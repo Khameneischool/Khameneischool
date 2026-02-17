@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>پنل مشاور | دبیرستان امام خامنه‌ای</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    :root {
+      --red: #b31b1b;
+      --gold: #d4af37;
+      --blue: #1a237e;
+      --primary: #4CAF50;
+      --secondary: #2196F3;
+      --accent: #FF9800;
+      --purple: #9C27B0;
+      --live-red: #ff3a4e;
+      --glass-light: rgba(255, 255, 255, 0.22);
+      --glass-dark: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.28);
+      --border-strong: rgba(255, 255, 255, 0.42);
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      --shadow-hover: 0 18px 50px rgba(0, 0, 0, 0.75);
+      --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+      color: white;
+      line-height: 1.6;
+      background-attachment: fixed;
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      position: relative;
+      overflow-x: hidden;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ========== GLASS SHADER EFFECT ========== */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
+        radial-gradient(circle at 30% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+        radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
+      z-index: -3;
+      opacity: 0.85;
+    }
+
+    /* ========== FLOATING ORBS ========== */
+    .floating-orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      z-index: -1;
+      animation: floatOrb 25s infinite linear;
+      opacity: 0.6;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      25% { transform: translateY(-60px) translateX(40px) rotate(90deg); opacity: 0.3; }
+      50% { transform: translateY(-120px) translateX(0) rotate(180deg); opacity: 0.1; }
+      75% { transform: translateY(-60px) translateX(-40px) rotate(270deg); opacity: 0.3; }
+      100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.6; }
+    }
+
+    /* ========== SCROLL PROGRESS ========== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--live-red), var(--accent), var(--purple), var(--secondary), var(--primary), var(--gold));      z-index: 10000;
+      width: 0%;
+      box-shadow: 0 0 15px rgba(255, 60, 78, 0.9), 0 0 25px rgba(255, 152, 0, 0.8);
+      transition: width 0.12s ease;
+    }
+
+    /* ========== BACK LINK ========== */
+    .back-link {
+      position: absolute;
+      top: 1.8rem;
+      left: 1.8rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.15rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: 30px;
+      background: var(--glass-dark);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+
+    .back-link.visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .back-link:hover {
+      transform: translateX(5px);
+      background: rgba(212, 175, 55, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .back-link i {
+      margin-left: 8px;
+    }
+
+    /* ========== GLASS CARD ========== */
+    .glass-card {
+      background: var(--glass-dark);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 2px solid var(--border-strong);
+      border-radius: 35px;
+      padding: 3rem;
+      max-width: 950px;      width: 100%;
+      box-shadow: var(--shadow);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .glass-card.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 38px;
+      animation: rotateGradient 12s linear infinite;
+      opacity: 0.85;
+    }
+
+    .glass-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: 35px;
+      z-index: -1;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-strong);
+    }
+
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }    }
+
+    /* ========== CARD TITLE ========== */
+    h2 {
+      font-size: 2.8rem;
+      margin-bottom: 2.5rem;
+      font-weight: 800;
+      position: relative;
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    h2::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      right: 50%;
+      transform: translateX(50%);
+      width: 70%;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--gold);
+    }
+
+    h2 i {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--secondary), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      display: block;
+      animation: floatIcon 3s infinite ease-in-out;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ========== ROLE BUTTONS ========== */
+    .role-btn {
+      display: block;
+      width: 100%;
+      padding: 1.4rem;      margin: 1rem 0;
+      background: var(--glass-light);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: white;
+      border: 2px solid var(--border);
+      border-radius: 50px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      text-align: center;
+    }
+
+    .role-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      z-index: 1;
+      animation: shineBtn 3s infinite;
+      opacity: 0;
+    }
+
+    @keyframes shineBtn {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    .role-btn:hover::before {
+      opacity: 1;
+    }
+
+    .role-btn:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      border-color: var(--border-strong);
+    }
+
+    .role-btn::after {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--secondary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .role-btn:hover::after {
+      opacity: 0.85;
+    }
+
+    .role-btn.counselor {
+      background: rgba(33, 150, 243, 0.25);
+    }
+
+    .role-btn.assistant {
+      background: rgba(156, 39, 176, 0.25);
+    }
+
+    /* ========== FORMS ========== */
+    .form-group {
+      margin-bottom: 1.8rem;
+      text-align: right;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--gold);
+      position: relative;
+      padding-bottom: 5px;
+    }
+
+    .form-group label::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 1px;
+    }
+
+    .form-group input,
+    .form-group textarea {      width: 100%;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      color: white;
+      font-size: 1.05rem;
+      direction: ltr;
+      text-align: left;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+      transform: scale(1.01);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+      line-height: 1.6;
+      direction: rtl;
+      text-align: right;
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn-submit {
+      width: 100%;
+      padding: 1.2rem;
+      background: var(--glass-light);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: white;
+      border: 2px solid var(--border-strong);
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+    .btn-submit::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      animation: rotateGradient 8s linear infinite;
+      opacity: 0.85;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .logout-btn {
+      background: rgba(244, 67, 54, 0.25);
+      margin-top: 2rem;
+    }
+
+    /* ========== ERROR MESSAGE ========== */
+    .error-msg {
+      color: var(--live-red);
+      margin-top: 1rem;
+      min-height: 1.6rem;
+      font-weight: 500;
+      padding: 0.8rem;
+      background: rgba(255, 60, 78, 0.1);
+      border-radius: 12px;
+      border-left: 4px solid var(--live-red);
+      animation: shakeError 0.5s;
+    }
+
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* ========== TABLE ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background: rgba(0, 0, 0, 0.2);      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 1.1rem;
+      text-align: center;
+      font-size: 1.05rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    th {
+      background: rgba(0, 0, 0, 0.3);
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    tr:hover {
+      background: rgba(212, 175, 55, 0.15);
+      transform: scale(1.01);
+      transition: var(--transition);
+    }
+
+    /* ========== WELCOME MESSAGE ========== */
+    #counselorWelcome,
+    #assistantWelcome {
+      font-size: 1.6rem;
+      margin: 1.5rem 0;
+      color: var(--gold);
+      font-weight: 700;
+      background: linear-gradient(to right, white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      animation: pulseGlow 3s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { text-shadow: 0 2px 10px rgba(0,0,0,0.3), 0 0 20px rgba(212, 175, 55, 0.7); }
+      50% { text-shadow: 0 2px 10px rgba(0,0,0,0.3), 0 0 30px rgba(212, 175, 55, 1), 0 0 40px rgba(33, 150, 243, 0.8); }
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      display: none;    }
+
+    .section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ========== SUCCESS MESSAGE ========== */
+    .success-msg {
+      text-align: center;
+      padding: 1.2rem;
+      background: rgba(76, 175, 80, 0.15);
+      border: 2px solid rgba(76, 175, 80, 0.4);
+      border-radius: 16px;
+      margin-top: 1.5rem;
+      display: none;
+      font-weight: 600;
+      color: #4CAF50;
+      animation: fadeIn 0.5s;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem 0.8rem;
+      }
+
+      .back-link {
+        top: 1.2rem;
+        left: 1.2rem;
+        font-size: 1rem;
+        padding: 0.5rem 1.2rem;
+      }
+
+      .glass-card {
+        padding: 2rem;
+        border-radius: 28px;
+      }
+
+      .glass-card::before {
+        border-radius: 31px;
+      }
+
+      .glass-card::after {
+        border-radius: 28px;      }
+
+      h2 {
+        font-size: 2.2rem;
+      }
+
+      h2 i {
+        font-size: 2.8rem;
+      }
+
+      .role-btn {
+        padding: 1.1rem;
+        font-size: 1.15rem;
+        margin: 0.8rem 0;
+      }
+
+      .form-group label {
+        font-size: 1.05rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.9rem;
+        font-size: 1rem;
+      }
+
+      .btn-submit {
+        padding: 1rem;
+        font-size: 1.1rem;
+        margin-top: 1.2rem;
+      }
+
+      #counselorWelcome,
+      #assistantWelcome {
+        font-size: 1.4rem;
+        margin: 1.2rem 0;
+      }
+
+      th, td {
+        padding: 0.9rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem 0.5rem;
+      }
+
+      .back-link {        top: 1rem;
+        left: 1rem;
+        font-size: 0.95rem;
+        padding: 0.4rem 1rem;
+      }
+
+      .glass-card {
+        padding: 1.8rem;
+        border-radius: 24px;
+        margin: 0 10px;
+      }
+
+      .glass-card::before {
+        border-radius: 27px;
+      }
+
+      .glass-card::after {
+        border-radius: 24px;
+      }
+
+      h2 {
+        font-size: 1.9rem;
+      }
+
+      h2::after {
+        width: 65%;
+        height: 4px;
+      }
+
+      h2 i {
+        font-size: 2.4rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .role-btn {
+        padding: 1rem;
+        font-size: 1.05rem;
+        margin: 0.7rem 0;
+        border-radius: 45px;
+      }
+
+      .role-btn::after {
+        border-radius: 48px;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {        font-size: 1rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .form-group label::after {
+        width: 35px;
+        height: 2px;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.85rem;
+        font-size: 0.95rem;
+        border-radius: 14px;
+      }
+
+      .form-group textarea {
+        min-height: 90px;
+      }
+
+      .btn-submit {
+        padding: 0.9rem;
+        font-size: 1rem;
+        margin-top: 1rem;
+        border-radius: 45px;
+      }
+
+      .btn-submit::before {
+        border-radius: 48px;
+      }
+
+      .logout-btn {
+        margin-top: 1.5rem;
+      }
+
+      #counselorWelcome,
+      #assistantWelcome {
+        font-size: 1.3rem;
+        margin: 1rem 0;
+      }
+
+      th, td {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating decorative orbs -->
+  <div class="floating-orb" style="width: 200px; height: 200px; top: 15%; left: 8%; animation-delay: 0s;"></div>
+  <div class="floating-orb" style="width: 160px; height: 160px; top: 65%; left: 92%; animation-delay: -7s;"></div>
+  <div class="floating-orb" style="width: 120px; height: 120px; top: 80%; left: 12%; animation-delay: -15s;"></div>
+  <div class="floating-orb" style="width: 180px; height: 180px; top: 45%; left: 85%; animation-delay: -10s;"></div>
+  
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <a href="index.html" class="back-link">
+    <i class="fas fa-arrow-right"></i> بازگشت
+  </a>
+
+  <!-- صفحه انتخاب نقش -->
+  <div id="roleSelect" class="glass-card">
+    <h2>
+      <i class="fas fa-user-cog"></i>
+      لطفاً نقش خود را انتخاب کنید
+    </h2>
+    <button class="role-btn counselor" onclick="showLogin('counselor')">
+      <i class="fas fa-user-tie"></i> 👨‍🏫 مشاور مدرسه
+    </button>
+    <button class="role-btn assistant" onclick="showLogin('assistant')">
+      <i class="fas fa-hands-helping"></i> 🤝 همیار مشاور مدرسه
+    </button>
+  </div>
+
+  <!-- ورود مشاور -->
+  <div id="counselorLogin" class="glass-card section">
+    <h2>
+      <i class="fas fa-user-shield"></i>
+      ورود مشاور مدرسه
+    </h2>
+    <div class="form-group">
+      <label><i class="fas fa-user"></i> نام کاربری</label>
+      <input type="text" id="counselorUser" placeholder="najafpour">
+    </div>
+    <div class="form-group">
+      <label><i class="fas fa-key"></i> رمز عبور</label>
+      <input type="password" id="counselorPass" placeholder="counselor123">
+    </div>
+    <div class="error-msg" id="counselorError"></div>
+    <button class="btn-submit" onclick="loginCounselor()">
+      <i class="fas fa-sign-in-alt"></i> ورود
+    </button>
+    <button class="btn-submit logout-btn" onclick="backToRole()">
+      <i class="fas fa-arrow-right"></i> ← بازگشت
+    </button>
+  </div>
+  <!-- ورود همیار -->
+  <div id="assistantLogin" class="glass-card section">
+    <h2>
+      <i class="fas fa-user-friends"></i>
+      ورود همیار مشاور
+    </h2>
+    <div class="form-group">
+      <label><i class="fas fa-mobile-alt"></i> شماره موبایل</label>
+      <input type="tel" id="assistantPhone" placeholder="0912...">
+    </div>
+    <div class="form-group">
+      <label><i class="fas fa-key"></i> رمز عبور</label>
+      <input type="password" id="assistantPass" placeholder="رمز عبور">
+    </div>
+    <div class="error-msg" id="assistantError"></div>
+    <button class="btn-submit" onclick="loginAssistant()">
+      <i class="fas fa-sign-in-alt"></i> ورود
+    </button>
+    <button class="btn-submit logout-btn" onclick="backToRole()">
+      <i class="fas fa-arrow-right"></i> ← بازگشت
+    </button>
+  </div>
+
+  <!-- داشبورد مشاور -->
+  <div id="counselorDashboard" class="glass-card section">
+    <h2>
+      <i class="fas fa-tachometer-alt"></i>
+      پنل مدیریت مشاوری
+    </h2>
+    <div id="counselorWelcome"></div>
+    <table>
+      <thead>
+        <tr>
+          <th><i class="fas fa-hashtag"></i> ردیف</th>
+          <th><i class="fas fa-user"></i> نام و نام خانوادگی</th>
+          <th><i class="fas fa-chalkboard-teacher"></i> کلاس</th>
+          <th><i class="fas fa-info-circle"></i> وضعیت</th>
+          <th><i class="fas fa-calendar-day"></i> تاریخ درخواست</th>
+          <th><i class="fas fa-clock"></i> ساعت</th>
+        </tr>
+      </thead>
+      <tbody id="counselorTable"></tbody>
+    </table>
+    <button class="btn-submit logout-btn" onclick="logoutCounselor()">
+      <i class="fas fa-sign-out-alt"></i> خروج
+    </button>
+  </div>
+
+  <!-- داشبورد همیار -->
+  <div id="assistantDashboard" class="glass-card section">    <h2>
+      <i class="fas fa-file-medical"></i>
+      ثبت درخواست مشاوره برای دانش آموزان شناسایی شده
+    </h2>
+    <div id="assistantWelcome"></div>
+    <form onsubmit="submitRequest(event)" id="requestForm">
+      <div class="form-group">
+        <label><i class="fas fa-user-graduate"></i> نام و نام خانوادگی دانش‌آموز</label>
+        <input type="text" name="student_name" placeholder="علی رضایی" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-chalkboard"></i> شماره کلاس</label>
+        <input type="text" name="class_number" placeholder="9/3" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-exclamation-triangle"></i> وضعیت (مهم، متوسط، کم اهمیت)</label>
+        <input type="text" name="status" placeholder="مهم" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-sticky-note"></i> توضیحات (دلیل درخواست)</label>
+        <textarea name="description" rows="3" placeholder="مثال: مشکل رفتاری در کلاس" required></textarea>
+      </div>
+      <input type="hidden" name="assistant_name" id="hiddenAssistantName">
+      <input type="hidden" name="assistant_phone" id="hiddenAssistantPhone">
+      <button type="submit" class="btn-submit">
+        <i class="fas fa-paper-plane"></i> ارسال درخواست مشاوره
+      </button>
+    </form>
+    <div class="success-msg" id="assistantSuccess"></div>
+    <button class="btn-submit logout-btn" onclick="logoutAssistant()">
+      <i class="fas fa-sign-out-alt"></i> خروج
+    </button>
+  </div>
+
+  <script>
+    // 🔐 مشاور اصلی
+    const COUNSELOR_USER = "najafpour";
+    const COUNSELOR_PASS = "counselor123";
+
+    // 👥 15 همیار مشاور
+    const assistants = [
+      { name: "ماهان جهاندیده سقزچی", phone: "09331939345", password: "a1010" },
+      { name: "رضا محمدی", phone: "09122020202", password: "a2020" },
+      { name: "سارا کاظمی", phone: "09123030303", password: "a3030" },
+      { name: "امیر حسینی", phone: "09124040404", password: "a4040" },
+      { name: "نرگس رضوی", phone: "09125050505", password: "a5050" },
+      { name: "مهدی شریفی", phone: "09126060606", password: "a6060" },
+      { name: "زهرا جعفری", phone: "09127070707", password: "a7070" },
+      { name: "کامران نوری", phone: "09128080808", password: "a8080" },
+      { name: "مریم غفوری", phone: "09129090909", password: "a9090" },      { name: "حسین طاهری", phone: "09120101010", password: "a0101" },
+      { name: "الهام موسوی", phone: "09121212121", password: "a1212" },
+      { name: "سینا ابراهیمی", phone: "09122323232", password: "a2323" },
+      { name: "نیلوفر قاسمی", phone: "09123434343", password: "a3434" },
+      { name: "آرمان زارع", phone: "09124545454", password: "a4545" },
+      { name: "مهسا خواجه‌امیری", phone: "09125656565", password: "a5656" }
+    ];
+
+    // 👥 50 دانش‌آموز پیش‌فرض (با وضعیت و تاریخ)
+    const students = [
+      { name: "علی رضایی", class: "7/1", status: "در انتظار", date: "1404/10/15", time: "10:00" },
+      { name: "مریم احمدی", class: "7/2", status: "در انتظار", date: "1404/10/16", time: "11:30" },
+      { name: "حسین کریمی", class: "8/1", status: "در انتظار", date: "1404/10/17", time: "14:00" },
+      { name: "زهرا محمدی", class: "8/2", status: "در انتظار", date: "1404/10/18", time: "09:00" },
+      { name: "امیر قاسمی", class: "9/1", status: "در انتظار", date: "1404/10/19", time: "15:30" },
+      { name: "فاطمه حسینی", class: "9/2", status: "در انتظار", date: "1404/10/20", time: "13:00" },
+      { name: "رضا احمدی", class: "7/3", status: "در انتظار", date: "1404/10/21", time: "10:30" },
+      { name: "سارا محمدی", class: "8/3", status: "در انتظار", date: "1404/10/22", time: "11:00" },
+      { name: "محمد کاظمی", class: "9/3", status: "در انتظار", date: "1404/10/23", time: "14:30" },
+      { name: "نرگس رضایی", class: "7/4", status: "در انتظار", date: "1404/10/24", time: "09:30" }
+    ].concat(
+      Array.from({length: 40}, (_, i) => ({
+        name: `دانش‌آموز ${i+11}`,
+        class: `${7 + Math.floor(i/6)}/${(i%6)+1}`,
+        status: "در انتظار",
+        date: "1404/10/25",
+        time: "10:00"
+      }))
+    );
+
+    // 🔗 Formspree endpoint for assistant requests
+    const ASSISTANT_FORM = "https://formspree.io/f/mnjnkryq";
+
+    let currentAssistant = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Animate back link
+      setTimeout(() => {
+        document.querySelector('.back-link').classList.add('visible');
+      }, 200);
+      
+      // Animate main card
+      setTimeout(() => {
+        document.querySelector('.glass-card').classList.add('visible');
+      }, 400);
+      
+      // Scroll progress indicator
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;        const clientHeight = document.documentElement.clientHeight;
+        const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+        document.getElementById('scroll-progress').style.width = `${scrolled}%`;
+      });
+      
+      // Add floating animation to orbs
+      document.querySelectorAll('.floating-orb').forEach((orb, index) => {
+        const duration = 25 + Math.random() * 15;
+        const delay = Math.random() * 10;
+        orb.style.animationDuration = `${duration}s`;
+        orb.style.animationDelay = `${-delay}s`;
+      });
+      
+      // Parallax effect on page
+      document.addEventListener('mousemove', (e) => {
+        if (window.innerWidth > 768) {
+          const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+          const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+          document.body.style.backgroundPosition = `${50 + xAxis}% ${50 + yAxis}%`;
+        }
+      });
+    });
+
+    // ========== Navigation ==========
+    function showLogin(role) {
+      document.getElementById("roleSelect").style.display = "none";
+      if (role === "counselor") {
+        document.getElementById("counselorLogin").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("counselorLogin").classList.add('visible');
+        }, 100);
+      } else {
+        document.getElementById("assistantLogin").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("assistantLogin").classList.add('visible');
+        }, 100);
+      }
+    }
+
+    function backToRole() {
+      document.getElementById("counselorLogin").style.display = "none";
+      document.getElementById("assistantLogin").style.display = "none";
+      document.getElementById("counselorLogin").classList.remove('visible');
+      document.getElementById("assistantLogin").classList.remove('visible');
+      document.getElementById("roleSelect").style.display = "block";
+    }
+
+    // ========== Counselor ==========
+    function loginCounselor() {
+      const user = document.getElementById("counselorUser").value.trim();      const pass = document.getElementById("counselorPass").value;
+      const err = document.getElementById("counselorError");
+
+      if (user === COUNSELOR_USER && pass === COUNSELOR_PASS) {
+        document.getElementById("counselorLogin").style.display = "none";
+        document.getElementById("counselorLogin").classList.remove('visible');
+        document.getElementById("counselorDashboard").style.display = "block";
+        document.getElementById("counselorWelcome").textContent = "آقای نجف‌پور خوش آمدید!";
+
+        const tbody = document.getElementById("counselorTable");
+        tbody.innerHTML = "";
+        students.forEach((s, i) => {
+          const row = `<tr>
+            <td>${i+1}</td>
+            <td>${s.name}</td>
+            <td>${s.class}</td>
+            <td>${s.status}</td>
+            <td>${s.date}</td>
+            <td>${s.time}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+
+        setTimeout(() => {
+          document.getElementById("counselorDashboard").classList.add('visible');
+        }, 100);
+      } else {
+        err.textContent = "❌ نام کاربری یا رمز عبور اشتباه است.";
+        setTimeout(() => err.textContent = "", 3000);
+      }
+    }
+
+    function logoutCounselor() {
+      document.getElementById("counselorDashboard").style.display = "none";
+      document.getElementById("counselorDashboard").classList.remove('visible');
+      document.getElementById("roleSelect").style.display = "block";
+    }
+
+    // ========== Assistant ==========
+    function loginAssistant() {
+      const phone = document.getElementById("assistantPhone").value.trim();
+      const pass = document.getElementById("assistantPass").value;
+      const err = document.getElementById("assistantError");
+
+      const assistant = assistants.find(a => a.phone === phone && a.password === pass);
+      if (assistant) {
+        currentAssistant = assistant;
+        document.getElementById("assistantLogin").style.display = "none";
+        document.getElementById("assistantLogin").classList.remove('visible');
+        document.getElementById("assistantDashboard").style.display = "block";        document.getElementById("assistantWelcome").textContent = `خوش آمدید، ${assistant.name} عزیز!`;
+        document.getElementById("hiddenAssistantName").value = assistant.name;
+        document.getElementById("hiddenAssistantPhone").value = assistant.phone;
+
+        setTimeout(() => {
+          document.getElementById("assistantDashboard").classList.add('visible');
+        }, 100);
+      } else {
+        err.textContent = "❌ شماره یا رمز اشتباه است.";
+        setTimeout(() => err.textContent = "", 3000);
+      }
+    }
+
+    function logoutAssistant() {
+      currentAssistant = null;
+      document.getElementById("assistantDashboard").style.display = "none";
+      document.getElementById("assistantDashboard").classList.remove('visible');
+      document.getElementById("roleSelect").style.display = "block";
+    }
+
+    // ========== Submit Request ==========
+    async function submitRequest(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const msg = document.getElementById("assistantSuccess");
+
+      try {
+        const res = await fetch(ASSISTANT_FORM, {
+          method: "POST",
+          body: formData,
+          headers: { "Accept": "application/json" }
+        });
+
+        if (res.ok) {
+          msg.textContent = "✅ درخواست مشاوره با موفقیت ارسال شد.";
+          msg.style.display = "block";
+          e.target.reset();
+          setTimeout(() => {
+            msg.style.display = "none";
+          }, 5000);
+        } else {
+          msg.textContent = "❌ خطا در ارسال.";
+          msg.style.display = "block";
+        }
+      } catch (err) {
+        alert("خطا در اتصال به سرور.");
+      }
+    }
+  </script>
+</body></html>

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>کلاس خصوصی | دبیرستان امام خامنه‌ای</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --red: #b31b1b;
+      --gold: #d4af37;
+      --blue: #1a237e;
+      --primary: #4CAF50;
+      --secondary: #2196F3;
+      --accent: #FF9800;
+      --purple: #9C27B0;
+      --live-red: #ff3a4e;
+      --glass-light: rgba(255, 255, 255, 0.22);
+      --glass-dark: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.28);
+      --border-strong: rgba(255, 255, 255, 0.42);
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      --shadow-hover: 0 18px 50px rgba(0, 0, 0, 0.75);
+      --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+      line-height: 1.6;
+      background-attachment: fixed;
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes gradientBG {      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ========== GLASS SHADER EFFECT ========== */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
+        radial-gradient(circle at 30% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+        radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
+      z-index: -3;
+      opacity: 0.85;
+    }
+
+    /* ========== FLOATING ORBS ========== */
+    .floating-orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      z-index: -1;
+      animation: floatOrb 25s infinite linear;
+      opacity: 0.6;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      25% { transform: translateY(-60px) translateX(40px) rotate(90deg); opacity: 0.3; }
+      50% { transform: translateY(-120px) translateX(0) rotate(180deg); opacity: 0.1; }
+      75% { transform: translateY(-60px) translateX(-40px) rotate(270deg); opacity: 0.3; }
+      100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.6; }
+    }
+
+    /* ========== SCROLL PROGRESS ========== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--live-red), var(--accent), var(--purple), var(--secondary), var(--primary), var(--gold));
+      z-index: 10000;
+      width: 0%;      box-shadow: 0 0 15px rgba(255, 60, 78, 0.9), 0 0 25px rgba(255, 152, 0, 0.8);
+      transition: width 0.12s ease;
+    }
+
+    /* ========== PARTICLES BACKGROUND ========== */
+    #particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ========== BACK LINK ========== */
+    .back-link {
+      position: absolute;
+      top: 1.8rem;
+      left: 1.8rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.15rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: 30px;
+      background: var(--glass-dark);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      transform: translateX(-50px);
+      opacity: 0;
+      z-index: 10;
+    }
+
+    .back-link.visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .back-link:hover {
+      transform: translateX(5px);
+      background: rgba(212, 175, 55, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .back-link i {
+      margin-left: 8px;
+    }
+    /* ========== PANEL ========== */
+    .panel {
+      background: var(--glass-dark);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 2px solid var(--border-strong);
+      border-radius: 35px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      max-width: 550px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      transform: scale(0.9) translateY(30px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .panel.visible {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 38px;
+      animation: rotateGradient 12s linear infinite;
+      opacity: 0.85;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: 35px;
+      z-index: -1;    }
+
+    .panel:hover {
+      transform: scale(1.02) translateY(-5px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-strong);
+    }
+
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ========== HEADER ========== */
+    h1 {
+      font-size: 3rem;
+      color: white;
+      margin-bottom: 2.8rem;
+      font-weight: 800;
+      position: relative;
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      letter-spacing: -1px;
+    }
+
+    h1::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      right: 50%;
+      transform: translateX(50%);
+      width: 70%;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--gold);
+    }
+
+    h1 i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--secondary), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      display: block;      animation: floatIcon 3s infinite ease-in-out;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 1.4rem 1.8rem;
+      margin: 1.3rem 0;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.35rem;
+      font-weight: 700;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid var(--border);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+      border-radius: 50px;
+      animation: shineBtn 3s infinite;
+      z-index: 1;
+    }
+
+    @keyframes shineBtn {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+    .btn:hover::before {
+      opacity: 1;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--secondary), var(--purple), var(--accent), var(--gold));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 53px;
+      z-index: -1;
+    }
+
+    .btn:hover::after {
+      opacity: 0.85;
+    }
+
+    .btn.student {
+      background: rgba(212, 175, 55, 0.25);
+      box-shadow: 0 6px 18px rgba(212, 175, 55, 0.4);
+    }
+
+    .btn.teacher {
+      background: rgba(26, 35, 126, 0.25);
+      box-shadow: 0 6px 18px rgba(26, 35, 126, 0.35);
+    }
+
+    .btn:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.3);
+    }
+
+    .btn.student:hover {
+      box-shadow: 0 10px 26px rgba(212, 175, 55, 0.6);
+    }
+
+    .btn.teacher:hover {
+      box-shadow: 0 10px 26px rgba(26, 35, 126, 0.5);
+    }
+
+    .btn:active {
+      transform: translateY(0) scale(0.99);
+    }
+    .btn i {
+      margin-left: 10px;
+      font-size: 1.2rem;
+    }
+
+    /* Ripple effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      pointer-events: none;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(2.5);
+        opacity: 0;
+      }
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem 0.8rem;
+      }
+
+      .back-link {
+        top: 1.2rem;
+        left: 1.2rem;
+        font-size: 1rem;
+        padding: 0.5rem 1.2rem;
+      }
+
+      .panel {
+        padding: 2.8rem 2rem;
+        border-radius: 28px;
+      }
+
+      .panel::before {
+        border-radius: 31px;
+      }
+
+      .panel::after {
+        border-radius: 28px;
+      }
+
+      h1 {
+        font-size: 2.4rem;      }
+
+      h1 i {
+        font-size: 3.2rem;
+      }
+
+      .btn {
+        padding: 1.2rem 1.5rem;
+        font-size: 1.2rem;
+        margin: 1.1rem 0;
+      }
+
+      .btn::after {
+        border-radius: 53px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem 0.5rem;
+      }
+
+      .back-link {
+        top: 1rem;
+        left: 1rem;
+        font-size: 0.95rem;
+        padding: 0.4rem 1rem;
+      }
+
+      .panel {
+        padding: 2.2rem 1.6rem;
+        border-radius: 24px;
+        margin: 0 10px;
+      }
+
+      .panel::before {
+        border-radius: 27px;
+      }
+
+      .panel::after {
+        border-radius: 24px;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 2.2rem;
+      }
+
+      h1::after {
+        width: 65%;        height: 4px;
+      }
+
+      h1 i {
+        font-size: 2.8rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .btn {
+        padding: 1.1rem 1.4rem;
+        font-size: 1.1rem;
+        margin: 1rem 0;
+        border-radius: 45px;
+      }
+
+      .btn::before {
+        border-radius: 45px;
+      }
+
+      .btn::after {
+        border-radius: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating decorative orbs -->
+  <div class="floating-orb" style="width: 200px; height: 200px; top: 15%; left: 8%; animation-delay: 0s;"></div>
+  <div class="floating-orb" style="width: 160px; height: 160px; top: 65%; left: 92%; animation-delay: -7s;"></div>
+  <div class="floating-orb" style="width: 120px; height: 120px; top: 80%; left: 12%; animation-delay: -15s;"></div>
+  <div class="floating-orb" style="width: 180px; height: 180px; top: 45%; left: 85%; animation-delay: -10s;"></div>
+  
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- Particles Background -->
+  <canvas id="particles"></canvas>
+
+  <a href="index.html" class="back-link">
+    <i class="fas fa-arrow-right"></i> بازگشت
+  </a>
+
+  <div class="panel">
+    <h1>
+      <i class="fas fa-chalkboard-teacher"></i>
+      کلاس خصوصی
+    </h1>
+    <a href="student-private.html" class="btn student">
+      <i class="fas fa-user-graduate"></i> دانش‌آموز هستم    </a>
+    <a href="teacher-private.html" class="btn teacher">
+      <i class="fas fa-user-tie"></i> دبیر هستم
+    </a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Animate back link
+      setTimeout(() => {
+        document.querySelector('.back-link').classList.add('visible');
+      }, 200);
+      
+      // Animate panel
+      setTimeout(() => {
+        document.querySelector('.panel').classList.add('visible');
+      }, 400);
+      
+      // Scroll progress indicator
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+        document.getElementById('scroll-progress').style.width = `${scrolled}%`;
+      });
+      
+      // Add floating animation to orbs
+      document.querySelectorAll('.floating-orb').forEach((orb, index) => {
+        const duration = 25 + Math.random() * 15;
+        const delay = Math.random() * 10;
+        orb.style.animationDuration = `${duration}s`;
+        orb.style.animationDelay = `${-delay}s`;
+      });
+      
+      // Parallax effect on page
+      document.addEventListener('mousemove', (e) => {
+        if (window.innerWidth > 768) {
+          const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+          const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+          document.body.style.backgroundPosition = `${50 + xAxis}% ${50 + yAxis}%`;
+        }
+      });
+    });
+
+    // Ripple effect on click
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;        const y = e.clientY - rect.top;
+
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+        ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+
+        this.appendChild(ripple);
+
+        // Remove ripple after animation
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+      });
+    });
+
+    // ذرات سبک پس‌زمینه
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = window.innerWidth < 600 ? 30 : 60;
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+        this.opacity = Math.random() * 0.3 + 0.1;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+      }
+      draw() {
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>

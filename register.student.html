@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ثبت‌نام دانش‌آموز | دبیرستان امام خامنه‌ای</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    :root {
+      --red: #b31b1b;
+      --gold: #d4af37;
+      --blue: #1a237e;
+      --primary: #4CAF50;
+      --secondary: #2196F3;
+      --accent: #FF9800;
+      --purple: #9C27B0;
+      --live-red: #ff3a4e;
+      --glass-light: rgba(255, 255, 255, 0.22);
+      --glass-dark: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.28);
+      --border-strong: rgba(255, 255, 255, 0.42);
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      --shadow-hover: 0 18px 50px rgba(0, 0, 0, 0.75);
+      --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      color: white;
+      font-family: 'Vazirmatn', sans-serif;
+      min-height: 100vh;
+      padding: 3rem 1.5rem;
+      line-height: 1.6;
+      background-attachment: fixed;
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      position: relative;
+      overflow-x: hidden;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ========== GLASS SHADER EFFECT ========== */
+    body::before {      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
+        radial-gradient(circle at 30% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+        radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
+      z-index: -3;
+      opacity: 0.85;
+    }
+
+    /* ========== FLOATING ORBS ========== */
+    .floating-orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      z-index: -1;
+      animation: floatOrb 25s infinite linear;
+      opacity: 0.6;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      25% { transform: translateY(-60px) translateX(40px) rotate(90deg); opacity: 0.3; }
+      50% { transform: translateY(-120px) translateX(0) rotate(180deg); opacity: 0.1; }
+      75% { transform: translateY(-60px) translateX(-40px) rotate(270deg); opacity: 0.3; }
+      100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.6; }
+    }
+
+    /* ========== SCROLL PROGRESS ========== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--live-red), var(--accent), var(--purple), var(--secondary), var(--primary), var(--gold));
+      z-index: 10000;
+      width: 0%;
+      box-shadow: 0 0 15px rgba(255, 60, 78, 0.9), 0 0 25px rgba(255, 152, 0, 0.8);
+      transition: width 0.12s ease;
+    }
+
+    /* ========== BACK LINK ========== */
+    .back-link {
+      display: inline-block;      color: var(--gold);
+      margin-bottom: 2.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1.2rem;
+      position: relative;
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      background: var(--glass-dark);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+
+    .back-link.visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .back-link:hover {
+      transform: translateX(5px);
+      background: rgba(212, 175, 55, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .back-link i {
+      margin-left: 8px;
+    }
+
+    /* ========== GLASS FORM ========== */
+    .glass-form {
+      max-width: 750px;
+      margin: 0 auto;
+      background: var(--glass-dark);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 2px solid var(--border-strong);
+      border-radius: 35px;
+      padding: 3rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .glass-form.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .glass-form::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 38px;
+      animation: rotateGradient 12s linear infinite;
+      opacity: 0.85;
+    }
+
+    .glass-form::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: 35px;
+      z-index: -1;
+    }
+
+    .glass-form:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-strong);
+    }
+
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ========== FORM HEADER ========== */
+    .form-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .form-header h1 {
+      font-size: 2.8rem;      margin-bottom: 1rem;
+      font-weight: 800;
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .form-header h1::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      right: 50%;
+      transform: translateX(50%);
+      width: 70%;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--gold);
+    }
+
+    .form-header p {
+      opacity: 0.9;
+      font-size: 1.15rem;
+      margin-top: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .form-header i {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--secondary), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      display: block;
+      animation: floatIcon 3s infinite ease-in-out;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ========== FORMS ========== */
+    .form-group {
+      margin-bottom: 1.8rem;    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--gold);
+      position: relative;
+      padding-bottom: 5px;
+    }
+
+    .form-group label::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 1px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--border);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border-radius: 16px;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 1.05rem;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+      transform: scale(1.01);
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* ========== BUTTONS ========== */
+    .submit-btn {
+      width: 100%;
+      padding: 1.2rem;      background: var(--glass-light);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: white;
+      border: 2px solid var(--border-strong);
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      font-family: 'Vazirmatn', sans-serif;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+
+    .submit-btn::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      animation: rotateGradient 8s linear infinite;
+      opacity: 0.85;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* ========== SUCCESS MESSAGE ========== */
+    .success-msg {
+      text-align: center;
+      padding: 1.8rem;
+      background: rgba(76, 175, 80, 0.15);
+      border: 2px solid rgba(76, 175, 80, 0.4);
+      border-radius: 20px;
+      margin-top: 2rem;
+      display: none;
+      font-weight: 600;
+      color: #4CAF50;
+      animation: fadeIn 0.6s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .success-msg::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      z-index: 1;
+      animation: shineSuccess 3s infinite;
+    }
+
+    @keyframes shineSuccess {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    .success-msg strong {
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ========== GALLERY SECTION ========== */
+    .gallery-section {
+      margin-top: 4rem;
+      max-width: 1100px;
+      margin: 4rem auto 0;
+      position: relative;
+      z-index: 15;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.8rem;
+      margin-bottom: 2.5rem;
+      font-weight: 800;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--gold);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.2rem;
+    }
+
+    .gallery-card {
+      background: var(--glass-dark);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .gallery-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery-card::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--secondary), var(--purple), var(--accent), var(--gold));      z-index: -1;
+      border-radius: 27px;
+      animation: rotateGradient 15s linear infinite reverse;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .gallery-card:hover::before {
+      opacity: 0.85;
+    }
+
+    .gallery-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.85), rgba(25, 30, 55, 0.8));
+      border-radius: 24px;
+      z-index: -1;
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+      border-radius: 22px 22px 0 0;
+    }
+
+    .gallery-card:hover img {
+      transform: scale(1.08);
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      text-align: center;
+      margin-top: 4.5rem;
+      font-size: 1.15rem;
+      opacity: 0.9;
+      background: var(--glass-dark);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-top: 2px solid var(--border-strong);
+      padding: 2.5rem;
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;      transform: translateY(40px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    footer.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    footer::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: footerLine 3s infinite;
+    }
+
+    @keyframes footerLine {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    footer p {
+      margin: 0.8rem 0;
+      line-height: 1.7;
+    }
+
+    footer strong {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      body {
+        padding: 2rem 1rem;
+      }
+
+      .back-link {
+        font-size: 1.1rem;
+        padding: 0.5rem 1.2rem;
+        margin-bottom: 1.8rem;
+      }
+
+      .glass-form {
+        padding: 2rem;        border-radius: 28px;
+      }
+
+      .glass-form::before {
+        border-radius: 31px;
+      }
+
+      .glass-form::after {
+        border-radius: 28px;
+      }
+
+      .form-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .form-header i {
+        font-size: 2.8rem;
+      }
+
+      .form-header p {
+        font-size: 1.05rem;
+      }
+
+      .form-group label {
+        font-size: 1.05rem;
+      }
+
+      .form-group input,
+      .form-group select {
+        padding: 0.9rem;
+        font-size: 1rem;
+      }
+
+      .submit-btn {
+        padding: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .success-msg {
+        padding: 1.5rem;
+        font-size: 1.05rem;
+      }
+
+      .section-title {
+        font-size: 2.3rem;
+      }
+
+      .gallery-card img {
+        height: 260px;
+      }
+      footer {
+        padding: 2rem;
+        font-size: 1.05rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1.5rem 0.8rem;
+      }
+
+      .back-link {
+        font-size: 1rem;
+        padding: 0.4rem 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .glass-form {
+        padding: 1.8rem;
+        border-radius: 24px;
+        margin: 0 10px;
+      }
+
+      .glass-form::before {
+        border-radius: 27px;
+      }
+
+      .glass-form::after {
+        border-radius: 24px;
+      }
+
+      .form-header {
+        margin-bottom: 2rem;
+      }
+
+      .form-header h1 {
+        font-size: 1.9rem;
+      }
+
+      .form-header h1::after {
+        width: 65%;
+        height: 4px;
+      }
+
+      .form-header i {
+        font-size: 2.4rem;
+        margin-bottom: 0.8rem;
+      }
+      .form-header p {
+        font-size: 1rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        font-size: 1rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .form-group label::after {
+        width: 35px;
+        height: 2px;
+      }
+
+      .form-group input,
+      .form-group select {
+        padding: 0.85rem;
+        font-size: 0.95rem;
+        border-radius: 14px;
+      }
+
+      .submit-btn {
+        padding: 0.9rem;
+        font-size: 1rem;
+        border-radius: 45px;
+      }
+
+      .submit-btn::before {
+        border-radius: 48px;
+      }
+
+      .success-msg {
+        padding: 1.3rem;
+        font-size: 0.95rem;
+        margin-top: 1.8rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .section-title::after {
+        width: 60%;
+        height: 4px;
+      }
+      .gallery-grid {
+        gap: 1.5rem;
+      }
+
+      .gallery-card img {
+        height: 220px;
+        border-radius: 20px 20px 0 0;
+      }
+
+      footer {
+        padding: 1.8rem;
+        font-size: 0.95rem;
+        border-radius: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating decorative orbs -->
+  <div class="floating-orb" style="width: 200px; height: 200px; top: 15%; left: 8%; animation-delay: 0s;"></div>
+  <div class="floating-orb" style="width: 160px; height: 160px; top: 65%; left: 92%; animation-delay: -7s;"></div>
+  <div class="floating-orb" style="width: 120px; height: 120px; top: 80%; left: 12%; animation-delay: -15s;"></div>
+  <div class="floating-orb" style="width: 180px; height: 180px; top: 45%; left: 85%; animation-delay: -10s;"></div>
+  
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <a href="index.html" class="back-link">
+    <i class="fas fa-arrow-right"></i> بازگشت به صفحه اصلی
+  </a>
+
+  <div class="glass-form">
+    <div class="form-header">
+      <i class="fas fa-user-graduate"></i>
+      <h1>📝 ثبت‌نام دانش‌آموز جدید</h1>
+      <p>لطفاً اطلاعات زیر را با دقت وارد کنید.</p>
+    </div>
+
+    <form id="studentForm" action="https://formspree.io/f/xaqngzwe" method="POST">
+      <div class="form-group">
+        <label><i class="fas fa-user"></i> نام و نام خانوادگی دانش‌آموز</label>
+        <input type="text" name="student_name" required placeholder="مثال: علی احمدی">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-male"></i> نام پدر</label>
+        <input type="text" name="father_name" required placeholder="مثال: محمد">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-female"></i> نام مادر</label>        <input type="text" name="mother_name" required placeholder="مثال: فاطمه">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-mobile-alt"></i> شماره موبایل پدر</label>
+        <input type="tel" name="father_phone" required placeholder="0912...">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-mobile-alt"></i> شماره موبایل مادر</label>
+        <input type="tel" name="mother_phone" required placeholder="0935...">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-id-card"></i> کد ملی دانش‌آموز</label>
+        <input type="text" name="national_id" required placeholder="0012345678">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-school"></i> پایه تحصیلی</label>
+        <select name="grade" required>
+          <option value="">انتخاب کنید</option>
+          <option value="هفتم">هفتم</option>
+          <option value="هشتم">هشتم</option>
+          <option value="نهم">نهم</option>
+        </select>
+      </div>
+      <button type="submit" class="submit-btn">
+        <i class="fas fa-paper-plane"></i> ارسال اطلاعات
+      </button>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      <i class="fas fa-check-circle" style="font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(to right, #4CAF50, #8BC34A); -webkit-background-clip: text; background-clip: text; color: transparent;"></i>
+      ✅ اطلاعات شما با موفقیت ارسال شد!<br>
+      اطلاعات شما برای مدیر دبیرستان ارسال گردید.<br>
+      بزودی بررسی و تماس گرفته خواهد شد.<br>
+      <strong>زمان تقریبی انتظار: ۴۸ ساعت.</strong>
+    </div>
+  </div>
+
+  <!-- Gallery Section -->
+  <section class="gallery-section">
+    <h2 class="section-title">
+      <i class="fas fa-images"></i>
+      🖼️ محیط دبیرستان ما
+    </h2>
+    <div class="gallery-grid">
+      <div class="gallery-card">
+        <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSyLjqkaVf0X2wvudi61adwKoJ3rU7eQ8Mvsg2-8QemjW6OzwObecl6MgtUOBz_G2cWQzRlEQayZzHllrBFEV8japa1j4omzDe22SR1LYwR7ADo_gxhAfAiv41BDeQAceJZU-z_2=s1360-w1360-h1020-rw" alt="نما از دبیرستان امام خامنه‌ای">
+      </div>
+      <div class="gallery-card">
+        <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSyj5rwiTHrOnaZz1tX4YR7gE_ySfka9rM_MEUhHHtdhc4GAJNuAijXzGf6IS-clEjdPSZF8gu6gNcTxmVqYiLsrlM9WtZ00UWWpbfPQb0E047q-iNjLWTNwAVU-MPyrc-U7L10K=s1360-w1360-h1020-rw" alt="نما از سالن دبیرستان امام خامنه‌ای">
+      </div>      <div class="gallery-card">
+        <img src="https://lh3.googleusercontent.com/gps-cs-s/AG0ilSx9VdR5XvLmJZ3VxYdF8XZ6Y7Q9JZ3VxYdF8XZ6Y7Q9JZ3VxYdF8XZ6Y7Q9JZ3VxYdF8XZ6Y7Q9JZ3VxYdF8XZ6Y7Q9JZ3VxYdF8XZ6Y7Q9JZ3VxYdF8XZ6Y7Q9JZ3VxYdF8XZ6Y7Q9JZ3VxYdF8XZ6Y7Q9=s1360-w1360-h1020-rw" alt="کتابخانه دبیرستان" onerror="this.src='https://images.unsplash.com/photo-1507842217343-583bb7270b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'">
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>طراحی و توسعه داده‌شده توسط <strong>سپهر قاسمی</strong> و <strong>ماهان جهاندیده</strong></p>
+    <p>تمامی حقوق این وبسایت محفوظ است.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Animate back link
+      setTimeout(() => {
+        document.querySelector('.back-link').classList.add('visible');
+      }, 200);
+      
+      // Animate form
+      setTimeout(() => {
+        document.querySelector('.glass-form').classList.add('visible');
+      }, 400);
+      
+      // Animate footer
+      setTimeout(() => {
+        document.querySelector('footer').classList.add('visible');
+      }, 800);
+      
+      // Scroll progress indicator
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+        document.getElementById('scroll-progress').style.width = `${scrolled}%`;
+      });
+      
+      // Add floating animation to orbs
+      document.querySelectorAll('.floating-orb').forEach((orb, index) => {
+        const duration = 25 + Math.random() * 15;
+        const delay = Math.random() * 10;
+        orb.style.animationDuration = `${duration}s`;
+        orb.style.animationDelay = `${-delay}s`;
+      });
+      
+      // Parallax effect on page
+      document.addEventListener('mousemove', (e) => {
+        if (window.innerWidth > 768) {
+          const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+          const yAxis = (window.innerHeight / 2 - e.pageY) / 50;          document.body.style.backgroundPosition = `${50 + xAxis}% ${50 + yAxis}%`;
+        }
+      });
+      
+      // Gallery animation with ScrollTrigger
+      gsap.registerPlugin(ScrollTrigger);
+      
+      gsap.utils.toArray('.gallery-card').forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+          },
+          opacity: 0,
+          y: 40,
+          duration: 0.8,
+          ease: "power2.out",
+          delay: i * 0.15,
+          onComplete: () => {
+            card.classList.add('visible');
+          }
+        });
+      });
+    });
+
+    // Form Submission
+    document.getElementById('studentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this),
+        headers: { 'Accept': 'application/json' }
+      }).then(res => {
+        if (res.ok) {
+          this.style.display = 'none';
+          const successMsg = document.getElementById('successMsg');
+          successMsg.style.display = 'block';
+          gsap.from(successMsg, { opacity: 0, y: 20, duration: 0.6 });
+        } else {
+          alert('خطا در ارسال! لطفاً دوباره تلاش کنید.');
+        }
+      }).catch(() => alert('خطای ارتباطی!'));
+    });
+  </script>
+</body>
+</html>

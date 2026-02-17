@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>پنل مدیر | دبیرستان امام خامنه‌ای</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    :root {
+      --red: #b31b1b;
+      --gold: #d4af37;
+      --blue: #1a237e;
+      --primary: #4CAF50;
+      --secondary: #2196F3;
+      --accent: #FF9800;
+      --purple: #9C27B0;
+      --live-red: #ff3a4e;
+      --glass-light: rgba(255, 255, 255, 0.22);
+      --glass-dark: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.28);
+      --border-strong: rgba(255, 255, 255, 0.42);
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      --shadow-hover: 0 18px 50px rgba(0, 0, 0, 0.75);
+      --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      color: white;
+      font-family: 'Vazirmatn', sans-serif;
+      min-height: 100vh;
+      padding: 3rem 1.5rem;
+      line-height: 1.6;
+      background-attachment: fixed;
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      position: relative;
+      overflow-x: hidden;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ========== GLASS SHADER EFFECT ========== */
+    body::before {
+      content: "";      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
+        radial-gradient(circle at 30% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+        radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
+      z-index: -3;
+      opacity: 0.85;
+    }
+
+    /* ========== FLOATING ORBS ========== */
+    .floating-orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      z-index: -1;
+      animation: floatOrb 25s infinite linear;
+      opacity: 0.6;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      25% { transform: translateY(-60px) translateX(40px) rotate(90deg); opacity: 0.3; }
+      50% { transform: translateY(-120px) translateX(0) rotate(180deg); opacity: 0.1; }
+      75% { transform: translateY(-60px) translateX(-40px) rotate(270deg); opacity: 0.3; }
+      100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.6; }
+    }
+
+    /* ========== SCROLL PROGRESS ========== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--live-red), var(--accent), var(--purple), var(--secondary), var(--primary), var(--gold));
+      z-index: 10000;
+      width: 0%;
+      box-shadow: 0 0 15px rgba(255, 60, 78, 0.9), 0 0 25px rgba(255, 152, 0, 0.8);
+      transition: width 0.12s ease;
+    }
+
+    /* ========== BACK LINK ========== */
+    .back-link {
+      display: inline-block;
+      color: var(--gold);      margin-bottom: 2.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1.2rem;
+      position: relative;
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      background: var(--glass-dark);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+
+    .back-link.visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .back-link:hover {
+      transform: translateX(5px);
+      background: rgba(212, 175, 55, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .back-link i {
+      margin-left: 8px;
+    }
+
+    /* ========== CONTAINER ========== */
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+    }
+
+    /* ========== GLASS CARD ========== */
+    .glass-card {
+      background: var(--glass-dark);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 2px solid var(--border-strong);
+      border-radius: 35px;
+      padding: 3rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transform: translateY(40px);      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .glass-card.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 38px;
+      animation: rotateGradient 12s linear infinite;
+      opacity: 0.85;
+    }
+
+    .glass-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: 35px;
+      z-index: -1;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-strong);
+    }
+
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ========== CARD TITLE ========== */
+    .card-title {
+      text-align: center;
+      font-size: 2.8rem;      margin-bottom: 2.5rem;
+      font-weight: 800;
+      position: relative;
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .card-title::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      right: 50%;
+      transform: translateX(50%);
+      width: 70%;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--gold);
+    }
+
+    .card-title i {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--secondary), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      display: block;
+      animation: floatIcon 3s infinite ease-in-out;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ========== FORMS ========== */
+    .form-group {
+      margin-bottom: 1.8rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--gold);      position: relative;
+      padding-bottom: 5px;
+    }
+
+    .form-group label::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 1px;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--border);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border-radius: 16px;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 1.05rem;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+      transform: scale(1.01);
+      background: rgba(255,255,255,0.15);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn {
+      width: 100%;
+      padding: 1.2rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      font-family: 'Vazirmatn', sans-serif;
+      cursor: pointer;      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      animation: rotateGradient 8s linear infinite;
+      opacity: 0.85;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn-primary {
+      background: var(--glass-light);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: white;
+      border: 2px solid var(--border-strong);
+    }
+
+    .dashboard-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+      margin-top: 2.5rem;
+    }
+
+    .dash-btn {
+      background: var(--glass-light);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid var(--border);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 24px;
+      text-align: center;
+      font-weight: 700;      font-size: 1.15rem;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+
+    .dash-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      z-index: 1;
+      animation: shineBtn 3s infinite;
+      opacity: 0;
+    }
+
+    @keyframes shineBtn {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    .dash-btn:hover::before {
+      opacity: 1;
+    }
+
+    .dash-btn:hover {
+      background: rgba(212, 175, 55, 0.3);
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      border-color: var(--border-strong);
+    }
+
+    .dash-btn::after {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--secondary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 27px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .dash-btn:hover::after {
+      opacity: 0.85;
+    }
+
+    .dash-btn i {
+      font-size: 2.2rem;
+      margin-bottom: 0.6rem;
+      display: block;
+      background: linear-gradient(to right, var(--secondary), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .section {
+      display: none;
+    }
+    .section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ========== TABLE ========== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      background: rgba(0,0,0,0.2);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 1.1rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      font-size: 1.05rem;
+    }
+    th {
+      background: rgba(0,0,0,0.3);
+      font-weight: 700;
+      color: var(--gold);
+      position: sticky;
+      top: 0;    }
+    tr:nth-child(even) {
+      background: rgba(0,0,0,0.12);
+    }
+    tr:hover {
+      background: rgba(212, 175, 55, 0.15);
+      transform: scale(1.01);
+      transition: var(--transition);
+    }
+
+    .cancel-btn {
+      background: rgba(244, 67, 54, 0.25);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: white;
+      border: 2px solid rgba(244, 67, 54, 0.4);
+      padding: 0.6rem 1.2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .cancel-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      z-index: 1;
+      animation: shineBtn 2s infinite;
+      opacity: 0;
+    }
+    .cancel-btn:hover::before {
+      opacity: 1;
+    }
+    .cancel-btn:hover {
+      background: rgba(244, 67, 54, 0.4);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+    }
+    .cancel-btn i {
+      margin-left: 5px;
+    }
+    /* ========== FOOTER ========== */
+    footer {
+      text-align: center;
+      margin-top: 3.5rem;
+      font-size: 1.1rem;
+      opacity: 0.9;
+      background: var(--glass-dark);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-top: 2px solid var(--border-strong);
+      padding: 2rem;
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    footer.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    footer::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: footerLine 3s infinite;
+    }
+
+    @keyframes footerLine {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    footer p {
+      margin: 0.6rem 0;
+      line-height: 1.6;
+    }
+    footer strong {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ========== SUCCESS MESSAGE ========== */    .success-msg {
+      text-align: center;
+      padding: 1.2rem;
+      background: rgba(76, 175, 80, 0.15);
+      border: 2px solid rgba(76, 175, 80, 0.4);
+      border-radius: 16px;
+      margin-top: 1.5rem;
+      display: none;
+      font-weight: 600;
+      color: #4CAF50;
+      animation: fadeIn 0.5s;
+    }
+
+    /* ========== LOGIN ERROR ========== */
+    #loginError {
+      color: var(--live-red);
+      margin: 1rem 0;
+      padding: 0.8rem;
+      background: rgba(255, 60, 78, 0.1);
+      border-radius: 12px;
+      border-left: 4px solid var(--live-red);
+      font-weight: 500;
+      animation: shakeError 0.5s;
+    }
+
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    /* ========== WELCOME MESSAGE ========== */
+    .welcome-message {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 1.5rem 0;
+      background: linear-gradient(to right, white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      animation: pulseGlow 3s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { text-shadow: 0 2px 10px rgba(0,0,0,0.3), 0 0 20px rgba(212, 175, 55, 0.7); }
+      50% { text-shadow: 0 2px 10px rgba(0,0,0,0.3), 0 0 30px rgba(212, 175, 55, 1), 0 0 40px rgba(33, 150, 243, 0.8); }
+    }
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      body {
+        padding: 2rem 1rem;
+      }
+
+      .back-link {
+        font-size: 1.1rem;
+        padding: 0.5rem 1.2rem;
+        margin-bottom: 1.8rem;
+      }
+
+      .glass-card {
+        padding: 2rem;
+        border-radius: 28px;
+      }
+
+      .glass-card::before {
+        border-radius: 31px;
+      }
+
+      .glass-card::after {
+        border-radius: 28px;
+      }
+
+      .card-title {
+        font-size: 2.2rem;
+      }
+
+      .card-title i {
+        font-size: 2.8rem;
+      }
+
+      .dashboard-btns {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .dash-btn {
+        padding: 1.2rem;
+        font-size: 1.05rem;
+      }
+
+      .dash-btn i {
+        font-size: 1.8rem;
+      }
+
+      .form-group label {
+        font-size: 1.05rem;
+      }
+      .form-group input,
+      .form-group textarea {
+        padding: 0.9rem;
+        font-size: 1rem;
+      }
+
+      .btn {
+        padding: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .welcome-message {
+        font-size: 1.6rem;
+      }
+
+      footer {
+        padding: 1.5rem;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1.5rem 0.8rem;
+      }
+
+      .back-link {
+        font-size: 1rem;
+        padding: 0.4rem 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .glass-card {
+        padding: 1.8rem;
+        border-radius: 24px;
+        margin: 0 10px;
+      }
+
+      .glass-card::before {
+        border-radius: 27px;
+      }
+
+      .glass-card::after {
+        border-radius: 24px;
+      }
+
+      .card-title {
+        font-size: 1.9rem;
+      }
+      .card-title::after {
+        width: 65%;
+        height: 4px;
+      }
+
+      .card-title i {
+        font-size: 2.4rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .dashboard-btns {
+        gap: 1rem;
+      }
+
+      .dash-btn {
+        padding: 1rem;
+        font-size: 1rem;
+        border-radius: 20px;
+      }
+
+      .dash-btn i {
+        font-size: 1.6rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .dash-btn::after {
+        border-radius: 23px;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        font-size: 1rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .form-group label::after {
+        width: 35px;
+        height: 2px;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.85rem;
+        font-size: 0.95rem;
+        border-radius: 14px;
+      }
+      .form-group textarea {
+        min-height: 100px;
+      }
+
+      .btn {
+        padding: 0.9rem;
+        font-size: 1rem;
+        border-radius: 45px;
+      }
+
+      .cancel-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .welcome-message {
+        font-size: 1.4rem;
+        margin: 1.2rem 0;
+      }
+
+      footer {
+        padding: 1.2rem;
+        font-size: 0.95rem;
+        border-radius: 20px;
+      }
+
+      th, td {
+        padding: 0.8rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating decorative orbs -->
+  <div class="floating-orb" style="width: 200px; height: 200px; top: 15%; left: 8%; animation-delay: 0s;"></div>
+  <div class="floating-orb" style="width: 160px; height: 160px; top: 65%; left: 92%; animation-delay: -7s;"></div>
+  <div class="floating-orb" style="width: 120px; height: 120px; top: 80%; left: 12%; animation-delay: -15s;"></div>
+  <div class="floating-orb" style="width: 180px; height: 180px; top: 45%; left: 85%; animation-delay: -10s;"></div>
+  
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <a href="index.html" class="back-link">
+    <i class="fas fa-arrow-right"></i> بازگشت به صفحه اصلی
+  </a>
+
+  <div class="container">    <!-- فرم ورود -->
+    <div id="loginSection" class="glass-card">
+      <h2 class="card-title">
+        <i class="fas fa-lock"></i>
+        🔐 ورود به پنل مدیر
+      </h2>
+      <div class="form-group">
+        <label><i class="fas fa-user"></i> نام کاربری</label>
+        <input type="text" id="username" placeholder="admin">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-key"></i> رمز عبور</label>
+        <input type="password" id="password" placeholder="mvmblumvmblu">
+      </div>
+      <div id="loginError"></div>
+      <button class="btn btn-primary" onclick="login()">
+        <i class="fas fa-sign-in-alt"></i> ورود
+      </button>
+    </div>
+
+    <!-- داشبورد -->
+    <div class="welcome-message">
+      <i class="fas fa-user-tie"></i> آقای حسن پوریوسفی خوش آمدید
+    </div>
+    <div id="dashboard" class="glass-card" style="display:none;">
+      <h2 class="card-title">
+        <i class="fas fa-tachometer-alt"></i>
+        🎛️ پنل مدیریت
+      </h2>
+      <div class="dashboard-btns">
+        <div class="dash-btn" onclick="showSection('news')">
+          <i class="fas fa-bullhorn"></i>
+          📢 اطلاعیه جدید
+        </div>
+        <div class="dash-btn" onclick="showSection('registrations')">
+          <i class="fas fa-clipboard-list"></i>
+          📋 پیش‌ثبت‌نام دانش‌آموزان
+        </div>
+      </div>
+    </div>
+
+    <!-- اطلاعیه جدید -->
+    <div id="news" class="glass-card section">
+      <h2 class="card-title">
+        <i class="fas fa-newspaper"></i>
+        ارسال اطلاعیه جدید
+      </h2>
+      <form id="newsForm" action="https://formspree.io/f/xdakkbpv" method="POST">
+        <div class="form-group">
+          <label><i class="fas fa-heading"></i> عنوان خبر</label>          <input type="text" name="title" required placeholder="مثال: تعطیلی فردا">
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-calendar-day"></i> تاریخ خبر (مثال: 1405/01/15)</label>
+          <input type="text" name="date" required placeholder="1405/01/15">
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-sticky-note"></i> توضیحات خبر</label>
+          <textarea name="description" rows="5" required placeholder="متن کامل اطلاعیه..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-paper-plane"></i> ارسال اطلاعیه
+        </button>
+      </form>
+      <div class="success-msg" id="newsSuccess">✅ اطلاعیه با موفقیت ارسال شد!</div>
+    </div>
+
+    <!-- پیش‌ثبت‌نام — 50 دانش‌آموز -->
+    <div id="registrations" class="glass-card section">
+      <h2 class="card-title">
+        <i class="fas fa-user-graduate"></i>
+        پیش ثبت نام 
+      </h2>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th><i class="fas fa-hashtag"></i> ردیف</th>
+              <th><i class="fas fa-user"></i> نام و نام خانوادگی دانش‌آموز</th>
+              <th><i class="fas fa-phone"></i> شماره تماس اولیا</th>
+              <th><i class="fas fa-cogs"></i> عملیات</th>
+            </tr>
+          </thead>
+          <tbody id="registrationsTable">
+            <!-- جدول به صورت خودکار از آرایه پر می‌شود -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>طراحی و توسعه داده‌شده توسط <strong>سپهر قاسمی</strong> و <strong>ماهان جهاندیده</strong></p>
+    <p>تمامی حقوق این وبسایت محفوظ است.</p>
+  </footer>
+
+  <script>
+    // 🔐 اطلاعات ورود
+    const ADMIN_USER = "admin";
+    const ADMIN_PASS = "mvmblumvmblu";
+    // 📋 50 دانش‌آموز با اطلاعات کامل
+    let studentRegistrations = [
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: "  ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" },      { name: " ", phone: "" },
+      { name: " ", phone: "" },
+      { name: " ", phone: "" }
+    ];
+
+    let isLoggedIn = false;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Animate back link
+      setTimeout(() => {
+        document.querySelector('.back-link').classList.add('visible');
+      }, 200);
+      
+      // Animate glass cards
+      setTimeout(() => {
+        document.querySelectorAll('.glass-card').forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add('visible');
+          }, 400 + (index * 200));
+        });
+      }, 400);
+      
+      // Animate footer
+      setTimeout(() => {
+        document.querySelector('footer').classList.add('visible');
+      }, 1200);
+      
+      // Scroll progress indicator
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+        document.getElementById('scroll-progress').style.width = `${scrolled}%`;
+      });
+      
+      // Add floating animation to orbs
+      document.querySelectorAll('.floating-orb').forEach((orb, index) => {
+        const duration = 25 + Math.random() * 15;
+        const delay = Math.random() * 10;
+        orb.style.animationDuration = `${duration}s`;
+        orb.style.animationDelay = `${-delay}s`;
+      });
+      
+      // Parallax effect on page
+      document.addEventListener('mousemove', (e) => {
+        if (window.innerWidth > 768) {
+          const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+          const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+          document.body.style.backgroundPosition = `${50 + xAxis}% ${50 + yAxis}%`;        }
+      });
+    });
+
+    function login() {
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value;
+      const errorEl = document.getElementById('loginError');
+
+      if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        isLoggedIn = true;
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        setTimeout(() => {
+          document.getElementById('dashboard').classList.add('visible');
+        }, 100);
+        renderRegistrations();
+      } else {
+        errorEl.textContent = "❌ نام کاربری یا رمز عبور اشتباه است.";
+        setTimeout(() => {
+          errorEl.textContent = "";
+        }, 3000);
+      }
+    }
+
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      if (id) document.getElementById(id).classList.add('active');
+    }
+
+    function renderRegistrations() {
+      const tbody = document.getElementById('registrationsTable');
+      tbody.innerHTML = '';
+
+      studentRegistrations.forEach((reg, i) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${i + 1}</td>
+          <td>${reg.name || 'ثبت نشده'}</td>
+          <td>${reg.phone || 'ثبت نشده'}</td>
+          <td><button class="cancel-btn" onclick="cancelRegistration(${i})"><i class="fas fa-times"></i> لغو</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function cancelRegistration(index) {
+      if (confirm("آیا مطمئنید می‌خواهید این درخواست را لغو کنید؟")) {
+        studentRegistrations[index] = { name: "", phone: "" };
+        renderRegistrations();      }
+    }
+
+    // ارسال اطلاعیه
+    document.getElementById('newsForm')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(res => {
+        if (res.ok) {
+          document.getElementById('newsSuccess').style.display = 'block';
+          this.reset();
+          setTimeout(() => document.getElementById('newsSuccess').style.display = 'none', 5000);
+        } else {
+          alert('خطا در ارسال!');
+        }
+      })
+      .catch(() => alert('خطای ارتباطی!'));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>دانش‌آموز | کلاس خصوصی</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --red: #b31b1b;
+      --gold: #d4af37;
+      --blue: #1a237e;
+      --primary: #4CAF50;
+      --secondary: #2196F3;
+      --accent: #FF9800;
+      --purple: #9C27B0;
+      --live-red: #ff3a4e;
+      --glass-light: rgba(255, 255, 255, 0.22);
+      --glass-dark: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.28);
+      --border-strong: rgba(255, 255, 255, 0.42);
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      --shadow-hover: 0 18px 50px rgba(0, 0, 0, 0.75);
+      --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+      line-height: 1.6;
+      background-attachment: fixed;
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ========== GLASS SHADER EFFECT ========== */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
+        radial-gradient(circle at 30% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+        radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
+      z-index: -3;
+      opacity: 0.85;
+    }
+
+    /* ========== FLOATING ORBS ========== */
+    .floating-orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      z-index: -1;
+      animation: floatOrb 25s infinite linear;
+      opacity: 0.6;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      25% { transform: translateY(-60px) translateX(40px) rotate(90deg); opacity: 0.3; }
+      50% { transform: translateY(-120px) translateX(0) rotate(180deg); opacity: 0.1; }
+      75% { transform: translateY(-60px) translateX(-40px) rotate(270deg); opacity: 0.3; }
+      100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.6; }
+    }
+
+    /* ========== SCROLL PROGRESS ========== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--live-red), var(--accent), var(--purple), var(--secondary), var(--primary), var(--gold));
+      z-index: 10000;
+      width: 0%;      box-shadow: 0 0 15px rgba(255, 60, 78, 0.9), 0 0 25px rgba(255, 152, 0, 0.8);
+      transition: width 0.12s ease;
+    }
+
+    /* ========== BACK LINK ========== */
+    .back-link {
+      position: absolute;
+      top: 1.8rem;
+      left: 1.8rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.15rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: 30px;
+      background: var(--glass-dark);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      transform: translateX(-50px);
+      opacity: 0;
+      z-index: 10;
+    }
+
+    .back-link.visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .back-link:hover {
+      transform: translateX(5px);
+      background: rgba(212, 175, 55, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .back-link i {
+      margin-left: 8px;
+    }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }    }
+
+    @keyframes fadeOutDown {
+      from {
+        opacity: 1;
+        transform: scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+    }
+
+    /* ========== PANEL ========== */
+    .panel {
+      background: var(--glass-dark);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 2px solid var(--border-strong);
+      border-radius: 35px;
+      padding: 3rem;
+      max-width: 580px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+      z-index: 2;
+    }
+
+    .panel.fade-out {
+      animation: fadeOutDown 0.6s ease-in forwards;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .panel.hidden {
+      display: none;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      bottom: -3px;      left: -3px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 38px;
+      animation: rotateGradient 12s linear infinite;
+      opacity: 0.85;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: 35px;
+      z-index: -1;
+    }
+
+    .panel:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-strong);
+    }
+
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ========== HEADER ========== */
+    h2 {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      font-weight: 800;
+      font-size: 2.6rem;
+      position: relative;
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    h2::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      right: 50%;      transform: translateX(50%);
+      width: 70%;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--gold);
+    }
+
+    h2 i {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--secondary), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      display: block;
+      animation: floatIcon 3s infinite ease-in-out;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ========== FORMS ========== */
+    .form-group {
+      margin-bottom: 1.8rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--gold);
+      position: relative;
+      padding-bottom: 5px;
+    }
+
+    label::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 1px;
+    }
+    input, select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      font-size: 1.05rem;
+      direction: ltr;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+      transform: scale(1.01);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn {
+      width: 100%;
+      padding: 1.2rem;
+      background: var(--glass-light);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: white;
+      border: 2px solid var(--border-strong);
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;      left: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      animation: rotateGradient 8s linear infinite;
+      opacity: 0.85;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .session-btn {
+      background: rgba(212, 175, 55, 0.25);
+      color: white;
+      margin-top: 1.8rem;
+      width: auto;
+      padding: 1.1rem 2.5rem;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.45);
+      border: 2px solid var(--border-strong);
+      cursor: pointer;
+      font-size: 1.2rem;
+      border-radius: 50px;
+    }
+
+    .session-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+      background: rgba(212, 175, 55, 0.35);
+    }
+
+    /* ========== ERROR MESSAGE ========== */
+    .error {
+      color: var(--live-red);
+      font-size: 1rem;
+      margin-top: 0.8rem;
+      display: none;
+      font-weight: 500;
+      padding: 0.8rem;
+      background: rgba(255, 60, 78, 0.1);
+      border-radius: 12px;
+      border-left: 4px solid var(--live-red);
+      animation: shakeError 0.5s;
+    }
+
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }      75% { transform: translateX(5px); }
+    }
+
+    /* ========== SEARCHING PANEL ========== */
+    .searching {
+      background: var(--glass-dark);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 2px solid var(--border-strong);
+      border-radius: 35px;
+      padding: 3rem;
+      max-width: 580px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      animation: fadeInUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+      z-index: 2;
+      display: none;
+    }
+
+    .searching::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+      z-index: -1;
+      border-radius: 38px;
+      animation: rotateGradient 12s linear infinite;
+      opacity: 0.85;
+    }
+
+    .searching::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: 35px;
+      z-index: -1;
+    }
+    /* Magnifier animation */
+    .magnifier {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 2.5rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .magnifier-glass {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border: 6px solid var(--gold);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.4), 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .magnifier-glass::before {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: var(--gold);
+      border-radius: 50%;
+      top: 20%;
+      left: 20%;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.5);
+    }
+
+    .magnifier-handle {
+      position: absolute;
+      width: 35px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 4px;
+      bottom: -12px;
+      right: -12px;
+      transform: rotate(45deg);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3), 0 0 10px rgba(212, 175, 55, 0.4);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }      50% { transform: translateY(-15px) rotate(3deg); }
+    }
+
+    .searching h3 {
+      font-size: 2.2rem;
+      color: white;
+      margin-bottom: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .searching p {
+      color: rgba(255,255,255,0.92);
+      line-height: 1.8;
+      font-size: 1.15rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ========== NO TICKET ========== */
+    .no-ticket {
+      margin-top: 2.5rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+
+    .no-ticket p {
+      font-size: 1.15rem;
+      margin-bottom: 1rem;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .no-ticket a {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: rgba(212, 175, 55, 0.25);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 700;
+      transition: var(--transition);
+      border: 2px solid var(--border-strong);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);    }
+
+    .no-ticket a::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      animation: rotateGradient 8s linear infinite;
+      opacity: 0.85;
+    }
+
+    .no-ticket a:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: var(--shadow-hover);
+      background: rgba(212, 175, 55, 0.35);
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem 0.8rem;
+      }
+
+      .back-link {
+        top: 1.2rem;
+        left: 1.2rem;
+        font-size: 1rem;
+        padding: 0.5rem 1.2rem;
+      }
+
+      .panel,
+      .searching {
+        padding: 2rem;
+        border-radius: 28px;
+      }
+
+      .panel::before,
+      .searching::before {
+        border-radius: 31px;
+      }
+
+      .panel::after,
+      .searching::after {
+        border-radius: 28px;
+      }
+      h2 {
+        font-size: 2.1rem;
+      }
+
+      h2 i {
+        font-size: 2.8rem;
+      }
+
+      label {
+        font-size: 1.05rem;
+      }
+
+      input, select {
+        padding: 0.9rem;
+        font-size: 1rem;
+      }
+
+      .btn {
+        padding: 1rem;
+        font-size: 1.1rem;
+        margin-top: 1.2rem;
+      }
+
+      .session-btn {
+        padding: 0.9rem 2rem;
+        font-size: 1.1rem;
+        margin-top: 1.5rem;
+      }
+
+      .magnifier {
+        width: 80px;
+        height: 80px;
+      }
+
+      .magnifier-glass {
+        width: 55px;
+        height: 55px;
+      }
+
+      .searching h3 {
+        font-size: 1.8rem;
+      }
+
+      .searching p {
+        font-size: 1.05rem;
+        line-height: 1.7;
+      }
+
+      .no-ticket p {        font-size: 1.05rem;
+      }
+
+      .no-ticket a {
+        padding: 0.9rem 2rem;
+        font-size: 1.05rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem 0.5rem;
+      }
+
+      .back-link {
+        top: 1rem;
+        left: 1rem;
+        font-size: 0.95rem;
+        padding: 0.4rem 1rem;
+      }
+
+      .panel,
+      .searching {
+        padding: 1.8rem;
+        border-radius: 24px;
+        margin: 0 10px;
+      }
+
+      .panel::before,
+      .searching::before {
+        border-radius: 27px;
+      }
+
+      .panel::after,
+      .searching::after {
+        border-radius: 24px;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      h2::after {
+        width: 65%;
+        height: 4px;
+      }
+
+      h2 i {
+        font-size: 2.4rem;
+        margin-bottom: 0.8rem;      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      label {
+        font-size: 1rem;
+        margin-bottom: 0.6rem;
+      }
+
+      label::after {
+        width: 35px;
+        height: 2px;
+      }
+
+      input, select {
+        padding: 0.85rem;
+        font-size: 0.95rem;
+        border-radius: 14px;
+      }
+
+      .btn {
+        padding: 0.9rem;
+        font-size: 1rem;
+        margin-top: 1rem;
+        border-radius: 45px;
+      }
+
+      .btn::before {
+        border-radius: 48px;
+      }
+
+      .session-btn {
+        padding: 0.8rem 1.8rem;
+        font-size: 1rem;
+        margin-top: 1.3rem;
+        border-radius: 45px;
+      }
+
+      .magnifier {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 2rem;
+      }
+
+      .magnifier-glass {
+        width: 50px;
+        height: 50px;
+      }
+      .searching h3 {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .searching p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.8rem;
+      }
+
+      .no-ticket {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+      }
+
+      .no-ticket p {
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .no-ticket a {
+        padding: 0.8rem 1.8rem;
+        font-size: 1rem;
+        border-radius: 45px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating decorative orbs -->
+  <div class="floating-orb" style="width: 200px; height: 200px; top: 15%; left: 8%; animation-delay: 0s;"></div>
+  <div class="floating-orb" style="width: 160px; height: 160px; top: 65%; left: 92%; animation-delay: -7s;"></div>
+  <div class="floating-orb" style="width: 120px; height: 120px; top: 80%; left: 12%; animation-delay: -15s;"></div>
+  <div class="floating-orb" style="width: 180px; height: 180px; top: 45%; left: 85%; animation-delay: -10s;"></div>
+  
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <a href="private-classes.html" class="back-link">
+    <i class="fas fa-arrow-right"></i> بازگشت
+  </a>
+
+  <!-- مرحله 1: وارد کردن شماره بلیط -->
+  <div id="ticketStep" class="panel active">
+    <h2>
+      <i class="fas fa-ticket-alt"></i>
+      شماره بلیط خصوصی خود را وارد کنید    </h2>
+    <div class="form-group">
+      <label for="ticket"><i class="fas fa-barcode"></i> شماره بلیط (9 رقمی)</label>
+      <input type="text" id="ticket" maxlength="9" placeholder="مثال: 123456789">
+      <div id="ticketError" class="error">شماره بلیط نامعتبر است.</div>
+    </div>
+    <button class="btn" onclick="checkTicket()">
+      <i class="fas fa-arrow-left"></i> ادامه
+    </button>
+
+    <div class="no-ticket">
+      <p><i class="fas fa-info-circle"></i> آیا بلیط ندارید؟</p>
+      <a href="https://dabirestansch.mydigify.app/product/2608101" target="_blank">
+        <i class="fas fa-shopping-cart"></i> بلیط خریداری کنید
+      </a>
+    </div>
+  </div>
+
+  <!-- مرحله 2: فرم ثبت درخواست -->
+  <form id="requestForm" class="panel hidden" action="https://formspree.io/f/xdakrvna" method="POST">
+    <h2>
+      <i class="fas fa-file-alt"></i>
+      درخواست کلاس خصوصی
+    </h2>
+    <div class="form-group">
+      <label for="name"><i class="fas fa-user"></i> نام و نام خانوادگی</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+      <label for="phone"><i class="fas fa-mobile-alt"></i> شماره موبایل</label>
+      <input type="tel" id="phone" name="phone number" required>
+    </div>
+    <div class="form-group">
+      <label for="ticketNum"><i class="fas fa-ticket-alt"></i> شماره بلیط</label>
+      <input type="text" id="ticketNum" name="ticket number" required>
+    </div>
+    <div class="form-group">
+      <label for="subject"><i class="fas fa-book"></i> درس</label>
+      <select id="subject" name="subject" required>
+        <option value="">انتخاب کنید</option>
+        <option value="ریاضی">ریاضی</option>
+        <option value="علوم">علوم</option>
+        <option value="عربی">عربی</option>
+        <option value="قرآن">قرآن</option>
+        <option value="زبان انگلیسی">زبان انگلیسی</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="topic"><i class="fas fa-sticky-note"></i> مبحث درس</label>
+      <input type="text" id="topic" name="topic" placeholder="مثال: معادله خط" required>    </div>
+    <input type="hidden" name="ticket" id="hiddenTicket">
+    <button class="btn" type="submit">
+      <i class="fas fa-paper-plane"></i> ارسال درخواست
+    </button>
+  </form>
+
+  <!-- مرحله 3: در حال جستجو -->
+  <div id="searching" class="searching">
+    <div class="magnifier">
+      <div class="magnifier-glass"></div>
+      <div class="magnifier-handle"></div>
+    </div>
+    <h3><i class="fas fa-chalkboard-teacher"></i> کلاس خصوصی شما ایجاد شد</h3>
+    <p>از دکمه زیر وارد کلاس خصوصی خود شوید و منتظر معلم باشید. پس از ورود معلم زمان شما آغاز خواهد شد. توجه: در تمام طول کلاس خصوصی همکاران ما کلاس را رصد می‌کنند و در صورت تجربه ناخوشایند شما مبلغ عودت داده می‌شود. زمان انتظار شما در کلاس 1 ساعت است. در صورت نیافتن معلم مبلغ عودت داده خواهد شد.</p>
+    <button id="gotSmsBtn" class="session-btn">
+      <i class="fas fa-door-open"></i> ورود به کلاس
+    </button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Animate back link
+      setTimeout(() => {
+        document.querySelector('.back-link').classList.add('visible');
+      }, 200);
+      
+      // Scroll progress indicator
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+        document.getElementById('scroll-progress').style.width = `${scrolled}%`;
+      });
+      
+      // Add floating animation to orbs
+      document.querySelectorAll('.floating-orb').forEach((orb, index) => {
+        const duration = 25 + Math.random() * 15;
+        const delay = Math.random() * 10;
+        orb.style.animationDuration = `${duration}s`;
+        orb.style.animationDelay = `${-delay}s`;
+      });
+      
+      // Parallax effect on page
+      document.addEventListener('mousemove', (e) => {
+        if (window.innerWidth > 768) {
+          const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+          const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+          document.body.style.backgroundPosition = `${50 + xAxis}% ${50 + yAxis}%`;        }
+      });
+    });
+
+    // 🔗 هر بلیط = یک لینک اختصاصی
+    const ticketToSessionLink = {
+      "102345678": "https://meet.google.com/gmw-ujzm-hdv",
+      "203456789": "https://meet.dabirestansch.ir/s/203456789",
+      "304567890": "https://meet.dabirestansch.ir/s/304567890",
+      "405678901": "https://meet.dabirestansch.ir/s/405678901",
+      "506789012": "https://meet.dabirestansch.ir/s/506789012",
+      "607890123": "https://meet.dabirestansch.ir/s/607890123",
+      "708901234": "https://meet.dabirestansch.ir/s/708901234",
+      "809012345": "https://meet.dabirestansch.ir/s/809012345",
+      "910123456": "https://meet.dabirestansch.ir/s/910123456",
+      "111234567": "https://meet.dabirestansch.ir/s/111234567",
+      "212345678": "https://meet.dabirestansch.ir/s/212345678",
+      "313456789": "https://meet.dabirestansch.ir/s/313456789",
+      "414567890": "https://meet.dabirestansch.ir/s/414567890",
+      "515678901": "https://meet.dabirestansch.ir/s/515678901",
+      "616789012": "https://meet.dabirestansch.ir/s/616789012",
+      "717890123": "https://meet.dabirestansch.ir/s/717890123",
+      "818901234": "https://meet.dabirestansch.ir/s/818901234",
+      "919012345": "https://meet.dabirestansch.ir/s/919012345",
+      "120123456": "https://meet.dabirestansch.ir/s/120123456",
+      "221234567": "https://meet.dabirestansch.ir/s/221234567",
+      "322345678": "https://meet.dabirestansch.ir/s/322345678",
+      "423456789": "https://meet.dabirestansch.ir/s/423456789",
+      "524567890": "https://meet.dabirestansch.ir/s/524567890",
+      "625678901": "https://meet.dabirestansch.ir/s/625678901",
+      "726789012": "https://meet.dabirestansch.ir/s/726789012",
+      "827890123": "https://meet.dabirestansch.ir/s/827890123",
+      "928901234": "https://meet.dabirestansch.ir/s/928901234",
+      "129012345": "https://meet.dabirestansch.ir/s/129012345",
+      "230123456": "https://meet.dabirestansch.ir/s/230123456",
+      "331234567": "https://meet.dabirestansch.ir/s/331234567",
+      "432345678": "https://meet.dabirestansch.ir/s/432345678",
+      "533456789": "https://meet.dabirestansch.ir/s/533456789",
+      "634567890": "https://meet.dabirestansch.ir/s/634567890",
+      "735678901": "https://meet.dabirestansch.ir/s/735678901",
+      "836789012": "https://meet.dabirestansch.ir/s/836789012",
+      "937890123": "https://meet.dabirestansch.ir/s/937890123",
+      "138901234": "https://meet.dabirestansch.ir/s/138901234",
+      "239012345": "https://meet.dabirestansch.ir/s/239012345",
+      "340123456": "https://meet.dabirestansch.ir/s/340123456",
+      "441234567": "https://meet.dabirestansch.ir/s/441234567",
+      "542345678": "https://meet.dabirestansch.ir/s/542345678",
+      "643456789": "https://meet.dabirestansch.ir/s/643456789",
+      "744567890": "https://meet.dabirestansch.ir/s/744567890",
+      "845678901": "https://meet.dabirestansch.ir/s/845678901",      "946789012": "https://meet.dabirestansch.ir/s/946789012",
+      "147890123": "https://meet.dabirestansch.ir/s/147890123",
+      "248901234": "https://meet.dabirestansch.ir/s/248901234",
+      "349012345": "https://meet.dabirestansch.ir/s/349012345",
+      "450123456": "https://meet.dabirestansch.ir/s/450123456",
+      "551234567": "https://meet.dabirestansch.ir/s/551234567",
+      "652345678": "https://meet.dabirestansch.ir/s/652345678",
+      "753456789": "https://meet.dabirestansch.ir/s/753456789",
+      "854567890": "https://meet.dabirestansch.ir/s/854567890",
+      "955678901": "https://meet.dabirestansch.ir/s/955678901",
+      "156789012": "https://meet.dabirestansch.ir/s/156789012",
+      "257890123": "https://meet.dabirestansch.ir/s/257890123",
+      "358901234": "https://meet.dabirestansch.ir/s/358901234",
+      "459012345": "https://meet.dabirestansch.ir/s/459012345",
+      "560123456": "https://meet.dabirestansch.ir/s/560123456",
+      "661234567": "https://meet.dabirestansch.ir/s/661234567",
+      "762345678": "https://meet.dabirestansch.ir/s/762345678",
+      "863456789": "https://meet.dabirestansch.ir/s/863456789",
+      "964567890": "https://meet.dabirestansch.ir/s/964567890",
+      "165678901": "https://meet.dabirestansch.ir/s/165678901",
+      "266789012": "https://meet.dabirestansch.ir/s/266789012",
+      "367890123": "https://meet.dabirestansch.ir/s/367890123",
+      "468901234": "https://meet.dabirestansch.ir/s/468901234",
+      "569012345": "https://meet.dabirestansch.ir/s/569012345",
+      "670123456": "https://meet.dabirestansch.ir/s/670123456",
+      "771234567": "https://meet.dabirestansch.ir/s/771234567",
+      "872345678": "https://meet.dabirestansch.ir/s/872345678",
+      "973456789": "https://meet.dabirestansch.ir/s/973456789",
+      "174567890": "https://meet.dabirestansch.ir/s/174567890",
+      "275678901": "https://meet.dabirestansch.ir/s/275678901",
+      "376789012": "https://meet.dabirestansch.ir/s/376789012",
+      "477890123": "https://meet.dabirestansch.ir/s/477890123",
+      "578901234": "https://meet.dabirestansch.ir/s/578901234",
+      "679012345": "https://meet.dabirestansch.ir/s/679012345",
+      "780123456": "https://meet.dabirestansch.ir/s/780123456",
+      "881234567": "https://meet.dabirestansch.ir/s/881234567",
+      "982345678": "https://meet.dabirestansch.ir/s/982345678",
+      "183456789": "https://meet.dabirestansch.ir/s/183456789",
+      "284567890": "https://meet.dabirestansch.ir/s/284567890",
+      "385678901": "https://meet.dabirestansch.ir/s/385678901",
+      "486789012": "https://meet.dabirestansch.ir/s/486789012",
+      "587890123": "https://meet.dabirestansch.ir/s/587890123",
+      "688901234": "https://meet.dabirestansch.ir/s/688901234",
+      "789012345": "https://meet.dabirestansch.ir/s/789012345",
+      "890123456": "https://meet.dabirestansch.ir/s/890123456",
+      "991234567": "https://meet.dabirestansch.ir/s/991234567"
+    };
+
+    const validTickets = Object.keys(ticketToSessionLink);
+    function checkTicket() {
+      const input = document.getElementById('ticket').value.trim();
+      const error = document.getElementById('ticketError');
+      
+      if (input.length !== 9 || !validTickets.includes(input)) {
+        error.style.display = 'block';
+        setTimeout(() => error.style.display = 'none', 3000);
+        return;
+      }
+
+      const ticketPanel = document.getElementById('ticketStep');
+      ticketPanel.classList.add('fade-out');
+      setTimeout(() => {
+        ticketPanel.classList.remove('active');
+        ticketPanel.classList.add('hidden');
+        const formPanel = document.getElementById('requestForm');
+        formPanel.classList.remove('hidden');
+        formPanel.classList.add('active');
+        document.getElementById('hiddenTicket').value = input;
+        document.getElementById('ticketNum').value = input;
+      }, 600);
+    }
+
+    document.getElementById('requestForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const ticket = document.getElementById('hiddenTicket').value;
+      // ذخیره بلیط در localStorage برای مرحلهٔ بعد
+      localStorage.setItem('userTicket', ticket);
+
+      const formPanel = document.getElementById('requestForm');
+      formPanel.classList.add('fade-out');
+      setTimeout(() => {
+        formPanel.classList.remove('active');
+        formPanel.classList.add('hidden');
+        const searchingPanel = document.getElementById('searching');
+        searchingPanel.style.display = 'block';
+        setTimeout(() => {
+          searchingPanel.style.opacity = '1';
+          searchingPanel.style.transform = 'translateY(0) scale(1)';
+        }, 100);
+
+        // تنظیم رویداد دکمهٔ پیامک
+        const gotSmsBtn = document.getElementById('gotSmsBtn');
+        gotSmsBtn.onclick = function() {
+          const link = ticketToSessionLink[ticket];
+          if (link) {
+            window.open(link, '_blank');
+          } else {
+            alert('لینک جلسه برای این بلیط موجود نیست.');          }
+        };
+      }, 600);
+    });
+  </script>
+</body>
+</html

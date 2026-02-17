@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>مدیریت غیبت | دبیرستان امام خامنه‌ای</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --red: #b31b1b;
+      --gold: #d4af37;
+      --blue: #1a237e;
+      --primary: #4CAF50;
+      --secondary: #2196F3;
+      --accent: #FF9800;
+      --purple: #9C27B0;
+      --live-red: #ff3a4e;
+      --glass-light: rgba(255, 255, 255, 0.22);
+      --glass-dark: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.28);
+      --border-strong: rgba(255, 255, 255, 0.42);
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      --shadow-hover: 0 18px 50px rgba(0, 0, 0, 0.75);
+      --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+      color: white;
+      line-height: 1.6;
+      background-attachment: fixed;
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      position: relative;
+      overflow-x: hidden;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ========== GLASS SHADER EFFECT ========== */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
+        radial-gradient(circle at 30% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+        radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
+      z-index: -3;
+      opacity: 0.85;
+    }
+
+    /* ========== FLOATING ORBS ========== */
+    .floating-orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      z-index: -1;
+      animation: floatOrb 25s infinite linear;
+      opacity: 0.6;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      25% { transform: translateY(-60px) translateX(40px) rotate(90deg); opacity: 0.3; }
+      50% { transform: translateY(-120px) translateX(0) rotate(180deg); opacity: 0.1; }
+      75% { transform: translateY(-60px) translateX(-40px) rotate(270deg); opacity: 0.3; }
+      100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.6; }
+    }
+
+    /* ========== SCROLL PROGRESS ========== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--live-red), var(--accent), var(--purple), var(--secondary), var(--primary), var(--gold));
+      z-index: 10000;      width: 0%;
+      box-shadow: 0 0 15px rgba(255, 60, 78, 0.9), 0 0 25px rgba(255, 152, 0, 0.8);
+      transition: width 0.12s ease;
+    }
+
+    /* ========== BACK LINK ========== */
+    .back-link {
+      position: absolute;
+      top: 1.8rem;
+      left: 1.8rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      background: var(--glass-dark);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      transform: translateX(-50px);
+      opacity: 0;
+      z-index: 10;
+    }
+
+    .back-link.visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .back-link:hover {
+      transform: translateX(5px);
+      background: rgba(212, 175, 55, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .back-link i {
+      margin-left: 8px;
+    }
+
+    /* ========== GLASS CARD ========== */
+    .glass-card {
+      background: var(--glass-dark);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 2px solid var(--border-strong);
+      border-radius: 35px;
+      padding: 3rem;
+      max-width: 750px;      width: 100%;
+      box-shadow: var(--shadow);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .glass-card.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 38px;
+      animation: rotateGradient 12s linear infinite;
+      opacity: 0.85;
+    }
+
+    .glass-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: 35px;
+      z-index: -1;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-strong);
+    }
+
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }    }
+
+    .hidden { display: none; }
+
+    /* ========== HEADER ========== */
+    h2 {
+      font-size: 2.8rem;
+      margin-bottom: 2.5rem;
+      font-weight: 800;
+      position: relative;
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    h2::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      right: 50%;
+      transform: translateX(50%);
+      width: 70%;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--gold);
+    }
+
+    h2 i {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--secondary), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      display: block;
+      animation: floatIcon 3s infinite ease-in-out;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn-option {
+      display: block;      width: 100%;
+      padding: 1.3rem;
+      margin: 1.1rem 0;
+      background: var(--glass-light);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: white;
+      border: 2px solid var(--border-strong);
+      border-radius: 50px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      text-align: center;
+    }
+
+    .btn-option::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      animation: rotateGradient 8s linear infinite;
+      opacity: 0.85;
+    }
+
+    .btn-option:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn-option i {
+      margin-left: 10px;
+      font-size: 1.3rem;
+    }
+
+    /* ========== CLASSES GRID ========== */
+    .classes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 1.2rem;
+      margin-top: 2rem;
+    }
+    .class-btn {
+      padding: 1rem 0.7rem;
+      background: var(--glass-light);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .class-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      z-index: 1;
+      animation: shineClass 3s infinite;
+      opacity: 0;
+    }
+
+    @keyframes shineClass {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    .class-btn:hover::before {
+      opacity: 1;
+    }
+
+    .class-btn:hover {
+      background: rgba(212, 175, 55, 0.3);
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+      border-color: var(--border-strong);
+    }
+
+    /* ========== FORMS ========== */
+    .form-group {
+      margin-bottom: 1.8rem;
+      text-align: right;    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--gold);
+      position: relative;
+      padding-bottom: 5px;
+    }
+
+    .form-group label::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 1px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      color: white;
+      font-size: 1.05rem;
+      direction: ltr;
+      text-align: left;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+      transform: scale(1.01);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-group textarea {
+      resize: vertical;      min-height: 100px;
+      line-height: 1.6;
+      direction: rtl;
+      text-align: right;
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn-submit {
+      width: 100%;
+      padding: 1.2rem;
+      background: var(--glass-light);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: white;
+      border: 2px solid var(--border-strong);
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+
+    .btn-submit::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      animation: rotateGradient 8s linear infinite;
+      opacity: 0.85;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .logout-btn {
+      background: rgba(244, 67, 54, 0.25);
+      color: white;
+      margin-top: 1.8rem;
+    }
+    .logout-btn::before {
+      background: linear-gradient(45deg, var(--live-red), var(--accent), var(--purple), var(--live-red));
+    }
+
+    /* ========== ABSENT LIST ========== */
+    .absent-list {
+      text-align: right;
+      margin-top: 2rem;
+      background: rgba(0,0,0,0.25);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 1.8rem;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+    }
+
+    #selectedClassTitle {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--gold);
+      font-weight: 700;
+      text-align: center;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    #selectedClassTitle::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 50%;
+      transform: translateX(50%);
+      width: 50%;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--gold);
+    }
+
+    .absent-item {
+      background: rgba(0,0,0,0.2);
+      padding: 1rem;
+      margin: 0.7rem 0;
+      border-radius: 16px;
+      font-size: 1.15rem;
+      border-left: 3px solid var(--gold);
+      position: relative;
+      overflow: hidden;
+    }
+    .absent-item::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+      z-index: 1;
+      animation: shineAbsent 4s infinite;
+    }
+
+    @keyframes shineAbsent {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    /* ========== SUCCESS MESSAGE ========== */
+    .success-msg {
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(76, 175, 80, 0.15);
+      border: 2px solid rgba(76, 175, 80, 0.4);
+      border-radius: 20px;
+      margin-top: 1.8rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #4CAF50;
+      display: none;
+      animation: fadeIn 0.6s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .success-msg::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      z-index: 1;
+      animation: shineSuccess 3s infinite;
+    }
+
+    @keyframes shineSuccess {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem 0.8rem;
+      }
+
+      .back-link {
+        top: 1.2rem;
+        left: 1.2rem;
+        font-size: 1.1rem;
+        padding: 0.5rem 1.2rem;
+      }
+
+      .glass-card {
+        padding: 2rem;
+        border-radius: 28px;
+      }
+
+      .glass-card::before {
+        border-radius: 31px;
+      }
+
+      .glass-card::after {
+        border-radius: 28px;
+      }
+
+      h2 {
+        font-size: 2.2rem;
+      }
+
+      h2 i {
+        font-size: 2.8rem;
+      }
+
+      .btn-option {
+        padding: 1.1rem;
+        font-size: 1.15rem;
+        margin: 0.9rem 0;
+      }
+
+      .classes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 1rem;      }
+
+      .class-btn {
+        padding: 0.9rem 0.6rem;
+        font-size: 1rem;
+        border-radius: 18px;
+      }
+
+      .form-group label {
+        font-size: 1.05rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.9rem;
+        font-size: 1rem;
+      }
+
+      .btn-submit {
+        padding: 1rem;
+        font-size: 1.1rem;
+        margin-top: 1.2rem;
+      }
+
+      .logout-btn {
+        margin-top: 1.5rem;
+      }
+
+      .absent-list {
+        padding: 1.5rem;
+      }
+
+      #selectedClassTitle {
+        font-size: 1.6rem;
+      }
+
+      .absent-item {
+        padding: 0.9rem;
+        font-size: 1.05rem;
+      }
+
+      .success-msg {
+        padding: 1.3rem;
+        font-size: 1.15rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem 0.5rem;      }
+
+      .back-link {
+        top: 1rem;
+        left: 1rem;
+        font-size: 1rem;
+        padding: 0.4rem 1rem;
+      }
+
+      .glass-card {
+        padding: 1.8rem;
+        border-radius: 24px;
+        margin: 0 10px;
+      }
+
+      .glass-card::before {
+        border-radius: 27px;
+      }
+
+      .glass-card::after {
+        border-radius: 24px;
+      }
+
+      h2 {
+        font-size: 1.9rem;
+      }
+
+      h2::after {
+        width: 65%;
+        height: 4px;
+      }
+
+      h2 i {
+        font-size: 2.4rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .btn-option {
+        padding: 1rem;
+        font-size: 1.05rem;
+        margin: 0.8rem 0;
+        border-radius: 45px;
+      }
+
+      .btn-option::before {
+        border-radius: 48px;
+      }
+
+      .classes-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));        gap: 0.9rem;
+      }
+
+      .class-btn {
+        padding: 0.85rem 0.5rem;
+        font-size: 0.95rem;
+        border-radius: 16px;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        font-size: 1rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .form-group label::after {
+        width: 35px;
+        height: 2px;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.85rem;
+        font-size: 0.95rem;
+        border-radius: 14px;
+      }
+
+      .form-group textarea {
+        min-height: 90px;
+      }
+
+      .btn-submit {
+        padding: 0.9rem;
+        font-size: 1rem;
+        margin-top: 1rem;
+        border-radius: 45px;
+      }
+
+      .btn-submit::before {
+        border-radius: 48px;
+      }
+
+      .logout-btn {
+        margin-top: 1.3rem;
+      }
+
+      .absent-list {        padding: 1.3rem;
+        margin-top: 1.8rem;
+      }
+
+      #selectedClassTitle {
+        font-size: 1.5rem;
+        margin-bottom: 1.2rem;
+      }
+
+      #selectedClassTitle::after {
+        width: 45%;
+        height: 2.5px;
+      }
+
+      .absent-item {
+        padding: 0.8rem;
+        margin: 0.6rem 0;
+        font-size: 1rem;
+        border-radius: 14px;
+      }
+
+      .success-msg {
+        padding: 1.1rem;
+        font-size: 1rem;
+        margin-top: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating decorative orbs -->
+  <div class="floating-orb" style="width: 200px; height: 200px; top: 15%; left: 8%; animation-delay: 0s;"></div>
+  <div class="floating-orb" style="width: 160px; height: 160px; top: 65%; left: 92%; animation-delay: -7s;"></div>
+  <div class="floating-orb" style="width: 120px; height: 120px; top: 80%; left: 12%; animation-delay: -15s;"></div>
+  <div class="floating-orb" style="width: 180px; height: 180px; top: 45%; left: 85%; animation-delay: -10s;"></div>
+  
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <a href="index.html" class="back-link">
+    <i class="fas fa-arrow-right"></i> بازگشت
+  </a>
+
+  <!-- صفحه اصلی -->
+  <div id="mainPanel" class="glass-card">
+    <h2>
+      <i class="fas fa-user-times"></i>
+      مدیریت غیبت دانش‌آموزان
+    </h2>    <button class="btn-option" onclick="showSection('view')">
+      <i class="fas fa-eye"></i> 👁️ مشاهده غایبین
+    </button>
+    <button class="btn-option" onclick="showSection('justify')">
+      <i class="fas fa-file-signature"></i> 📝 توجیه غیبت
+    </button>
+  </div>
+
+  <!-- مشاهده غایبین -->
+  <div id="viewSection" class="glass-card hidden">
+    <h2>
+      <i class="fas fa-chalkboard"></i>
+      انتخاب کلاس
+    </h2>
+    <div class="classes-grid" id="classGrid"></div>
+    <div class="absent-list" id="absentList" style="display:none;">
+      <h3 id="selectedClassTitle"></h3>
+      <div id="absentItems"></div>
+    </div>
+    <button class="btn-submit logout-btn" onclick="backToMain()">
+      <i class="fas fa-arrow-right"></i> ← بازگشت
+    </button>
+  </div>
+
+  <!-- توجیه غیبت -->
+  <div id="justifySection" class="glass-card hidden">
+    <h2>
+      <i class="fas fa-clipboard-check"></i>
+      توجیه غیبت دانش‌آموز
+    </h2>
+    <form id="justifyForm">
+      <div class="form-group">
+        <label><i class="fas fa-user-tie"></i> نام و نام خانوادگی والدین یا سرپرست</label>
+        <input type="text" name="guardian_name" placeholder="مثال: علی رضایی" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-user-graduate"></i> نام و نام خانوادگی دانش‌آموز</label>
+        <input type="text" name="student_name" placeholder="مثال: محمد رضایی" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-chalkboard"></i> شماره کلاس</label>
+        <input type="text" name="class_number" placeholder="مثال: 9/3" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-id-card"></i> کد ملی دانش‌آموز</label>
+        <input type="text" name="national_id" placeholder="10 رقمی" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-calendar-day"></i> تاریخ غیبت</label>
+        <input type="text" name="absence_date" placeholder="مثال: 1404/10/15" required>      </div>
+      <div class="form-group">
+        <label><i class="fas fa-sticky-note"></i> علت غیبت</label>
+        <textarea name="reason" rows="3" placeholder="مثال: بیماری، مسائل خانوادگی و..."></textarea>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-file-medical"></i> لینک تصویر گواهی پزشکی (در صورت وجود)</label>
+        <input type="url" name="medical_certificate" placeholder="https://uploadkon.ir/uploads/...">
+      </div>
+      <button type="submit" class="btn-submit">
+        <i class="fas fa-paper-plane"></i> ارسال توجیه غیبت
+      </button>
+    </form>
+    <div class="success-msg" id="justifySuccess"></div>
+    <button class="btn-submit logout-btn" onclick="backToMain()">
+      <i class="fas fa-arrow-right"></i> ← بازگشت
+    </button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Animate back link
+      setTimeout(() => {
+        document.querySelector('.back-link').classList.add('visible');
+      }, 200);
+      
+      // Animate main card
+      setTimeout(() => {
+        document.querySelector('.glass-card').classList.add('visible');
+      }, 400);
+      
+      // Scroll progress indicator
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+        document.getElementById('scroll-progress').style.width = `${scrolled}%`;
+      });
+      
+      // Add floating animation to orbs
+      document.querySelectorAll('.floating-orb').forEach((orb, index) => {
+        const duration = 25 + Math.random() * 15;
+        const delay = Math.random() * 10;
+        orb.style.animationDuration = `${duration}s`;
+        orb.style.animationDelay = `${-delay}s`;
+      });
+      
+      // Parallax effect on page
+      document.addEventListener('mousemove', (e) => {        if (window.innerWidth > 768) {
+          const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+          const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+          document.body.style.backgroundPosition = `${50 + xAxis}% ${50 + yAxis}%`;
+        }
+      });
+      
+      // Initialize class grid
+      initClassGrid();
+    });
+
+    // 🔁 فقط یک فرم ساده — جای خودت فرم اسپری رو بذار
+    const JUSTIFY_FORM = "https://formspree.io/f/xjgkqzdk";
+
+    const classes = [
+      "7/1", "7/2", "7/3", "7/4", "7/5", "7/6",
+      "8/1", "8/2", "8/3", "8/4", "8/5", "8/6",
+      "9/1", "9/2", "9/3"
+    ];
+
+    // ایجاد دکمه‌های کلاس
+    function initClassGrid() {
+      const grid = document.getElementById("classGrid");
+      grid.innerHTML = '';
+      classes.forEach(cls => {
+        const btn = document.createElement("button");
+        btn.className = "class-btn";
+        btn.innerHTML = `<i class="fas fa-chalkboard"></i>${cls}`;
+        btn.onclick = () => showAbsentees(cls);
+        grid.appendChild(btn);
+      });
+    }
+
+    function showSection(section) {
+      document.getElementById("mainPanel").classList.add("hidden");
+      document.getElementById("mainPanel").classList.remove("visible");
+      
+      if (section === "view") {
+        document.getElementById("viewSection").classList.remove("hidden");
+        setTimeout(() => {
+          document.getElementById("viewSection").classList.add("visible");
+        }, 100);
+      } else if (section === "justify") {
+        document.getElementById("justifySection").classList.remove("hidden");
+        setTimeout(() => {
+          document.getElementById("justifySection").classList.add("visible");
+        }, 100);
+      }
+    }
+    function backToMain() {
+      document.getElementById("viewSection").classList.add("hidden");
+      document.getElementById("viewSection").classList.remove("visible");
+      document.getElementById("justifySection").classList.add("hidden");
+      document.getElementById("justifySection").classList.remove("visible");
+      
+      document.getElementById("mainPanel").classList.remove("hidden");
+      setTimeout(() => {
+        document.getElementById("mainPanel").classList.add("visible");
+      }, 100);
+      
+      document.getElementById("absentList").style.display = "none";
+    }
+
+    function showAbsentees(className) {
+      document.getElementById("selectedClassTitle").textContent = `غایبین کلاس ${className}`;
+      const itemsDiv = document.getElementById("absentItems");
+      itemsDiv.innerHTML = "";
+      
+      // Generate 20 empty slots
+      for (let i = 1; i <= 20; i++) {
+        const div = document.createElement("div");
+        div.className = "absent-item";
+        div.innerHTML = `<i class="fas fa-user"></i> ${i}. —`;
+        itemsDiv.appendChild(div);
+      }
+      
+      document.getElementById("absentList").style.display = "block";
+      
+      // Scroll to the list
+      document.getElementById("absentList").scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ارسال فرم
+    document.getElementById("justifyForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const msg = document.getElementById("justifySuccess");
+
+      fetch(JUSTIFY_FORM, {
+        method: "POST",
+        body: formData,
+        headers: { "Accept": "application/json" }
+      })
+      .then(response => {
+        if (response.ok) {
+          msg.innerHTML = "<i class='fas fa-check-circle' style='font-size: 2rem; margin-bottom: 0.5rem; display: block;'></i> با تشکر، بزودی با شما تماس خواهیم گرفت.";
+          msg.style.display = "block";
+          this.reset();
+                    // Hide message after 5 seconds
+          setTimeout(() => {
+            msg.style.display = "none";
+          }, 5000);
+        } else {
+          msg.innerHTML = "<i class='fas fa-exclamation-triangle' style='font-size: 2rem; margin-bottom: 0.5rem; display: block;'></i> ❌ خطا در ارسال. لطفاً دوباره تلاش کنید.";
+          msg.style.display = "block";
+        }
+      })
+      .catch(() => {
+        msg.innerHTML = "<i class='fas fa-exclamation-triangle' style='font-size: 2rem; margin-bottom: 0.5rem; display: block;'></i> ❌ خطا در اتصال به سرور.";
+        msg.style.display = "block";
+      });
+    });
+  </script>
+</body>
+</html>

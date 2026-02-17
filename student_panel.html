@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>پنل دانش‌آموز | دبیرستان امام خامنه‌ای</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    :root {
+      --red: #b31b1b;
+      --gold: #d4af37;
+      --blue: #1a237e;
+      --primary: #4CAF50;
+      --secondary: #2196F3;
+      --accent: #FF9800;
+      --purple: #9C27B0;
+      --live-red: #ff3a4e;
+      --glass-light: rgba(255, 255, 255, 0.22);
+      --glass-dark: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.28);
+      --border-strong: rgba(255, 255, 255, 0.42);
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      --shadow-hover: 0 18px 50px rgba(0, 0, 0, 0.75);
+      --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      color: white;
+      font-family: 'Vazirmatn', sans-serif;
+      min-height: 100vh;
+      padding: 3rem 1.5rem;
+      line-height: 1.6;
+      background-attachment: fixed;
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      position: relative;
+      overflow-x: hidden;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ========== GLASS SHADER EFFECT ========== */
+    body::before {
+      content: "";      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
+        radial-gradient(circle at 30% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+        radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
+      z-index: -3;
+      opacity: 0.85;
+    }
+
+    /* ========== FLOATING ORBS ========== */
+    .floating-orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      z-index: -1;
+      animation: floatOrb 25s infinite linear;
+      opacity: 0.6;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      25% { transform: translateY(-60px) translateX(40px) rotate(90deg); opacity: 0.3; }
+      50% { transform: translateY(-120px) translateX(0) rotate(180deg); opacity: 0.1; }
+      75% { transform: translateY(-60px) translateX(-40px) rotate(270deg); opacity: 0.3; }
+      100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.6; }
+    }
+
+    /* ========== SCROLL PROGRESS ========== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--live-red), var(--accent), var(--purple), var(--secondary), var(--primary), var(--gold));
+      z-index: 10000;
+      width: 0%;
+      box-shadow: 0 0 15px rgba(255, 60, 78, 0.9), 0 0 25px rgba(255, 152, 0, 0.8);
+      transition: width 0.12s ease;
+    }
+
+    /* ========== BACK LINK ========== */
+    .back-link {
+      display: inline-block;
+      color: var(--gold);      margin-bottom: 2.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1.2rem;
+      position: relative;
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      background: var(--glass-dark);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+
+    .back-link.visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .back-link:hover {
+      transform: translateX(5px);
+      background: rgba(212, 175, 55, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .back-link i {
+      margin-left: 8px;
+    }
+
+    /* ========== GLASS CARD ========== */
+    .glass-card {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--glass-dark);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 2px solid var(--border-strong);
+      border-radius: 35px;
+      padding: 3rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .glass-card.visible {      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 38px;
+      animation: rotateGradient 12s linear infinite;
+      opacity: 0.85;
+    }
+
+    .glass-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: 35px;
+      z-index: -1;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-strong);
+    }
+
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ========== CARD HEADER ========== */
+    .card-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .card-header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;      font-weight: 800;
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .card-header h1::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      right: 50%;
+      transform: translateX(50%);
+      width: 70%;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--gold);
+    }
+
+    .card-header p {
+      opacity: 0.9;
+      font-size: 1.15rem;
+      margin-top: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .card-header i {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--secondary), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      display: block;
+      animation: floatIcon 3s infinite ease-in-out;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ========== STEPS ========== */
+    .step {
+      text-align: center;
+      margin: 2rem 0 1.5rem;      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--gold);
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .step::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 50%;
+      transform: translateX(50%);
+      width: 50%;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--gold);
+    }
+
+    /* ========== CLASS GRID ========== */
+    .class-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 1.2rem;
+      margin: 1.8rem 0;
+    }
+
+    .class-btn {
+      background: var(--glass-light);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 2px solid var(--border);
+      color: white;
+      padding: 1rem 0.6rem;
+      border-radius: 20px;
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .class-btn::before {
+      content: "";
+      position: absolute;      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      z-index: 1;
+      animation: shineClass 3s infinite;
+      opacity: 0;
+    }
+
+    @keyframes shineClass {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    .class-btn:hover::before {
+      opacity: 1;
+    }
+
+    .class-btn:hover {
+      background: rgba(212, 175, 55, 0.3);
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+      border-color: var(--border-strong);
+    }
+
+    .class-btn.active {
+      background: rgba(212, 175, 55, 0.4);
+      color: white;
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+      transform: scale(1.05);
+    }
+
+    .class-btn.active::after {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 23px;
+      animation: rotateGradient 6s linear infinite;
+      opacity: 0.85;
+    }
+
+    /* ========== SUBJECT GRID ========== */
+    .subject-grid {      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: var(--transition);
+    }
+
+    .subject-grid.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .subject-card {
+      background: var(--glass-light);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 1.3rem 0.8rem;
+      border-radius: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .subject-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1), transparent);
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .subject-card:hover::before {
+      opacity: 1;
+    }
+
+    .subject-card:hover {
+      background: rgba(212, 175, 55, 0.25);
+      transform: translateY(-6px) scale(1.04);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);      border-color: var(--border-strong);
+    }
+
+    .subject-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      position: relative;
+      z-index: 2;
+    }
+
+    .subject-card i {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      display: block;
+      background: linear-gradient(to right, var(--secondary), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      z-index: 2;
+      position: relative;
+    }
+
+    /* ========== HOMEWORK DETAIL ========== */
+    .homework-detail {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 2rem;
+      border-radius: 24px;
+      margin-top: 2rem;
+      display: none;
+      border: 2px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      animation: fadeIn 0.6s ease;
+    }
+
+    .homework-detail::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      z-index: 1;
+      animation: shineHomework 4s infinite;    }
+
+    @keyframes shineHomework {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    .homework-detail h3 {
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .homework-detail h3 i {
+      font-size: 2rem;
+      background: linear-gradient(to right, var(--secondary), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .homework-detail p {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      opacity: 0.95;
+      position: relative;
+      z-index: 2;
+    }
+
+    .homework-detail a {
+      color: var(--secondary);
+      text-decoration: underline;
+      font-weight: 600;
+      transition: var(--transition);
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+
+    .homework-detail a:hover {
+      color: var(--gold);
+      text-shadow: 0 0 10px var(--gold);      transform: translateX(3px);
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 1.15rem;
+      opacity: 0.9;
+      background: var(--glass-dark);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-top: 2px solid var(--border-strong);
+      padding: 2.5rem;
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    footer.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    footer::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: footerLine 3s infinite;
+    }
+
+    @keyframes footerLine {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    footer p {
+      margin: 0.8rem 0;
+      line-height: 1.7;
+    }
+
+    footer strong {
+      color: var(--gold);      font-weight: 700;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      body {
+        padding: 2rem 1rem;
+      }
+
+      .back-link {
+        font-size: 1.1rem;
+        padding: 0.5rem 1.2rem;
+        margin-bottom: 1.8rem;
+      }
+
+      .glass-card {
+        padding: 2rem;
+        border-radius: 28px;
+      }
+
+      .glass-card::before {
+        border-radius: 31px;
+      }
+
+      .glass-card::after {
+        border-radius: 28px;
+      }
+
+      .card-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .card-header i {
+        font-size: 2.8rem;
+      }
+
+      .card-header p {
+        font-size: 1.05rem;
+      }
+
+      .step {
+        font-size: 1.15rem;
+        margin: 1.5rem 0 1.2rem;
+      }
+
+      .class-grid {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 1rem;
+      }
+      .class-btn {
+        padding: 0.9rem 0.5rem;
+        font-size: 1rem;
+        border-radius: 18px;
+      }
+
+      .class-btn::after {
+        border-radius: 21px;
+      }
+
+      .subject-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 1.2rem;
+      }
+
+      .subject-card {
+        padding: 1.1rem 0.7rem;
+        border-radius: 18px;
+      }
+
+      .subject-card h3 {
+        font-size: 1.15rem;
+      }
+
+      .subject-card i {
+        font-size: 1.9rem;
+      }
+
+      .homework-detail {
+        padding: 1.6rem;
+      }
+
+      .homework-detail h3 {
+        font-size: 1.6rem;
+      }
+
+      .homework-detail p {
+        font-size: 1.05rem;
+      }
+
+      footer {
+        padding: 2rem;
+        font-size: 1.05rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1.5rem 0.8rem;
+      }
+      .back-link {
+        font-size: 1rem;
+        padding: 0.4rem 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .glass-card {
+        padding: 1.8rem;
+        border-radius: 24px;
+        margin: 0 10px;
+      }
+
+      .glass-card::before {
+        border-radius: 27px;
+      }
+
+      .glass-card::after {
+        border-radius: 24px;
+      }
+
+      .card-header {
+        margin-bottom: 2rem;
+      }
+
+      .card-header h1 {
+        font-size: 1.9rem;
+      }
+
+      .card-header h1::after {
+        width: 65%;
+        height: 4px;
+      }
+
+      .card-header i {
+        font-size: 2.4rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .card-header p {
+        font-size: 1rem;
+      }
+
+      .step {
+        font-size: 1.1rem;
+        margin: 1.3rem 0 1rem;
+      }
+
+      .step::after {
+        width: 45%;        height: 2.5px;
+      }
+
+      .class-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 0.9rem;
+      }
+
+      .class-btn {
+        padding: 0.85rem 0.45rem;
+        font-size: 0.95rem;
+        border-radius: 16px;
+      }
+
+      .class-btn::after {
+        border-radius: 19px;
+      }
+
+      .subject-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 1rem;
+      }
+
+      .subject-card {
+        padding: 1rem 0.6rem;
+        border-radius: 16px;
+      }
+
+      .subject-card h3 {
+        font-size: 1.05rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .subject-card i {
+        font-size: 1.7rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .homework-detail {
+        padding: 1.4rem;
+        margin-top: 1.8rem;
+      }
+
+      .homework-detail h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .homework-detail h3 i {
+        font-size: 1.7rem;      }
+
+      .homework-detail p {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      footer {
+        padding: 1.8rem;
+        font-size: 0.95rem;
+        border-radius: 24px;
+        margin-top: 3.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating decorative orbs -->
+  <div class="floating-orb" style="width: 200px; height: 200px; top: 15%; left: 8%; animation-delay: 0s;"></div>
+  <div class="floating-orb" style="width: 160px; height: 160px; top: 65%; left: 92%; animation-delay: -7s;"></div>
+  <div class="floating-orb" style="width: 120px; height: 120px; top: 80%; left: 12%; animation-delay: -15s;"></div>
+  <div class="floating-orb" style="width: 180px; height: 180px; top: 45%; left: 85%; animation-delay: -10s;"></div>
+  
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <a href="index.html" class="back-link">
+    <i class="fas fa-arrow-right"></i> بازگشت به صفحه اصلی
+  </a>
+
+  <div class="glass-card">
+    <div class="card-header">
+      <i class="fas fa-user-graduate"></i>
+      <h1>📚 پنل دانش‌آموز</h1>
+      <p>تکالیف دروس خود را مشاهده کنید</p>
+    </div>
+
+    <!-- مرحله ۱: انتخاب کلاس -->
+    <div class="step">
+      <i class="fas fa-list-ol"></i>
+      مرحله ۱: کلاس خود را انتخاب کنید
+    </div>
+    <div class="class-grid" id="classGrid">
+      <!-- کلاس‌ها به صورت خودکار اینجا اضافه می‌شن -->
+    </div>
+
+    <!-- مرحله ۲: انتخاب درس -->
+    <div class="step" id="subjectStep" style="display:none;">
+      <i class="fas fa-book-open"></i>      مرحله ۲: درس مورد نظر را انتخاب کنید
+    </div>
+    <div class="subject-grid" id="subjectGrid" style="display:none;"></div>
+
+    <!-- نمایش تکلیف -->
+    <div class="homework-detail" id="homeworkDetail"></div>
+  </div>
+
+  <footer>
+    <p>طراحی و توسعه داده‌شده توسط <strong>سپهر قاسمی</strong> و <strong>ماهان جهاندیده</strong></p>
+    <p>تمامی حقوق این وبسایت محفوظ است.</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Animate back link
+      setTimeout(() => {
+        document.querySelector('.back-link').classList.add('visible');
+      }, 200);
+      
+      // Animate main card
+      setTimeout(() => {
+        document.querySelector('.glass-card').classList.add('visible');
+      }, 400);
+      
+      // Animate footer
+      setTimeout(() => {
+        document.querySelector('footer').classList.add('visible');
+      }, 800);
+      
+      // Scroll progress indicator
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+        document.getElementById('scroll-progress').style.width = `${scrolled}%`;
+      });
+      
+      // Add floating animation to orbs
+      document.querySelectorAll('.floating-orb').forEach((orb, index) => {
+        const duration = 25 + Math.random() * 15;
+        const delay = Math.random() * 10;
+        orb.style.animationDuration = `${duration}s`;
+        orb.style.animationDelay = `${-delay}s`;
+      });
+      
+      // Parallax effect on page
+      document.addEventListener('mousemove', (e) => {
+        if (window.innerWidth > 768) {          const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+          const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+          document.body.style.backgroundPosition = `${50 + xAxis}% ${50 + yAxis}%`;
+        }
+      });
+      
+      // Initialize the class grid
+      initClassGrid();
+    });
+
+    // 📚 داده‌های تکالیف (شما می‌تونید اینجا تکالیف رو به‌روز کنید)
+    const homeworkData = {
+      // کلاس‌های هفتم
+      "7/1": {
+        "ریاضی": "تمرین صفحه 45-47 — تا 1405/02/10",
+        "علوم": "پروژه آب و هوا — فایل: https://uploadkon.ir/uploads/abc123.jpg",
+        "ادبیات": "خواندن درس نو — نوشتن خلاصه",
+        "عربی": "تمرین صفحه 30",
+        "دینی": "پرسش‌های درس 5",
+        "زبان": "تمرین گرامر صفحه 22"
+      },
+      "7/2": {
+        "ریاضی": "فصل 4 کامل — تا 1405/02/12",
+        "علوم": "آزمایش ساده در خانه — گزارش بنویسید",
+        "ادبیات": "حفظ شعر درس 3"
+      },
+      "7/3": { "ریاضی": "صفحه 50-52", "زبان": "واژگان درس 4" },
+      "7/4": { "علوم": "فایل آموزشی: https://uploadkon.ir/uploads/sci7-4.pdf" },
+      "7/5": { "ادبیات": "خلاصه‌نویسی درس 6" },
+      "7/6": { "ریاضی": "تمرین تستی فصل 4", "دینی": "پرسش‌های کتاب" },
+
+      // کلاس‌های هشتم
+      "8/1": {
+        "ریاضی": "صفحه 60-62 — تا 1405/02/15",
+        "فیزیک": "حل مسائل صفحه 22",
+        "شیمی": "فایل آموزشی: https://uploadkon.ir/uploads/chem8-1.pdf",
+        "زیست": "فصل 3 کتاب"
+      },
+      "8/2": { "زیست": "پروژه گیاهان — فایل: https://uploadkon.ir/uploads/bio8-2.jpg" },
+      "8/3": { "ریاضی": "تمرین صفحه 65", "ادبیات": "حفظ شعر" },
+      "8/4": { "فیزیک": "آزمایش ساده — گزارش" },
+      "8/5": { "شیمی": "پرسش‌های درس 2" },
+      "8/6": { "زبان": "تمرین گرامر صفحه 30" },
+
+      // کلاس‌های نهم
+      "9/1": {
+        "ریاضی": "صفحه 70-72 — تا 1405/02/20",
+        "شیمی": "آزمایش گاز اکسیژن — گزارش بنویسید",
+        "زیست": "فصل 4 کتاب — پرسش‌ها",
+        "زبان": "تمرین گرامر صفحه 55"      },
+      "9/2": { "فیزیک": "مسائل صفحه 35", "ادبیات": "خلاصه‌نویسی" },
+      "9/3": { "ریاضی": "فصل 5 کامل", "شیمی": "فایل: https://uploadkon.ir/uploads/chem9-3.pdf" }
+    };
+
+    // تولید لیست کلاس‌ها
+    const classes = [
+      "7/1", "7/2", "7/3", "7/4", "7/5", "7/6",
+      "8/1", "8/2", "8/3", "8/4", "8/5", "8/6",
+      "9/1", "9/2", "9/3"
+    ];
+
+    const classGrid = document.getElementById('classGrid');
+    const subjectGrid = document.getElementById('subjectGrid');
+    const subjectStep = document.getElementById('subjectStep');
+    const homeworkDetail = document.getElementById('homeworkDetail');
+
+    // نمایش کلاس‌ها
+    function initClassGrid() {
+      classGrid.innerHTML = '';
+      classes.forEach(cls => {
+        const btn = document.createElement('button');
+        btn.className = 'class-btn';
+        btn.innerHTML = `<i class="fas fa-chalkboard"></i>${cls}`;
+        btn.onclick = () => selectClass(cls);
+        classGrid.appendChild(btn);
+      });
+    }
+
+    let selectedClass = null;
+
+    function selectClass(cls) {
+      // حذف active از همه
+      document.querySelectorAll('.class-btn').forEach(b => b.classList.remove('active'));
+      // اضافه کردن active
+      event.target.classList.add('active');
+      
+      selectedClass = cls;
+      subjectStep.style.display = 'block';
+      subjectGrid.style.display = 'grid';
+      subjectGrid.classList.add('visible');
+      homeworkDetail.style.display = 'none';
+
+      const subjects = homeworkData[cls] || {};
+      if (Object.keys(subjects).length === 0) {
+        subjectGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:1.5rem; background: rgba(255,255,255,0.08); border-radius: 18px; font-weight: 600;">تکلیفی برای این کلاس ثبت نشده است.</div>';
+        return;
+      }
+
+      subjectGrid.innerHTML = '';      Object.entries(subjects).forEach(([subject, homework]) => {
+        const card = document.createElement('div');
+        card.className = 'subject-card';
+        
+        // Assign icons based on subject
+        let icon = 'fa-book';
+        if (subject.includes('ریاضی')) icon = 'fa-calculator';
+        else if (subject.includes('علوم') || subject.includes('فیزیک') || subject.includes('شیمی') || subject.includes('زیست')) icon = 'fa-flask';
+        else if (subject.includes('ادبیات') || subject.includes('عربی') || subject.includes('دینی')) icon = 'fa-pen-nib';
+        else if (subject.includes('زبان')) icon = 'fa-language';
+        
+        card.innerHTML = `
+          <i class="fas ${icon}"></i>
+          <h3>${subject}</h3>
+        `;
+        card.onclick = () => showHomework(cls, subject);
+        subjectGrid.appendChild(card);
+      });
+    }
+
+    function showHomework(cls, subject) {
+      const hw = homeworkData[cls][subject];
+      homeworkDetail.innerHTML = `
+        <h3><i class="fas fa-tasks"></i> تکلیف ${subject} — کلاس ${cls}</h3>
+        <p>${formatHomeworkText(hw)}</p>
+      `;
+      homeworkDetail.style.display = 'block';
+      
+      // اسکرول به بخش تکلیف
+      homeworkDetail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function formatHomeworkText(text) {
+      // اگر لینک داشت، به تگ <a> تبدیل کنه
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      return text.replace(urlRegex, url => `<a href="${url}" target="_blank"><i class="fas fa-file-download"></i> دانلود فایل</a>`);
+    }
+  </script>
+</body>
+</html>

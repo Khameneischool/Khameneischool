@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>پنل معاون پرورشی | دبیرستان امام خامنه‌ای</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --red: #b31b1b;
+      --gold: #d4af37;
+      --blue: #1a237e;
+      --primary: #4CAF50;
+      --secondary: #2196F3;
+      --accent: #FF9800;
+      --purple: #9C27B0;
+      --live-red: #ff3a4e;
+      --glass-light: rgba(255, 255, 255, 0.22);
+      --glass-dark: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.28);
+      --border-strong: rgba(255, 255, 255, 0.42);
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      --shadow-hover: 0 18px 50px rgba(0, 0, 0, 0.75);
+      --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      color: white;
+      min-height: 100vh;
+      padding: 3rem 1.5rem;
+      line-height: 1.6;
+      background-attachment: fixed;
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }      100% { background-position: 0% 50%; }
+    }
+
+    /* ========== GLASS SHADER EFFECT ========== */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
+        radial-gradient(circle at 30% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+        radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
+      z-index: -3;
+      opacity: 0.85;
+    }
+
+    /* ========== FLOATING ORBS ========== */
+    .floating-orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      z-index: -1;
+      animation: floatOrb 25s infinite linear;
+      opacity: 0.6;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      25% { transform: translateY(-60px) translateX(40px) rotate(90deg); opacity: 0.3; }
+      50% { transform: translateY(-120px) translateX(0) rotate(180deg); opacity: 0.1; }
+      75% { transform: translateY(-60px) translateX(-40px) rotate(270deg); opacity: 0.3; }
+      100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.6; }
+    }
+
+    /* ========== SCROLL PROGRESS ========== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--live-red), var(--accent), var(--purple), var(--secondary), var(--primary), var(--gold));
+      z-index: 10000;
+      width: 0%;
+      box-shadow: 0 0 15px rgba(255, 60, 78, 0.9), 0 0 25px rgba(255, 152, 0, 0.8);
+      transition: width 0.12s ease;    }
+
+    /* ========== BACK LINK ========== */
+    .back-link {
+      display: inline-block;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1.2rem;
+      position: relative;
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      background: var(--glass-dark);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+
+    .back-link.visible {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .back-link:hover {
+      transform: translateX(5px);
+      background: rgba(212, 175, 55, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .back-link i {
+      margin-left: 8px;
+    }
+
+    /* ========== GLASS CARD ========== */
+    .glass-card {
+      background: var(--glass-dark);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 2px solid var(--border-strong);
+      border-radius: 35px;
+      padding: 3rem;
+      box-shadow: var(--shadow);
+      max-width: 650px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;      transform: translateY(40px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .glass-card.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 38px;
+      animation: rotateGradient 12s linear infinite;
+      opacity: 0.85;
+    }
+
+    .glass-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: 35px;
+      z-index: -1;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-strong);
+    }
+
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ========== CARD HEADER ========== */
+    .card-header {
+      text-align: center;      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .card-header h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .card-header h1::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      right: 50%;
+      transform: translateX(50%);
+      width: 70%;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--gold);
+    }
+
+    .card-header i {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--secondary), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      display: block;
+      animation: floatIcon 3s infinite ease-in-out;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn-choice {
+      display: block;
+      width: 100%;
+      padding: 1.3rem;      margin: 1rem 0;
+      background: var(--glass-light);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: white;
+      border: 2px solid var(--border);
+      border-radius: 50px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+
+    .btn-choice::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      z-index: 1;
+      animation: shineBtn 3s infinite;
+      opacity: 0;
+    }
+
+    @keyframes shineBtn {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    .btn-choice:hover::before {
+      opacity: 1;
+    }
+
+    .btn-choice:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      border-color: var(--border-strong);
+    }
+
+    .btn-choice::after {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--secondary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-choice:hover::after {
+      opacity: 0.85;
+    }
+
+    .btn-choice.deputy {
+      background: rgba(33, 150, 243, 0.25);
+    }
+
+    .btn-choice.council {
+      background: rgba(156, 39, 176, 0.25);
+    }
+
+    /* ========== FORMS ========== */
+    .form-group {
+      margin-bottom: 1.8rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--gold);
+      position: relative;
+      padding-bottom: 5px;
+    }
+
+    .form-group label::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 1px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;      padding: 1rem;
+      border: 2px solid var(--border);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border-radius: 16px;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 1.05rem;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+      transform: scale(1.01);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 1.2rem;
+      background: var(--glass-light);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: white;
+      border: 2px solid var(--border-strong);
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+
+    .btn-submit::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;      left: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      animation: rotateGradient 8s linear infinite;
+      opacity: 0.85;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn-submit.logout-btn {
+      background: rgba(244, 67, 54, 0.25);
+      margin-top: 2rem;
+    }
+
+    /* ========== ERROR & SUCCESS MESSAGES ========== */
+    #deputyError,
+    #councilError {
+      color: var(--live-red);
+      margin: 0.8rem 0;
+      padding: 0.8rem;
+      background: rgba(255, 60, 78, 0.1);
+      border-radius: 12px;
+      border-left: 4px solid var(--live-red);
+      font-weight: 500;
+      animation: shakeError 0.5s;
+    }
+
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .success-msg {
+      text-align: center;
+      padding: 1.2rem;
+      background: rgba(76, 175, 80, 0.15);
+      border: 2px solid rgba(76, 175, 80, 0.4);
+      border-radius: 16px;
+      margin-top: 1.5rem;
+      display: none;
+      font-weight: 600;
+      color: #4CAF50;
+      animation: fadeIn 0.5s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ========== DASHBOARD ========== */
+    #deputyDashboard,
+    #councilDashboard {
+      padding: 2.5rem;
+    }
+
+    #deputyWelcome,
+    #councilWelcome {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to right, white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      display: none;
+    }
+
+    /* ========== WELCOME ANIMATION ========== */
+    @keyframes pulseGlow {
+      0%, 100% { text-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 25px rgba(212, 175, 55, 0.7); }
+      50% { text-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 35px rgba(212, 175, 55, 1), 0 0 50px rgba(33, 150, 243, 0.8); }
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      body {
+        padding: 2rem 1rem;
+      }
+
+      .back-link {
+        font-size: 1.1rem;
+        padding: 0.5rem 1.2rem;
+        margin-bottom: 1.8rem;
+      }
+
+      .glass-card {
+        padding: 2rem;
+        border-radius: 28px;
+      }
+      .glass-card::before {
+        border-radius: 31px;
+      }
+
+      .glass-card::after {
+        border-radius: 28px;
+      }
+
+      .card-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .card-header i {
+        font-size: 2.8rem;
+      }
+
+      .btn-choice {
+        padding: 1rem;
+        font-size: 1.1rem;
+        margin: 0.8rem 0;
+      }
+
+      .form-group label {
+        font-size: 1.05rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.9rem;
+        font-size: 1rem;
+      }
+
+      .btn-submit {
+        padding: 1rem;
+        font-size: 1.1rem;
+        margin-top: 1.2rem;
+      }
+
+      .btn-submit.logout-btn {
+        margin-top: 1.5rem;
+      }
+
+      #deputyWelcome,
+      #councilWelcome {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {      body {
+        padding: 1.5rem 0.8rem;
+      }
+
+      .back-link {
+        font-size: 1rem;
+        padding: 0.4rem 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .glass-card {
+        padding: 1.8rem;
+        border-radius: 24px;
+        margin: 0 10px;
+      }
+
+      .glass-card::before {
+        border-radius: 27px;
+      }
+
+      .glass-card::after {
+        border-radius: 24px;
+      }
+
+      .card-header {
+        margin-bottom: 1.8rem;
+      }
+
+      .card-header h1 {
+        font-size: 1.9rem;
+      }
+
+      .card-header h1::after {
+        width: 65%;
+        height: 4px;
+      }
+
+      .card-header i {
+        font-size: 2.4rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .btn-choice {
+        padding: 0.9rem;
+        font-size: 1rem;
+        margin: 0.7rem 0;
+        border-radius: 45px;
+      }
+
+      .form-group {        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        font-size: 1rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.85rem;
+        font-size: 0.95rem;
+        border-radius: 14px;
+      }
+
+      .form-group textarea {
+        min-height: 100px;
+      }
+
+      .btn-submit {
+        padding: 0.9rem;
+        font-size: 1rem;
+        margin-top: 1rem;
+        border-radius: 45px;
+      }
+
+      .btn-submit.logout-btn {
+        margin-top: 1.2rem;
+      }
+
+      #deputyWelcome,
+      #councilWelcome {
+        font-size: 1.6rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .success-msg {
+        padding: 1rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating decorative orbs -->
+  <div class="floating-orb" style="width: 200px; height: 200px; top: 15%; left: 8%; animation-delay: 0s;"></div>
+  <div class="floating-orb" style="width: 160px; height: 160px; top: 65%; left: 92%; animation-delay: -7s;"></div>
+  <div class="floating-orb" style="width: 120px; height: 120px; top: 80%; left: 12%; animation-delay: -15s;"></div>
+  <div class="floating-orb" style="width: 180px; height: 180px; top: 45%; left: 85%; animation-delay: -10s;"></div>  
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <a href="index.html" class="back-link">
+    <i class="fas fa-arrow-right"></i> بازگشت به صفحه اصلی
+  </a>
+
+  <!-- صفحه انتخاب نوع ورود -->
+  <div id="selectPanel" class="glass-card">
+    <div class="card-header">
+      <i class="fas fa-door-open"></i>
+      <h1>🚪 انتخاب پنل</h1>
+    </div>
+    <button class="btn-choice deputy" onclick="showLogin('deputy')">
+      <i class="fas fa-user-tie"></i> ورود به پنل معاون پرورشی
+    </button>
+    <button class="btn-choice council" onclick="showLogin('council')">
+      <i class="fas fa-users"></i> ورود به پنل شوراهای مدرسه
+    </button>
+  </div>
+
+  <!-- فرم ورود معاون -->
+  <div id="deputyLogin" class="glass-card" style="display:none;">
+    <div class="card-header">
+      <i class="fas fa-lock"></i>
+      <h1>🔐 ورود معاون پرورشی</h1>
+    </div>
+    <div class="form-group">
+      <label><i class="fas fa-user"></i> نام کاربری</label>
+      <input type="text" id="deputyUser" placeholder="deputy">
+    </div>
+    <div class="form-group">
+      <label><i class="fas fa-key"></i> رمز عبور</label>
+      <input type="password" id="deputyPass" placeholder="123456">
+    </div>
+    <div id="deputyError"></div>
+    <button class="btn-submit" onclick="loginDeputy()">
+      <i class="fas fa-sign-in-alt"></i> ورود
+    </button>
+    <button class="btn-submit logout-btn" onclick="backToSelect()">
+      <i class="fas fa-arrow-right"></i> بازگشت
+    </button>
+  </div>
+
+  <!-- فرم ورود شورا -->
+  <div id="councilLogin" class="glass-card" style="display:none;">
+    <div class="card-header">
+      <i class="fas fa-lock"></i>
+      <h1>🔐 ورود عضو شورا</h1>    </div>
+    <div class="form-group">
+      <label><i class="fas fa-mobile-alt"></i> شماره موبایل</label>
+      <input type="tel" id="councilPhone" placeholder="0912...">
+    </div>
+    <div class="form-group">
+      <label><i class="fas fa-key"></i> رمز عبور</label>
+      <input type="password" id="councilPass" placeholder="رمز عبور">
+    </div>
+    <div id="councilError"></div>
+    <button class="btn-submit" onclick="loginCouncil()">
+      <i class="fas fa-sign-in-alt"></i> ورود
+    </button>
+    <button class="btn-submit logout-btn" onclick="backToSelect()">
+      <i class="fas fa-arrow-right"></i> بازگشت
+    </button>
+  </div>
+
+  <!-- داشبورد معاون -->
+  <div id="deputyDashboard" class="glass-card" style="display:none;">
+    <div class="card-header">
+      <i class="fas fa-tachometer-alt"></i>
+      <h1 id="deputyWelcome">خوش آمدید، معاون پرورشی!</h1>
+    </div>
+    <button class="btn-choice" onclick="showDeputyForm('meeting')">
+      <i class="fas fa-calendar-alt"></i> 📅 ثبت زمان جدید جلسه
+    </button>
+    <button class="btn-choice" onclick="showDeputyForm('suggestions')">
+      <i class="fas fa-eye"></i> 👁️ مشاهده پیشنهادات شوراها
+    </button>
+    <button class="btn-submit logout-btn" onclick="logoutDeputy()">
+      <i class="fas fa-sign-out-alt"></i> خروج
+    </button>
+  </div>
+
+  <!-- فرم ثبت زمان جلسه -->
+  <div id="meetingForm" class="glass-card section">
+    <div class="card-header">
+      <i class="fas fa-calendar-check"></i>
+      <h1>📅 ثبت زمان جلسه</h1>
+    </div>
+    <form onsubmit="submitMeeting(event)">
+      <div class="form-group">
+        <label><i class="fas fa-calendar-day"></i> تاریخ جلسه (مثال: 1404/10/20)</label>
+        <input type="text" name="meeting_date" placeholder="1404/10/20" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-clock"></i> ساعت جلسه (مثال: 14:00)</label>
+        <input type="text" name="meeting_time" placeholder="14:00" required>
+      </div>      <div class="form-group">
+        <label><i class="fas fa-sticky-note"></i> موضوع جلسه</label>
+        <input type="text" name="meeting_topic" placeholder="جلسه بررسی امور انضباطی" required>
+      </div>
+      <button type="submit" class="btn-submit">
+        <i class="fas fa-paper-plane"></i> ارسال زمان جلسه
+      </button>
+    </form>
+    <div class="success-msg" id="meetingSuccess"></div>
+    <button class="btn-submit logout-btn" onclick="backToDeputy()">
+      <i class="fas fa-arrow-right"></i> ← بازگشت
+    </button>
+  </div>
+
+  <!-- نمایش پیشنهادات (دکمه هدایت به لینک خارجی) -->
+  <div id="suggestionsView" class="glass-card section">
+    <div class="card-header">
+      <i class="fas fa-lightbulb"></i>
+      <h1>👁️ پیشنهادات شوراها</h1>
+    </div>
+    <p style="margin: 1.8rem 0; font-size: 1.15rem; opacity: 0.92; line-height: 1.7; text-align: center;">
+      برای مشاهدهٔ لیست کامل پیشنهادات ارسال‌شده توسط شوراهای مدرسه، 
+      روی دکمه زیر کلیک کنید.
+    </p>
+    <!-- ⭐ دکمه لینک (لینک خودت را جایگزین کن) -->
+    <a href="https://uploadkon.ir/uploads/a1dc06_26Untitled.png" 
+       target="_blank" 
+       class="btn-submit" 
+       style="display: inline-block; width: auto; padding: 1rem 2rem; text-decoration: none; margin: 1.2rem 0;">
+      <i class="fas fa-clipboard-list"></i> 📋 مشاهده پیشنهادات
+    </a>
+    <button class="btn-submit logout-btn" onclick="backToDeputy()" style="margin-top: 1.8rem; width: 100%;">
+      <i class="fas fa-arrow-right"></i> ← بازگشت
+    </button>
+  </div>
+
+  <!-- داشبورد عضو شورا -->
+  <div id="councilDashboard" class="glass-card" style="display:none;">
+    <div class="card-header">
+      <i class="fas fa-user-friends"></i>
+      <h1 id="councilWelcome">خوش آمدید، عضو شورا!</h1>
+    </div>
+    <form onsubmit="submitSuggestion(event)" id="suggestionForm">
+      <div class="form-group">
+        <label><i class="fas fa-heading"></i> عنوان پیشنهاد</label>
+        <input type="text" name="suggestion_title" placeholder="پیشنهاد برای بهبود فضای مدرسه" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-edit"></i> متن پیشنهاد</label>
+        <textarea name="suggestion_text" rows="4" placeholder="لطفاً پیشنهاد خود را با جزئیات بنویسید..." required></textarea>      </div>
+      <input type="hidden" name="council_member" id="hiddenCouncilName">
+      <input type="hidden" name="council_phone" id="hiddenCouncilPhone">
+      <button type="submit" class="btn-submit">
+        <i class="fas fa-paper-plane"></i> ارسال پیشنهاد
+      </button>
+    </form>
+    <div class="success-msg" id="suggestionSuccess"></div>
+    <button class="btn-submit logout-btn" onclick="logoutCouncil()">
+      <i class="fas fa-sign-out-alt"></i> خروج
+    </button>
+  </div>
+
+  <script>
+    // 🔐 اطلاعات معاون
+    const DEPUTY_USERNAME = "deputy";
+    const DEPUTY_PASSWORD = "123456";
+
+    // 👥 اعضای شورا (11 نفر)
+    const councilMembers = [
+      { name: "علی رضایی", phone: "09121111111", password: "c1111" },
+      { name: "سارا محمدی", phone: "09122222222", password: "c2222" },
+      { name: "رضا حسینی", phone: "09123333333", password: "c3333" },
+      { name: "نرگس احمدی", phone: "09124444444", password: "c4444" },
+      { name: "امیر کاظمی", phone: "09125555555", password: "c5555" },
+      { name: "فاطمه زاهدی", phone: "09126666666", password: "c6666" },
+      { name: "حسین طاهری", phone: "09127777777", password: "c7777" },
+      { name: "مریم نوری", phone: "09128888888", password: "c8888" },
+      { name: "مهدی جعفری", phone: "09129999999", password: "c9999" },
+      { name: "زهرا شریفی", phone: "09120000000", password: "c0000" },
+      { name: "کامران غفوری", phone: "09121010101", password: "c1010" }
+    ];
+
+    // 🔗 Formspree Endpoints (⚠️ جایگزین کنید)
+    const MEETING_FORM = "https://formspree.io/f/mjgkqzor";
+    const SUGGESTION_FORM = "https://formspree.io/f/xnjnkrzd";
+
+    let currentCouncilUser = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Animate back link
+      setTimeout(() => {
+        document.querySelector('.back-link').classList.add('visible');
+      }, 200);
+      
+      // Animate main card
+      setTimeout(() => {
+        document.querySelector('.glass-card').classList.add('visible');
+      }, 400);
+            // Scroll progress indicator
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+        document.getElementById('scroll-progress').style.width = `${scrolled}%`;
+      });
+      
+      // Add floating animation to orbs
+      document.querySelectorAll('.floating-orb').forEach((orb, index) => {
+        const duration = 25 + Math.random() * 15;
+        const delay = Math.random() * 10;
+        orb.style.animationDuration = `${duration}s`;
+        orb.style.animationDelay = `${-delay}s`;
+      });
+      
+      // Parallax effect on page
+      document.addEventListener('mousemove', (e) => {
+        if (window.innerWidth > 768) {
+          const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+          const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+          document.body.style.backgroundPosition = `${50 + xAxis}% ${50 + yAxis}%`;
+        }
+      });
+    });
+
+    // ========== Navigation ==========
+    function showLogin(type) {
+      document.getElementById("selectPanel").style.display = "none";
+      if (type === "deputy") {
+        document.getElementById("deputyLogin").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("deputyLogin").classList.add('visible');
+        }, 100);
+      } else {
+        document.getElementById("councilLogin").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("councilLogin").classList.add('visible');
+        }, 100);
+      }
+    }
+
+    function backToSelect() {
+      document.getElementById("deputyLogin").style.display = "none";
+      document.getElementById("councilLogin").style.display = "none";
+      document.getElementById("deputyLogin").classList.remove('visible');
+      document.getElementById("councilLogin").classList.remove('visible');
+      document.getElementById("selectPanel").style.display = "block";
+    }
+    // ========== Deputy ==========
+    function loginDeputy() {
+      const user = document.getElementById("deputyUser").value.trim();
+      const pass = document.getElementById("deputyPass").value;
+      if (user === DEPUTY_USERNAME && pass === DEPUTY_PASSWORD) {
+        document.getElementById("deputyLogin").style.display = "none";
+        document.getElementById("deputyLogin").classList.remove('visible');
+        document.getElementById("deputyDashboard").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("deputyDashboard").classList.add('visible');
+        }, 100);
+      } else {
+        document.getElementById("deputyError").textContent = "❌ نام کاربری یا رمز عبور اشتباه است.";
+        setTimeout(() => document.getElementById("deputyError").textContent = "", 3000);
+      }
+    }
+
+    function showDeputyForm(type) {
+      document.querySelectorAll("#deputyDashboard ~ .glass-card").forEach(el => {
+        el.style.display = "none";
+        el.classList.remove('visible');
+      });
+      if (type === "meeting") {
+        document.getElementById("meetingForm").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("meetingForm").classList.add('visible');
+        }, 100);
+      } else {
+        document.getElementById("suggestionsView").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("suggestionsView").classList.add('visible');
+        }, 100);
+      }
+    }
+
+    function backToDeputy() {
+      document.getElementById("meetingForm").style.display = "none";
+      document.getElementById("suggestionsView").style.display = "none";
+      document.getElementById("meetingForm").classList.remove('visible');
+      document.getElementById("suggestionsView").classList.remove('visible');
+      document.getElementById("deputyDashboard").style.display = "block";
+    }
+
+    function logoutDeputy() {
+      document.getElementById("deputyDashboard").style.display = "none";
+      document.getElementById("deputyDashboard").classList.remove('visible');
+      document.getElementById("selectPanel").style.display = "block";
+    }
+    // ========== Council ==========
+    function loginCouncil() {
+      const phone = document.getElementById("councilPhone").value.trim();
+      const pass = document.getElementById("councilPass").value;
+      const member = councilMembers.find(m => m.phone === phone && m.password === pass);
+      if (member) {
+        currentCouncilUser = member;
+        document.getElementById("councilWelcome").textContent = `خوش آمدید، ${member.name} عزیز!`;
+        document.getElementById("hiddenCouncilName").value = member.name;
+        document.getElementById("hiddenCouncilPhone").value = member.phone;
+        document.getElementById("councilLogin").style.display = "none";
+        document.getElementById("councilLogin").classList.remove('visible');
+        document.getElementById("councilDashboard").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("councilDashboard").classList.add('visible');
+        }, 100);
+      } else {
+        document.getElementById("councilError").textContent = "❌ شماره یا رمز اشتباه است.";
+        setTimeout(() => document.getElementById("councilError").textContent = "", 3000);
+      }
+    }
+
+    function logoutCouncil() {
+      currentCouncilUser = null;
+      document.getElementById("councilDashboard").style.display = "none";
+      document.getElementById("councilDashboard").classList.remove('visible');
+      document.getElementById("selectPanel").style.display = "block";
+    }
+
+    // ========== Submit ==========
+    async function submitMeeting(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      try {
+        const res = await fetch(MEETING_FORM, {
+          method: "POST",
+          body: formData,
+          headers: { "Accept": "application/json" }
+        });
+        const msgEl = document.getElementById("meetingSuccess");
+        if (res.ok) {
+          msgEl.textContent = "✅ زمان جلسه با موفقیت ثبت شد.";
+          msgEl.style.display = "block";
+          e.target.reset();
+          setTimeout(() => {
+            msgEl.style.display = "none";
+          }, 5000);
+        } else {
+          msgEl.textContent = "❌ خطا در ارسال.";
+          msgEl.style.display = "block";        }
+      } catch (err) {
+        alert("خطا در اتصال به سرور Formspree.");
+      }
+    }
+
+    async function submitSuggestion(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      try {
+        const res = await fetch(SUGGESTION_FORM, {
+          method: "POST",
+          body: formData,
+          headers: { "Accept": "application/json" }
+        });
+        const msgEl = document.getElementById("suggestionSuccess");
+        if (res.ok) {
+          msgEl.textContent = "✅ پیشنهاد شما با موفقیت ارسال شد.";
+          msgEl.style.display = "block";
+          e.target.reset();
+          setTimeout(() => {
+            msgEl.style.display = "none";
+          }, 5000);
+        } else {
+          msgEl.textContent = "❌ خطا در ارسال.";
+          msgEl.style.display = "block";
+        }
+      } catch (err) {
+        alert("خطا در اتصال به سرور Formspree.");
+      }
+    }
+  </script>
+</body>
+</html>

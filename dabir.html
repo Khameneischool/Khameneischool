@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>پخش ویدیو | دبیرستان حضرت امام خامنه‌ای</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      color: white;
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
+        radial-gradient(circle at 30% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+        radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
+      z-index: -3;
+      opacity: 0.85;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #d4af37;
+      margin: 1.5rem 0;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.2rem;      position: relative;
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      transform: translateX(5px);
+      background: rgba(212, 175, 55, 0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .back-link i {
+      margin-left: 8px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .video-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .video-header h1 {
+      font-size: 2.4rem;
+      margin-bottom: 0.8rem;
+      background: linear-gradient(to right, #d4af37, white, #d4af37);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .video-header p {
+      font-size: 1.2rem;
+      opacity: 0.85;
+      margin-top: 0.5rem;
+    }
+
+    /* ========== WARNING MODAL ========== */
+    #warning-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;      background: rgba(0, 0, 0, 0.97);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.5s ease;
+      display: none;
+    }
+
+    .warning-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 3px solid rgba(244, 67, 54, 0.7);
+      border-radius: 35px;
+      padding: 3rem;
+      max-width: 650px;
+      width: 95%;
+      text-align: center;
+      box-shadow: 0 0 50px rgba(244, 67, 54, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .warning-card::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, #ff1744, #d50000, #ff1744);
+      z-index: -1;
+      border-radius: 38px;
+      animation: pulseBorder 3s infinite;
+      opacity: 0.9;
+    }
+
+    @keyframes pulseBorder {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+
+    .warning-card h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: #ff1744;
+      position: relative;
+      display: inline-block;    }
+
+    .warning-card h2 i {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .warning-card p {
+      font-size: 1.3rem;
+      line-height: 1.8;
+      margin: 1.2rem 0;
+      opacity: 0.95;
+    }
+
+    .warning-card .warning-item {
+      background: rgba(0, 0, 0, 0.4);
+      border-left: 4px solid #ff1744;
+      padding: 1rem;
+      border-radius: 0 12px 12px 0;
+      margin: 1rem 0;
+      text-align: right;
+      font-size: 1.15rem;
+      font-weight: 500;
+    }
+
+    .warning-card .warning-item i {
+      color: #ff1744;
+      margin-left: 8px;
+    }
+
+    .warning-btns {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 2rem;
+      justify-content: center;
+    }
+
+    .warning-btn {
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Vazirmatn', sans-serif;
+      border: 2px solid transparent;
+    }
+
+    .warning-btn.accept {      background: linear-gradient(45deg, #4CAF50, #2E7D32);
+      color: white;
+    }
+
+    .warning-btn.accept:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 20px rgba(76, 175, 80, 0.6);
+    }
+
+    .warning-btn.decline {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .warning-btn.decline:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.03);
+    }
+
+    /* ========== LOGIN OVERLAY ========== */
+    #login-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999998;
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.5s ease;
+    }
+
+    .login-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 30px;
+      padding: 3rem;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+    .login-card::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, #d4af37, #2196F3, #4CAF50, #9C27B0, #d4af37);
+      z-index: -1;
+      border-radius: 33px;
+      animation: rotateGradient 15s linear infinite;
+      opacity: 0.85;
+    }
+
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .login-card h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: #d4af37;
+      position: relative;
+      display: inline-block;
+    }
+
+    .login-card h2::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      right: 50%;
+      transform: translateX(50%);
+      width: 70%;
+      height: 4px;
+      background: #d4af37;
+      border-radius: 2px;
+      box-shadow: 0 0 15px #d4af37;
+    }
+
+    .login-card p {
+      font-size: 1.2rem;
+      margin: 1rem 0 2rem;
+      opacity: 0.9;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: right;    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.7rem;
+      font-weight: 600;
+      color: #d4af37;
+      font-size: 1.1rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-radius: 16px;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 1.1rem;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 1.2rem;
+      background: linear-gradient(45deg, #d4af37, #2196F3);
+      color: #0a0a1a;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+    }
+    .login-error {
+      color: #ff5252;
+      margin-top: 1rem;
+      font-weight: 500;
+      min-height: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    /* ========== VIDEO PLAYER ========== */
+    .video-player {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      background: #000;
+      border-radius: 24px 24px 0 0;
+      overflow: hidden;
+    }
+
+    .video-element {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: none;
+      outline: none;
+      pointer-events: none;
+    }
+
+    /* Advanced Watermarks - Multiple layers */
+    .watermark-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;      z-index: 999;
+    }
+
+    .watermark-main {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      background: rgba(0, 0, 0, 0.75);
+      color: rgba(212, 175, 55, 1);
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      backdrop-filter: blur(8px);
+      border: 2px solid rgba(212, 175, 55, 0.5);
+      animation: pulseWatermark 4s infinite;
+      z-index: 100;
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+    }
+
+    .watermark-id {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(244, 67, 54, 0.85);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      backdrop-filter: blur(5px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      z-index: 100;
+    }
+
+    /* Moving watermarks - diagonal pattern */
+    .watermark-moving {
+      position: absolute;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.12);
+      transform: rotate(-30deg);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 50;
+      animation: moveWatermark 25s linear infinite;
+    }
+
+    @keyframes moveWatermark {
+      0% { transform: translateX(-100%) rotate(-30deg); }      100% { transform: translateX(100%) rotate(-30deg); }
+    }
+
+    .watermark-row-1 { top: 10%; animation-delay: 0s; }
+    .watermark-row-2 { top: 35%; animation-delay: -5s; }
+    .watermark-row-3 { top: 60%; animation-delay: -10s; }
+    .watermark-row-4 { top: 85%; animation-delay: -15s; }
+
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      background: rgba(212, 175, 55, 0.9);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+    }
+
+    .play-button:hover {
+      background: rgba(212, 175, 55, 1);
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .play-button i {
+      font-size: 2.5rem;
+      color: #b31b1b;
+      margin-left: 4px;
+    }
+
+    .video-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      padding: 15px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      z-index: 20;
+    }
+    .video-player:hover .video-controls {
+      transform: translateY(0);
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #d4af37, #2196F3);
+      border-radius: 3px;
+      width: 0%;
+      position: relative;
+      transition: width 0.1s linear;
+    }
+
+    .progress-bar::after {
+      content: "";
+      position: absolute;
+      right: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      background: #d4af37;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .progress-container:hover .progress-bar::after {
+      opacity: 1;
+    }
+
+    .controls-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .time-display {      font-size: 0.95rem;
+      color: #d4af37;
+      font-weight: 600;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .control-buttons {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .btn-control {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .btn-control:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.1);
+    }
+
+    .btn-play i {
+      font-size: 1.4rem;
+    }
+
+    .volume-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+    }
+
+    .volume-slider {
+      width: 70px;
+      height: 5px;
+      -webkit-appearance: none;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #d4af37;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .volume-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.3);
+      background: #c69c2e;
+    }
+
+    .fullscreen-btn {
+      margin-left: auto;
+    }
+
+    .volume-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+      z-index: 30;
+    }
+
+    .volume-container:hover .volume-tooltip {
+      opacity: 1;
+    }
+
+    .quality-selector {
+      position: absolute;
+      bottom: 60px;
+      right: 20px;
+      background: rgba(30, 30, 40, 0.9);
+      border: 1px solid rgba(212, 175, 55, 0.3);      border-radius: 12px;
+      padding: 8px 0;
+      display: none;
+      z-index: 25;
+    }
+
+    .quality-option {
+      padding: 8px 16px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .quality-option:hover,
+    .quality-option.active {
+      background: rgba(212, 175, 55, 0.2);
+      color: #d4af37;
+    }
+
+    .quality-btn {
+      position: relative;
+    }
+
+    .quality-btn:hover .quality-selector {
+      display: block;
+    }
+
+    .loading-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.2);
+      border-top: 5px solid #d4af37;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      z-index: 15;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .video-info {
+      background: rgba(255, 255, 255, 0.1);      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 1.8rem;
+      margin-top: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .video-info h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #d4af37;
+    }
+
+    .video-info p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .video-meta {
+      display: flex;
+      gap: 20px;
+      margin-top: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.05rem;
+    }
+
+    .meta-item i {
+      color: #d4af37;
+    }
+
+    .security-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(244, 67, 54, 0.25);
+      color: #ff5252;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      z-index: 100;      border: 2px solid rgba(244, 67, 54, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(8px);
+      animation: pulseBadge 2s infinite;
+    }
+
+    @keyframes pulseBadge {
+      0%, 100% { box-shadow: 0 0 10px rgba(244, 67, 54, 0.5); }
+      50% { box-shadow: 0 0 20px rgba(244, 67, 54, 0.9); }
+    }
+
+    .security-badge i {
+      font-size: 1.3rem;
+    }
+
+    @media (max-width: 768px) {
+      .warning-card {
+        padding: 2rem;
+        border-radius: 28px;
+      }
+      
+      .warning-card h2 {
+        font-size: 2.1rem;
+      }
+      
+      .warning-card p {
+        font-size: 1.15rem;
+      }
+      
+      .warning-btn {
+        padding: 0.9rem 2rem;
+        font-size: 1.15rem;
+      }
+      
+      .login-card {
+        padding: 2rem;
+        border-radius: 24px;
+      }
+      
+      .login-card h2 {
+        font-size: 1.9rem;
+      }
+      
+      .form-group input {
+        padding: 0.9rem;
+        font-size: 1rem;
+      }
+            .login-btn {
+        padding: 1rem;
+        font-size: 1.15rem;
+      }
+      
+      .watermark-main {
+        font-size: 1.1rem;
+        padding: 8px 16px;
+      }
+      
+      .watermark-id {
+        font-size: 0.95rem;
+        padding: 6px 14px;
+      }
+      
+      .watermark-moving {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem 0.8rem;
+      }
+      
+      .warning-card {
+        padding: 1.8rem;
+        border-radius: 24px;
+        margin: 1rem;
+      }
+      
+      .warning-card h2 {
+        font-size: 1.9rem;
+      }
+      
+      .warning-card h2 i {
+        font-size: 2.4rem;
+      }
+      
+      .warning-card p {
+        font-size: 1.05rem;
+      }
+      
+      .warning-btn {
+        padding: 0.85rem 1.8rem;
+        font-size: 1.1rem;
+        width: 100%;
+      }
+      
+      .warning-btns {        flex-direction: column;
+      }
+      
+      .login-card {
+        padding: 1.8rem;
+        border-radius: 20px;
+        margin: 1rem;
+      }
+      
+      .login-card h2 {
+        font-size: 1.7rem;
+      }
+      
+      .login-card h2::after {
+        width: 65%;
+        height: 3px;
+      }
+      
+      .watermark-main {
+        font-size: 1rem;
+        bottom: 15px;
+        left: 15px;
+        padding: 7px 14px;
+      }
+      
+      .watermark-id {
+        top: 12px;
+        right: 12px;
+        font-size: 0.9rem;
+        padding: 5px 12px;
+      }
+      
+      .watermark-moving {
+        font-size: 1.1rem;
+      }
+      
+      .security-badge {
+        top: 10px;
+        right: 10px;
+        font-size: 0.95rem;
+        padding: 6px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="back-link">
+      <i class="fas fa-arrow-right"></i> بازگشت به صفحه اصلی    </a>
+
+    <div class="video-header">
+      <h1>📺 ویدیوهای راهنما</h1>
+      <p>ویژه دبیران دبیرستان حضرت امام خامنه‌ای</p>
+    </div>
+
+    <!-- Warning Modal -->
+    <div id="warning-modal">
+      <div class="warning-card">
+        <h2><i class="fas fa-exclamation-triangle"></i> هشدار امنیتی</h2>
+        <p>این ویدیو محتوای محرمانه دبیرستان است و تحت حمایت قانون کپی‌رایت قرار دارد.</p>
+        
+        <div class="warning-item">
+          <i class="fas fa-video"></i> ضبط صفحه، فیلمبرداری یا اشتراک‌گذاری این ویدیو ممنوع است.
+        </div>
+        
+        <div class="warning-item">
+          <i class="fas fa-fingerprint"></i> هر فریم از ویدیو دارای واترمارک منحصر به فرد شماست.
+        </div>
+        
+        <div class="warning-item">
+          <i class="fas fa-user-shield"></i> در صورت سوءاستفاده، هویت شما قابل ردیابی و پیگیری قانونی است.
+        </div>
+        
+        <p style="margin-top: 1.5rem; font-weight: 700; color: #ff1744;">
+          با ادامه پخش، شما با شرایط فوق موافقت می‌کنید.
+        </p>
+        
+        <div class="warning-btns">
+          <button class="warning-btn accept" id="accept-warning">
+            <i class="fas fa-check-circle"></i> موافقم و ادامه می‌دهم
+          </button>
+          <button class="warning-btn decline" id="decline-warning">
+            <i class="fas fa-times-circle"></i> انصراف
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Overlay -->
+    <div id="login-overlay">
+      <div class="login-card">
+        <h2><i class="fas fa-user-shield"></i> ورود دبیران</h2>
+        <p>برای دسترسی به ویدیوهای آموزشی، لطفاً وارد حساب کاربری خود شوید</p>
+        
+        <div class="form-group">
+          <label><i class="fas fa-mobile-alt"></i> شماره موبایل</label>
+          <input type="tel" id="login-phone" placeholder="09123456789" maxlength="11">
+        </div>        
+        <div class="form-group">
+          <label><i class="fas fa-key"></i> رمز عبور</label>
+          <input type="password" id="login-password" placeholder="••••••••">
+        </div>
+        
+        <button class="login-btn" id="login-btn">
+          <i class="fas fa-sign-in-alt"></i> ورود به پنل
+        </button>
+        
+        <div class="login-error" id="login-error"></div>
+        
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.2);">
+          <p style="font-size: 0.95rem; opacity: 0.8;">
+            <i class="fas fa-lock"></i> اطلاعات شما محفوظ است و فقط برای دبیران مدرسه قابل دسترسی می‌باشد.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video Player (Initially Hidden) -->
+    <div class="video-player" id="videoPlayer">
+      <div class="video-container" id="video-container">
+        <video class="video-element" id="videoElement" poster="http://khameneischool.site/image/dabir.jpg" oncontextmenu="return false;">
+          <source src="http://khameneischool.site/video/dabir.mp4" type="video/mp4">
+          مرورگر شما از ویدیو پشتیبانی نمی‌کند.
+        </video>
+        
+        <!-- Advanced Watermark System -->
+        <div class="watermark-container">
+          <div class="watermark-main" id="watermark-main">در حال پخش: راهنمای پنل دبیران</div>
+          <div class="watermark-id" id="watermark-id">شناسه: #000000</div>
+          
+          <!-- Moving watermarks for anti-screen-recording -->
+          <div class="watermark-moving watermark-row-1" id="wm1">کپی‌رایت © 1404 دبیرستان امام خامنه‌ای - کپی‌رایت © 1404 دبیرستان امام خامنه‌ای</div>
+          <div class="watermark-moving watermark-row-2" id="wm2">کپی‌رایت © 1404 دبیرستان امام خامنه‌ای - کپی‌رایت © 1404 دبیرستان امام خامنه‌ای</div>
+          <div class="watermark-moving watermark-row-3" id="wm3">کپی‌رایت © 1404 دبیرستان امام خامنه‌ای - کپی‌رایت © 1404 دبیرستان امام خامنه‌ای</div>
+          <div class="watermark-moving watermark-row-4" id="wm4">کپی‌رایت © 1404 دبیرستان امام خامنه‌ای - کپی‌رایت © 1404 دبیرستان امام خامنه‌ای</div>
+        </div>
+        
+        <div class="security-badge">
+          <i class="fas fa-shield-alt"></i> ضد ضبط هوشمند
+        </div>
+        <div class="play-button" id="playButton">
+          <i class="fas fa-play"></i>
+        </div>
+        <div class="loading-spinner" id="loadingSpinner"></div>
+      </div>
+      
+      <div class="video-controls" id="videoControls">        <div class="progress-container" id="progressContainer">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="controls-row">
+          <div class="time-display">
+            <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
+          </div>
+          
+          <div class="control-buttons">
+            <button class="btn-control" id="playPauseBtn">
+              <i class="fas fa-play"></i>
+            </button>
+            <button class="btn-control" id="muteBtn">
+              <i class="fas fa-volume-up"></i>
+            </button>
+            <div class="volume-container">
+              <div class="volume-tooltip">تنظیم حجم صدا</div>
+              <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.05" value="1">
+            </div>
+            <button class="btn-control quality-btn">
+              <i class="fas fa-cog"></i>
+              <div class="quality-selector">
+                <div class="quality-option active">خودکار</div>
+                <div class="quality-option">1080p</div>
+                <div class="quality-option">720p</div>
+                <div class="quality-option">480p</div>
+                <div class="quality-option">360p</div>
+              </div>
+            </button>
+            <button class="btn-control fullscreen-btn" id="fullscreenBtn">
+              <i class="fas fa-expand"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-info">
+      <h2>راهنمای جامع پنل دبیران</h2>
+      <p>در این ویدیو نحوه کار با پنل دبیران به طور کامل توضیح داده خواهد شد. این ویدیو فقط برای دبیران دبیرستان حضرت امام خامنه‌ای قابل دسترسی است و دارای سیستم امنیتی هوشمند ضد ضبط می‌باشد.</p>
+      <div class="video-meta">
+        <div class="meta-item">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <span>تیم فنی دبیرستان حضرت امام خامنه‌ای</span>
+        </div>
+        <div class="meta-item">
+          <i class="fas fa-calendar-alt"></i>
+          <span>تاریخ ویدیو: 1404/11/7</span>
+        </div>        <div class="meta-item">
+          <i class="fas fa-lock"></i>
+          <span>سطح دسترسی: محرمانه - فقط برای دبیران</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Teachers database
+      const teachers = [
+        { name: "دکتر رضایی", phone: "09120011111", password: "123456" },
+        { name: "خانم احمدی", phone: "09120022222", password: "123457" },
+        { name: "آقای محمدی", phone: "09120033333", password: "123458" },
+        { name: "خانم کاظمی", phone: "09120044444", password: "123459" },
+        { name: "آقای حسینی", phone: "09120055555", password: "123460" },
+        { name: "خانم ابراهیمی", phone: "09120066666", password: "123461" },
+        { name: "دکتر فتحی", phone: "09120077777", password: "123462" },
+        { name: "آقای موسوی", phone: "09120088888", password: "123463" },
+        { name: "خانم نوری", phone: "09120099999", password: "123464" },
+        { name: "آقای صادقی", phone: "09120101010", password: "123465" },
+        { name: "خانم رضوی", phone: "09120111111", password: "123466" },
+        { name: "آقای کریمی", phone: "09120121212", password: "123467" },
+        { name: "خانم میرزایی", phone: "09120131313", password: "123468" },
+        { name: "دکتر نجفی", phone: "09120141414", password: "123469" },
+        { name: "آقای امینی", phone: "09120151515", password: "123470" },
+        { name: "خانم زاهدی", phone: "09120161616", password: "123471" },
+        { name: "آقای طاهری", phone: "09120171717", password: "123472" },
+        { name: "خانم قاسمی", phone: "09120181818", password: "123473" },
+        { name: "آقای جعفری", phone: "09120191919", password: "123474" },
+        { name: "خانم محرابی", phone: "09120202020", password: "123475" },
+        { name: "آقای یوسفی", phone: "09120212121", password: "123476" },
+        { name: "خانم نعمتی", phone: "09120222222", password: "123477" },
+        { name: "آقای غفوری", phone: "09120232323", password: "123478" },
+        { name: "خانم صفاری", phone: "09120242424", password: "123479" },
+        { name: "آقای دهقانی", phone: "09120252525", password: "123480" },
+        { name: "خانم بابایی", phone: "09120262626", password: "123481" },
+        { name: "آقای شریفی", phone: "09120272727", password: "123482" },
+        { name: "خانم پورحسینی", phone: "09120282828", password: "123483" },
+        { name: "آقای زارع", phone: "09120292929", password: "123484" },
+        { name: "خانم خواجه‌امیری", phone: "09120303030", password: "123485" }
+      ];
+
+      const loginOverlay = document.getElementById('login-overlay');
+      const warningModal = document.getElementById('warning-modal');
+      const videoPlayer = document.getElementById('videoPlayer');
+      const loginBtn = document.getElementById('login-btn');
+      const loginError = document.getElementById('login-error');
+      const loginPhone = document.getElementById('login-phone');      const loginPassword = document.getElementById('login-password');
+      const acceptWarningBtn = document.getElementById('accept-warning');
+      const declineWarningBtn = document.getElementById('decline-warning');
+      const watermarkMain = document.getElementById('watermark-main');
+      const watermarkId = document.getElementById('watermark-id');
+      const wm1 = document.getElementById('wm1');
+      const wm2 = document.getElementById('wm2');
+      const wm3 = document.getElementById('wm3');
+      const wm4 = document.getElementById('wm4');
+      
+      let currentTeacher = null;
+      let sessionId = null;
+      
+      // Generate unique session ID
+      function generateSessionId() {
+        return Math.floor(100000 + Math.random() * 900000);
+      }
+      
+      // Show warning modal after login
+      function showWarningModal() {
+        loginOverlay.style.opacity = '0';
+        loginOverlay.style.visibility = 'hidden';
+        setTimeout(() => {
+          loginOverlay.style.display = 'none';
+          warningModal.style.display = 'flex';
+          warningModal.style.opacity = '1';
+        }, 500);
+      }
+      
+      // Accept warning and show video
+      acceptWarningBtn.addEventListener('click', () => {
+        warningModal.style.opacity = '0';
+        setTimeout(() => {
+          warningModal.style.display = 'none';
+          videoPlayer.style.display = 'block';
+          
+          // Set watermarks with teacher info and session ID
+          const now = new Date();
+          const timeString = now.toLocaleTimeString('fa-IR');
+          const dateString = now.toLocaleDateString('fa-IR');
+          sessionId = generateSessionId();
+          
+          watermarkMain.innerHTML = `دبیر: ${currentTeacher.name}<br>${dateString} - ${timeString}`;
+          watermarkId.textContent = `شناسه: #${sessionId}`;
+          
+          // Set moving watermarks with teacher name and session ID
+          const wmText = `دبیر: ${currentTeacher.name} | شناسه: ${sessionId} | ${dateString} ${timeString} | دبیرستان امام خامنه‌ای | `;
+          wm1.textContent = wmText.repeat(3);
+          wm2.textContent = wmText.repeat(3);
+          wm3.textContent = wmText.repeat(3);          wm4.textContent = wmText.repeat(3);
+          
+          // Start video player
+          initVideoPlayer();
+          
+          // Update watermark time every 30 seconds
+          setInterval(() => {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('fa-IR');
+            const dateString = now.toLocaleDateString('fa-IR');
+            watermarkMain.innerHTML = `دبیر: ${currentTeacher.name}<br>${dateString} - ${timeString}`;
+          }, 30000);
+          
+          // Randomize watermark positions every 5 seconds to prevent cropping
+          setInterval(() => {
+            const positions = ['10%', '25%', '40%', '55%', '70%', '85%'];
+            wm1.style.top = positions[Math.floor(Math.random() * positions.length)];
+            wm2.style.top = positions[Math.floor(Math.random() * positions.length)];
+            wm3.style.top = positions[Math.floor(Math.random() * positions.length)];
+            wm4.style.top = positions[Math.floor(Math.random() * positions.length)];
+          }, 5000);
+          
+        }, 500);
+      });
+      
+      // Decline warning - go back to login
+      declineWarningBtn.addEventListener('click', () => {
+        warningModal.style.opacity = '0';
+        setTimeout(() => {
+          warningModal.style.display = 'none';
+          loginOverlay.style.display = 'flex';
+          loginOverlay.style.opacity = '1';
+          loginOverlay.style.visibility = 'visible';
+        }, 500);
+      });
+      
+      // Login functionality
+      loginBtn.addEventListener('click', () => {
+        const phone = loginPhone.value.trim();
+        const password = loginPassword.value.trim();
+        
+        if (!phone || !/^09\d{9}$/.test(phone)) {
+          loginError.textContent = "لطفاً یک شماره موبایل معتبر وارد کنید (11 رقم با 09 شروع شود)";
+          return;
+        }
+        
+        if (!password || password.length < 6) {
+          loginError.textContent = "رمز عبور باید حداقل 6 کاراکتر باشد";
+          return;
+        }        
+        const teacher = teachers.find(t => t.phone === phone && t.password === password);
+        
+        if (teacher) {
+          // Successful login
+          loginError.textContent = "";
+          currentTeacher = teacher;
+          showWarningModal();
+        } else {
+          loginError.textContent = "شماره موبایل یا رمز عبور اشتباه است";
+          
+          // Shake animation for error
+          loginError.style.animation = 'none';
+          setTimeout(() => {
+            loginError.style.animation = 'shake 0.5s';
+          }, 10);
+        }
+      });
+      
+      // Allow Enter key to submit login
+      loginPhone.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') loginBtn.click();
+      });
+      
+      loginPassword.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') loginBtn.click();
+      });
+      
+      // Add shake animation CSS
+      const style = document.createElement('style');
+      style.innerHTML = `
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+          20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      // Video player initialization
+      function initVideoPlayer() {
+        const video = document.getElementById('videoElement');
+        const playButton = document.getElementById('playButton');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressContainer = document.getElementById('progressContainer');
+        const currentTimeEl = document.getElementById('currentTime');        const durationEl = document.getElementById('duration');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const videoControls = document.getElementById('videoControls');
+        const videoContainer = document.getElementById('video-container');
+        
+        let isPlaying = false;
+        let isFullscreen = false;
+        
+        // Disable right-click on video container
+        videoContainer.addEventListener('contextmenu', (e) => {
+          e.preventDefault();
+          showSecurityAlert();
+        });
+        
+        // Disable keyboard shortcuts for download/inspection
+        document.addEventListener('keydown', (e) => {
+          // Prevent Ctrl+S, Ctrl+P, F12, Ctrl+Shift+I, Ctrl+U, Ctrl+Shift+J
+          if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            showSecurityAlert();
+          }
+          if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+            e.preventDefault();
+            showSecurityAlert();
+          }
+          if (e.key === 'F12' || 
+              (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || 
+              (e.ctrlKey && e.key === 'u')) {
+            e.preventDefault();
+            showSecurityAlert();
+          }
+          // Prevent Print Screen key detection (limited effectiveness)
+          if (e.key === 'PrintScreen') {
+            setTimeout(showSecurityAlert, 100);
+          }
+        });
+        
+        // Detect screen recording (limited browser support)
+        if ('mediaDevices' in navigator && 'getDisplayMedia' in navigator.mediaDevices) {
+          // This is just a warning - we cannot actually block screen recording
+          console.log('⚠️ توجه: ضبط صفحه توسط سیستم‌عامل امکان‌پذیر است. واترمارک‌های هوشمند برای ردیابی فعال شده‌اند.');
+        }
+        
+        // Security alert function
+        function showSecurityAlert() {
+          const alertDiv = document.createElement('div');
+          alertDiv.style.position = 'fixed';
+          alertDiv.style.top = '20px';
+          alertDiv.style.left = '50%';
+          alertDiv.style.transform = 'translateX(-50%)';          alertDiv.style.background = 'rgba(244, 67, 54, 0.95)';
+          alertDiv.style.color = 'white';
+          alertDiv.style.padding = '15px 30px';
+          alertDiv.style.borderRadius = '50px';
+          alertDiv.style.zIndex = '9999999';
+          alertDiv.style.fontWeight = '700';
+          alertDiv.style.fontSize = '1.2rem';
+          alertDiv.style.boxShadow = '0 5px 30px rgba(0,0,0,0.6)';
+          alertDiv.style.animation = 'slideIn 0.3s, fadeOut 0.5s 3s forwards';
+          alertDiv.style.textAlign = 'center';
+          alertDiv.style.lineHeight = '1.4';
+          alertDiv.innerHTML = `<i class="fas fa-user-secret"></i> این ویدیو دارای واترمارک منحصر به فرد شماست (#${sessionId})<br>هشدار: ضبط و اشتراک‌گذاری ممنوع است!`;
+          document.body.appendChild(alertDiv);
+          
+          setTimeout(() => {
+            if (document.body.contains(alertDiv)) {
+              document.body.removeChild(alertDiv);
+            }
+          }, 3500);
+        }
+        
+        // Add CSS animation for security alert
+        const alertStyle = document.createElement('style');
+        alertStyle.innerHTML = `
+          @keyframes slideIn {
+            from { transform: translateX(-50%) translateY(-100px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+          }
+          @keyframes fadeOut {
+            from { opacity: 1; transform: translateX(-50%) translateY(0); }
+            to { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+          }
+        `;
+        document.head.appendChild(alertStyle);
+        
+        function formatTime(seconds) {
+          const mins = Math.floor(seconds / 60);
+          const secs = Math.floor(seconds % 60);
+          return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        function updateProgress() {
+          const progress = (video.currentTime / video.duration) * 100;
+          progressBar.style.width = `${progress}%`;
+          currentTimeEl.textContent = formatTime(video.currentTime);
+        }
+        
+        function setProgress(e) {
+          const width = progressContainer.clientWidth;
+          const clickX = e.offsetX;          const duration = video.duration;
+          video.currentTime = (clickX / width) * duration;
+        }
+        
+        function togglePlay() {
+          if (video.paused) {
+            video.play();
+            playButton.style.display = 'none';
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            isPlaying = true;
+          } else {
+            video.pause();
+            playButton.style.display = 'flex';
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            isPlaying = false;
+          }
+        }
+        
+        function toggleMute() {
+          video.muted = !video.muted;
+          muteBtn.innerHTML = video.muted 
+            ? '<i class="fas fa-volume-mute"></i>' 
+            : '<i class="fas fa-volume-up"></i>';
+          volumeSlider.value = video.muted ? 0 : video.volume;
+        }
+        
+        function updateVolume() {
+          video.volume = volumeSlider.value;
+          video.muted = video.volume === 0;
+          muteBtn.innerHTML = video.muted 
+            ? '<i class="fas fa-volume-mute"></i>' 
+            : '<i class="fas fa-volume-up"></i>';
+        }
+        
+        function toggleFullscreen() {
+          if (!isFullscreen) {
+            if (videoContainer.requestFullscreen) {
+              videoContainer.requestFullscreen();
+            } else if (videoContainer.mozRequestFullScreen) {
+              videoContainer.mozRequestFullScreen();
+            } else if (videoContainer.webkitRequestFullscreen) {
+              videoContainer.webkitRequestFullscreen();
+            } else if (videoContainer.msRequestFullscreen) {
+              videoContainer.msRequestFullscreen();
+            }
+            fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+          } else {
+            if (document.exitFullscreen) {
+              document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {              document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+              document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+              document.msExitFullscreen();
+            }
+            fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+          }
+          isFullscreen = !isFullscreen;
+        }
+        
+        let hideControlsTimeout;
+        
+        videoContainer.addEventListener('mousemove', () => {
+          videoControls.style.transform = 'translateY(0)';
+          clearTimeout(hideControlsTimeout);
+          hideControlsTimeout = setTimeout(() => {
+            if (!isPlaying) return;
+            videoControls.style.transform = 'translateY(100%)';
+          }, 3000);
+        });
+        
+        playButton.addEventListener('click', togglePlay);
+        playPauseBtn.addEventListener('click', togglePlay);
+        muteBtn.addEventListener('click', toggleMute);
+        volumeSlider.addEventListener('input', updateVolume);
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        progressContainer.addEventListener('click', setProgress);
+        
+        video.addEventListener('loadedmetadata', () => {
+          durationEl.textContent = formatTime(video.duration);
+        });
+        
+        video.addEventListener('timeupdate', updateProgress);
+        
+        video.addEventListener('play', () => {
+          playButton.style.display = 'none';
+          playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+          isPlaying = true;
+          videoControls.style.transform = 'translateY(0)';
+        });
+        
+        video.addEventListener('pause', () => {
+          playButton.style.display = 'flex';
+          playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+          isPlaying = false;
+        });
+        
+        video.addEventListener('waiting', () => {
+          loadingSpinner.style.display = 'block';        });
+        
+        video.addEventListener('canplay', () => {
+          loadingSpinner.style.display = 'none';
+        });
+        
+        video.addEventListener('ended', () => {
+          playButton.style.display = 'flex';
+          playPauseBtn.innerHTML = '<i class="fas fa-redo"></i>';
+          isPlaying = false;
+        });
+        
+        document.addEventListener('fullscreenchange', () => {
+          isFullscreen = !!document.fullscreenElement;
+          fullscreenBtn.innerHTML = isFullscreen 
+            ? '<i class="fas fa-compress"></i>' 
+            : '<i class="fas fa-expand"></i>';
+        });
+        
+        document.addEventListener('keydown', (e) => {
+          if (e.key === ' ') {
+            e.preventDefault();
+            togglePlay();
+          } else if (e.key === 'm') {
+            toggleMute();
+          } else if (e.key === 'f') {
+            toggleFullscreen();
+          } else if (e.key === 'ArrowRight') {
+            video.currentTime = Math.min(video.duration, video.currentTime + 5);
+          } else if (e.key === 'ArrowLeft') {
+            video.currentTime = Math.max(0, video.currentTime - 5);
+          }
+        });
+        
+        video.volume = 0.7;
+        volumeSlider.value = video.volume;
+        
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          setTimeout(() => {
+            videoControls.style.transform = 'translateY(100%)';
+          }, 3000);
+        }
+      }
+      
+      // Initial security notice in console (deters tech-savvy users)
+      console.log('%c⚠️ امنیت ویدیو', 'color: #ff1744; font-size: 20px; font-weight: bold;');
+      console.log('%cاین ویدیو دارای سیستم امنیتی هوشمند است:', 'color: #d4af37; font-size: 16px; font-weight: bold;');
+      console.log('%c• واترمارک‌های پویا با شناسه منحصر به فرد کاربر', 'color: white;');
+      console.log('%c• ردیابی کامل هر فریم ویدیو', 'color: white;');
+      console.log('%c• هرگونه ضبط یا اشتراک‌گذاری قابل پیگیری قانونی است', 'color: #ff1744; font-weight: bold;');      console.log('%c• اطلاعات شما در سرورهای مدرسه ذخیره شده است', 'color: white;');
+    });
+  </script>
+</body>
+</html>
