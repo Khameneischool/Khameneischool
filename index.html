@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>دبیرستان حضرت امام خامنه‌ای | پیشخوان شیشه‌ای</title>
+  <meta name="description" content="پیشخوان رسمی دبیرستان با طراحی مدرن شیشه‌ای">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <style>
+    /* ========== BASE ========== */
+    :root {
+      --red: #b31b1b;
+      --gold: #d4af37;
+      --blue: #1a237e;
+      --primary: #4CAF50;
+      --secondary: #2196F3;
+      --accent: #FF9800;
+      --purple: #9C27B0;
+      --live-red: #ff3a4e;
+      --glass-light: rgba(255, 255, 255, 0.22);
+      --glass-dark: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.28);
+      --border-strong: rgba(255, 255, 255, 0.42);
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      --shadow-hover: 0 18px 50px rgba(0, 0, 0, 0.75);
+      --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+      --status-color: #4CAF50;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;      background-attachment: fixed;
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      position: relative;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ========== GLASS SHADER EFFECT ========== */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
+        radial-gradient(circle at 30% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+        radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
+      z-index: -3;
+      opacity: 0.85;
+    }
+
+    /* ========== FLOATING ORBS ========== */
+    .floating-orb {
+      position: fixed;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      z-index: -1;
+      animation: floatOrb 25s infinite linear;
+      opacity: 0.6;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      25% { transform: translateY(-60px) translateX(40px) rotate(90deg); opacity: 0.3; }
+      50% { transform: translateY(-120px) translateX(0) rotate(180deg); opacity: 0.1; }
+      75% { transform: translateY(-60px) translateX(-40px) rotate(270deg); opacity: 0.3; }
+      100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.6; }
+    }
+
+    /* ========== SCROLL PROGRESS ========== */
+    .scroll-progress {      position: fixed;
+      top: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--live-red), var(--accent), var(--purple), var(--secondary), var(--primary), var(--gold));
+      z-index: 10000;
+      width: 0%;
+      box-shadow: 0 0 15px rgba(255, 60, 78, 0.9), 0 0 25px rgba(255, 152, 0, 0.8);
+      transition: width 0.12s ease;
+    }
+
+    /* ========== LOADER ========== */
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .spinner {
+      width: 80px;
+      height: 80px;
+      border: 8px solid rgba(212, 175, 55, 0.2);
+      border-top: 8px solid var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 2rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #loader p {
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+      text-align: center;
+      line-height: 1.5;
+      max-width: 90%;    }
+
+    #loader p span {
+      color: var(--gold);
+      display: block;
+      font-size: 1.4rem;
+      margin-top: 0.5rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    /* ========== TUTORIAL MODAL ========== */
+    #tutorial-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99998;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    #tutorial-modal.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: var(--glass-dark);
+      backdrop-filter: blur(40px);      -webkit-backdrop-filter: blur(40px);
+      border: 3px solid var(--border-strong);
+      border-radius: 40px;
+      padding: 3rem;
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      transform: translateY(30px);
+      opacity: 0;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      box-shadow: var(--shadow);
+    }
+
+    #tutorial-modal.visible .modal-content {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .modal-content::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 43px;
+      animation: rotateGradient 10s linear infinite;
+      opacity: 0.85;
+    }
+
+    .modal-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--gold);
+      font-weight: 800;
+      position: relative;
+      display: inline-block;
+    }
+
+    .modal-content h2::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      right: 50%;
+      transform: translateX(50%);
+      width: 70%;      height: 4px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--gold);
+    }
+
+    .modal-content p {
+      font-size: 1.3rem;
+      line-height: 1.8;
+      margin: 1.2rem 0;
+      opacity: 0.95;
+    }
+
+    .tutorial-btn {
+      background: var(--glass-light);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid var(--border-strong);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .tutorial-btn::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      animation: rotateGradient 8s linear infinite;
+      opacity: 0.85;
+    }
+
+    .tutorial-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+    /* ========== STATUS INDICATOR ========== */
+    .status-indicator {
+      text-align: center;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.4rem;
+      background: var(--glass-dark);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 2px solid var(--border-strong);
+      border-radius: 40px;
+      padding: 1rem 2rem;
+      display: inline-block;
+      transform: translateY(30px);
+      opacity: 0;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status-indicator.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .status-indicator::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+      z-index: -1;
+      border-radius: 43px;
+      animation: rotateGradient 8s linear infinite;
+      opacity: 0.85;
+    }
+
+    .status-indicator::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: 40px;
+      z-index: -1;
+    }
+
+    .status-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: var(--status-color);
+      display: inline-block;
+      animation: blink 1.2s infinite;
+      box-shadow: 0 0 12px var(--status-color);
+      position: relative;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--status-color); }
+      50% { opacity: 0.6; box-shadow: 0 0 20px var(--status-color), 0 0 30px var(--status-color); }
+    }
+
+    /* ========== GLASS CARD ========== */
+    .glass {
+      background: var(--glass-dark);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 2px solid var(--border-strong);
+      border-radius: 35px;
+      box-shadow: var(--shadow);
+      padding: 2.5rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(40px);
+      opacity: 0;
+    }
+
+    .glass.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .glass::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      bottom: -3px;
+      left: -3px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));      z-index: -1;
+      border-radius: 38px;
+      animation: rotateGradient 12s linear infinite;
+      opacity: 0.85;
+    }
+
+    .glass::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: 35px;
+      z-index: -1;
+    }
+
+    .glass:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-strong);
+    }
+
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 3rem;
+      transform: translateY(50px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .hero.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -50%;      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 25px var(--gold);
+      animation: floatHero 4s ease-in-out infinite;
+      transition: var(--transition);
+    }
+
+    .hero-img:hover {
+      transform: scale(1.05) rotate(5deg);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 35px var(--gold), 0 0 50px var(--secondary);
+    }
+
+    @keyframes floatHero {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .hero-text {
+      text-align: center;
+      max-width: 650px;
+    }
+
+    .hero-text h1 {      font-size: 3.2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, white, var(--gold), white, var(--secondary), white);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      animation: pulseGlow 3s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { text-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 25px rgba(212, 175, 55, 0.7); }
+      50% { text-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 35px rgba(212, 175, 55, 1), 0 0 50px rgba(33, 150, 243, 0.8); }
+    }
+
+    .hero-text p {
+      font-size: 1.5rem;
+      opacity: 0.92;
+      font-weight: 400;
+      margin-top: 1rem;
+      letter-spacing: 1px;
+      font-style: italic;
+      position: relative;
+    }
+
+    .hero-text p::before,
+    .hero-text p::after {
+      content: """;
+      position: absolute;
+      font-size: 2.8rem;
+      opacity: 0.7;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .hero-text p::before {
+      top: -1.2rem;
+      right: -1rem;
+    }
+
+    .hero-text p::after {
+      bottom: -1.5rem;
+      left: -1rem;
+    }
+
+    /* ========== NAVIGATION ========== */
+    .nav {
+      display: flex;      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin: 2.5rem auto 3.5rem;
+      max-width: 1400px;
+      padding: 0 1.5rem;
+      transform: translateY(40px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .nav.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .nav-btn {
+      background: var(--glass-light);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid var(--border);
+      color: white;
+      padding: 1rem 1.8rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+      min-width: 150px;
+      position: relative;
+      overflow: hidden;
+      font-size: 1.05rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .nav-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      z-index: 1;
+      animation: shineNav 3s infinite;
+      opacity: 0;
+    }
+    @keyframes shineNav {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    .nav-btn:hover::before {
+      opacity: 1;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      border-color: var(--border-strong);
+    }
+
+    .nav-btn::after {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--secondary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-btn:hover::after {
+      opacity: 0.85;
+    }
+
+    .nav-btn.support {
+      background: rgba(33, 150, 243, 0.25);
+    }
+    .nav-btn.admin {
+      background: rgba(244, 67, 54, 0.25);
+    }
+    .nav-btn.class {
+      background: rgba(76, 175, 80, 0.25);
+    }
+    .nav-btn.blog {
+      background: rgba(156, 39, 176, 0.25);
+    }
+    .nav-btn.library {
+      background: rgba(255, 152, 0, 0.25);
+    }
+    .nav-btn.tv {
+      background: rgba(233, 30, 99, 0.25);    }
+    .nav-btn.feedback {
+      background: rgba(156, 39, 176, 0.3);
+    }
+
+    /* ========== SECTIONS ========== */
+    .section {
+      padding: 4rem 2rem 3rem;
+      position: relative;
+      z-index: 15;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 3rem;
+      font-weight: 800;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 3px 15px rgba(0,0,0,0.4);
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 15px var(--gold);
+    }
+
+    /* Grids */
+    .grid {
+      display: grid;      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
+
+    /* Announcement Card */
+    .ann-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 18px;
+      margin: 1.2rem 0;
+      transition: var(--transition);
+      border: 2px solid var(--border);
+    }
+
+    .ann-card img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+
+    .ann-card strong {
+      display: inline-block;
+      background: rgba(212, 175, 55, 0.2);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+      border: 1px solid var(--gold);
+    }
+
+    .ann-card h3 {
+      font-size: 1.6rem;
+      margin: 0.6rem 0;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .ann-card p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-top: 0.8rem;
+      opacity: 0.92;
+    }
+
+    /* Teachers */
+    .student-card {
+      text-align: center;
+      padding: 2.2rem;
+    }
+    .student-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid var(--gold);
+      margin-bottom: 1.2rem;
+      object-fit: cover;
+      transition: var(--transition);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .student-card img:hover {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 25px var(--gold);
+    }
+
+    .student-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .student-card p {
+      font-size: 1.15rem;
+      opacity: 0.9;
+      margin-top: 0.4rem;
+    }
+
+    /* Contact Section */
+    .contact-card {
+      text-align: center;
+      max-width: 750px;
+      margin: 0 auto;
+      padding: 3rem;
+    }
+
+    .contact-card p {
+      font-size: 1.4rem;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+      opacity: 0.95;
+    }
+
+    .contact-card strong {
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .contact-card i {
+      font-size: 4.5rem;
+      margin-top: 1.5rem;
+      background: linear-gradient(to right, var(--secondary), var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      animation: floatIcon 3s infinite ease-in-out;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Location Section */
+    .location-card {
+      text-align: center;
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 2.5rem;
+    }
+
+    .location-card p {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.95;
+    }
+
+    .map-container {
+      margin: 2rem 0;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--border-strong);
+      position: relative;
+    }
+
+    .map-container::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--red), var(--gold), var(--blue), var(--red));
+      z-index: -1;
+      border-radius: 23px;
+      animation: rotateGradient 10s linear infinite;      opacity: 0.85;
+    }
+
+    .map-container iframe {
+      border: none;
+      border-radius: 18px;
+      width: 100%;
+      height: 380px;
+      display: block;
+    }
+
+    .map-btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      background: var(--glass-light);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 2px solid var(--border-strong);
+      color: white;
+      padding: 1rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-btn::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: 53px;
+      animation: rotateGradient 8s linear infinite;
+      opacity: 0.85;
+    }
+
+    .map-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Footer */
+    .footer {      text-align: center;
+      padding: 3rem 1.5rem 4rem;
+      font-size: 1.15rem;
+      opacity: 0.9;
+      background: var(--glass-dark);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-top: 2px solid var(--border-strong);
+      margin-top: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: footerLine 3s infinite;
+    }
+
+    @keyframes footerLine {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .footer p {
+      margin: 0.6rem 0;
+      line-height: 1.6;
+    }
+
+    .footer strong {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .footer a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+
+    .footer a:hover {
+      text-shadow: 0 0 10px var(--gold);
+      transform: scale(1.05);
+    }
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .hero-text h1 { font-size: 2.8rem; }
+      .hero-img { width: 110px; height: 110px; }
+      .section-title { font-size: 2.7rem; }
+      .nav-btn { padding: 0.9rem 1.6rem; font-size: 1rem; min-width: 140px; }
+      .student-card img { width: 110px; height: 110px; }
+      .grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 4rem 1.5rem 3rem;
+      }
+      
+      .hero-text h1 {
+        font-size: 2.4rem;
+        letter-spacing: 0;
+      }
+      
+      .hero-text p {
+        font-size: 1.35rem;
+      }
+      
+      .hero-img {
+        width: 90px;
+        height: 90px;
+      }
+      
+      .hero-content {
+        gap: 1.5rem;
+      }
+      
+      .nav {
+        gap: 0.8rem;
+        margin: 2rem auto 3rem;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .nav-btn {
+        padding: 0.9rem 1.5rem;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .status-indicator {
+        flex-direction: column;        gap: 8px;
+        padding: 1.2rem 1.8rem;
+      }
+      
+      .status-circle {
+        width: 20px;
+        height: 20px;
+      }
+      
+      .section {
+        padding: 3rem 1.5rem 2.5rem;
+      }
+      
+      .section-title {
+        font-size: 2.4rem;
+        margin-bottom: 2.2rem;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .ann-card img {
+        height: 180px;
+      }
+      
+      .student-card {
+        padding: 2rem;
+      }
+      
+      .student-card img {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .student-card h3 {
+        font-size: 1.5rem;
+      }
+      
+      .contact-card {
+        padding: 2.2rem;
+      }
+      
+      .contact-card p {
+        font-size: 1.3rem;
+      }
+      
+      .contact-card i {
+        font-size: 4rem;
+      }      
+      .map-container iframe {
+        height: 300px;
+      }
+      
+      .map-btn {
+        padding: 0.9rem 1.8rem;
+        font-size: 1.1rem;
+      }
+      
+      .footer {
+        padding: 2.5rem 1.5rem 3rem;
+        font-size: 1.05rem;
+      }
+      
+      .modal-content {
+        padding: 2rem;
+        border-radius: 30px;
+      }
+      
+      .modal-content h2 {
+        font-size: 2rem;
+      }
+      
+      .modal-content p {
+        font-size: 1.15rem;
+      }
+      
+      .tutorial-btn {
+        padding: 0.9rem 2rem;
+        font-size: 1.15rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+      }
+      
+      .hero {
+        padding: 3.5rem 1rem 2.5rem;
+      }
+      
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-text p {
+        font-size: 1.25rem;
+      }      
+      .hero-img {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .nav-btn {
+        padding: 0.85rem 1.5rem;
+        font-size: 1rem;
+      }
+      
+      .section-title {
+        font-size: 2.1rem;
+      }
+      
+      .ann-card img {
+        height: 160px;
+      }
+      
+      .student-card img {
+        width: 90px;
+        height: 90px;
+      }
+      
+      .map-container iframe {
+        height: 250px;
+      }
+      
+      .footer {
+        font-size: 1rem;
+      }
+      
+      .spinner {
+        width: 60px;
+        height: 60px;
+        border-width: 6px;
+      }
+      
+      #loader p {
+        font-size: 1.5rem;
+      }
+      
+      #loader p span {
+        font-size: 1.2rem;
+      }
+      
+      .modal-content {
+        padding: 1.8rem;
+        border-radius: 25px;
+        margin: 1rem;      }
+      
+      .modal-content h2 {
+        font-size: 1.8rem;
+      }
+      
+      .modal-content p {
+        font-size: 1.1rem;
+      }
+      
+      .tutorial-btn {
+        padding: 0.8rem 1.8rem;
+        font-size: 1.1rem;
+        width: 100%;
+      }
+      
+      .floating-orb {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>در حال بارگذاری...<br><span>طراحی شده با 🩷 توسط سپهر قاسمی و ماهان جهاندیده</span></p>
+  </div>
+
+  <!-- Tutorial Modal -->
+  <div id="tutorial-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <h2>سلام دوست عزیز!</h2>
+      <p>برای اضافه کردن سایت به صفحه اصلی لطفا روی دکمه سه نقطه بزن و افزودن به صفحه اصلی رو بزن و تمام</p>
+      <button id="tutorial-close" class="tutorial-btn">متوجه شدم</button>
+    </div>
+  </div>
+
+  <!-- Floating decorative orbs -->
+  <div class="floating-orb" style="width: 220px; height: 220px; top: 15%; left: 8%; animation-delay: 0s;"></div>
+  <div class="floating-orb" style="width: 180px; height: 180px; top: 55%; left: 92%; animation-delay: -7s;"></div>
+  <div class="floating-orb" style="width: 140px; height: 140px; top: 80%; left: 12%; animation-delay: -15s;"></div>
+  <div class="floating-orb" style="width: 200px; height: 200px; top: 35%; left: 85%; animation-delay: -10s;"></div>
+  
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- Hero Section -->  <div class="hero">
+    <div class="hero-content">
+      <img src="https://cdn.nody.ir/files/2025/03/31/nody-%D8%B9%DA%A9%D8%B3-%D8%A2%D9%82%D8%A7%DB%8C-%D8%AE%D9%85%DB%8C%D9%86%DB%8C-%D8%AE%D8%A7%D9%85%D9%86%D9%87-%D8%A7%DB%8C-1743377593.webp" alt="رهبر انقلاب" class="hero-img">
+      <div class="hero-text">
+        <h1>به پیشخوان دبیرستان حضرت امام خامنه‌ای خوش آمدید</h1>
+        <p>گام‌هایی فراتر از دانش، در سایه ولایت</p>
+      </div>
+      <img src="https://uploadkon.ir/do.php?imgf=dddd27_26-2147483648-210314-1-.png" alt="لوگوی مدرسه" class="hero-img">
+    </div>
+  </div>
+  
+  <!-- Navigation Buttons -->
+  <div class="nav">
+    <a href="#announcements" class="nav-btn">اطلاعیه‌ها</a>
+    <a href="register-student.html" class="nav-btn">ثبت‌نام دانش‌آموز</a>
+    <a href="consoler.html" class="nav-btn">پنل مشاور مدرسه</a>
+    <a href="teacher-login.html" class="nav-btn">پنل دبیران</a>
+    <a href="student-panel.html" class="nav-btn">پنل دانش‌آموز</a>
+    <a href="deputy-panel.html" class="nav-btn admin">خدمات پرورشی</a>
+    <a href="counselor-panel.html" class="nav-btn admin">دریافت نوبت مشاوره</a>
+    <a href="private-classes.html" class="nav-btn class">کلاس خصوصی</a>
+    <a href="study-hub.html" class="nav-btn" style="background: rgba(106, 27, 154, 0.25);">پنل اولیا</a>
+    <a href="exam-review-package.html" class="nav-btn" style="background: rgba(156, 39, 176, 0.25);">بسته جمع‌بندی شب امتحان</a>
+    <a href="soal.html" class="nav-btn support">سوالی دارید؟</a>
+    <a href="admin-panel.html" class="nav-btn admin">پنل مدیر</a>
+    <a href="feedback.html" class="nav-btn feedback">پیشنهادات و انتقادات</a>
+    <a href="blog.html" class="nav-btn blog">بلاگ</a>
+    <a href="library.html" class="nav-btn library">کتابخانه(بزودی)</a>
+    <a href="tv.html" class="nav-btn tv">تلویزیون اینترنتی</a>
+  </div>
+
+  <!-- Announcements -->
+  <section class="section" id="announcements">
+    <div class="container">
+      <div class="status-indicator">
+        <div class="status-circle"></div>
+        <span>وضعیت مدارس: حضوری</span>
+      </div>
+      
+      <h2 class="section-title">📢 اطلاعیه‌های رسمی</h2>
+      <div class="grid">
+        <div class="glass ann-card">
+          <strong>1404/11/6</strong>
+          <h3>اطلاعیه آزمون های ابلاغ شده</h3>
+          <p>قابل توجه دانش آموزان پایه هفتم،دوره سوم آزمون تیمز در تاریخ 1404/11/9 برگزار خواهد شد.این آزمون به صورت تستی و دروس ریاضی و علوم می باشد.</p>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5lrIqBBcIT7wc1-HmyfAWpcK1m3_s0TY4Dw&s" alt="آزمون">
+        </div>
+        <div class="glass ann-card">
+          <strong>1404/10/11</strong>
+          <h3>اطلاعیه وضعیت سایت دبیرستان</h3>          <p>همراهان گرامی وبسایت تمامی خدمات وبسایت دبیرستان متصل و پایدار هستند؛ ممکن است اختلالات اینترنت بر روی خدمات سایت تاثیر گذار باشند،این مشکل خارج از تیم فنی دبیرستان است از صبوری شما سپاسگزاریم</p>
+          <img src="https://static2.jamaran.news/servev2/2vH3fzVR6YY7/lLl5vbV5w7c,/%D8%A7%DB%8C%D9%86%D8%AA%D8%B1%D9%86%D8%AA+%D8%A7%DB%8C%D8%B1%D8%A7%D9%86+%D9%82%D8%B7%D8%B9+%D8%A7%D8%B3%D8%AA.jpg" alt="اطلاعیه">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teachers -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">👨‍🏫 اساتید دبیرستان حضرت امام خامنه‌ای</h2>
+      <div class="grid">
+        <div class="glass student-card">
+          <img src="https://via.placeholder.com/120/b31b1b/ffffff?text=آ." alt="آقای پوریوسفی">
+          <h3>حسن پوریوسفی بهان</h3>
+          <p>مدیریت دبیرستان</p>
+        </div>
+        <div class="glass student-card">
+          <img src="https://via.placeholder.com/120/b31b1b/ffffff?text=س." alt="آقای دادجوی">
+          <h3>امیرمنصور کاشانی ادیب</h3>
+          <p>معاون پرورشی دبیرستان</p>
+        </div>
+        <div class="glass student-card">
+          <img src="https://via.placeholder.com/120/b31b1b/ffffff?text=ا." alt="آقای بابایی">
+          <h3>مجید علی نیا</h3>
+          <p>معاون انظباط</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">📞 تماس با ما</h2>
+      <div class="glass contact-card">
+        <p>تماس با مدرسه: <strong>02155536959</strong><br>
+          آدرس: خانی آباد نو، خیابان میثاق، خیابان گلستان</p>
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location with Embedded Map -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">📍 موقعیت مکانی مدرسه</h2>
+      <div class="glass location-card">
+        <p>آدرس: خانی آباد نو، خیابان میثاق، خیابان گلستان</p>
+                <div class="map-container">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.531277653521!2d51.40183027556105!3d35.73672647262817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x9518e982d0fe9f5a!2z2KfYr9uM2KfYp9mH2KfYp9ix2KfYp9mHINmF2YbZhNuM2YfYp9mGINi32YjbjNin2KfYp9ix2KfYp9mH!5e0!3m2!1sfa!2sir!4v1710000000000!5m2!1sfa!2sir" 
+            width="100%" 
+            height="380" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+        <a href="https://www.google.com/maps/place/%D9%85%D8%AF%D8%B1%D8%B3%D9%87+%D8%A2%DB%8C%D8%AA+%D8%A7%D9%84%D9%84%D9%87+%D8%AE%D8%A7%D9%85%D9%86%D9%87+%D8%A7%DB%8C%E2%80%AD/data=!4m2!3m1!1s0x0:0x9518e982d0fe9f5a?sa=X&ved=1t:2428&ictx=111" 
+           target="_blank" 
+           class="map-btn">
+          🗺️ نمایش در گوگل مپس (تمام‌صفحه)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>طراحی و توسعه داده‌شده توسط <a href="sepehr.html">سپهر قاسمی</a> و <a href="mahan.html">ماهان جهاندیده</a></p>
+    <p>© ۱۴۰۵ — تمامی حقوق این وبسایت محفوظ است.</p>
+  </footer>
+
+  <!-- ========== Mu.Chat Widget ========== -->
+  <script type="module">
+    import Chatbox from 'https://cdn.mu.chat/embeds/dist/chatbox/index.js?v=2';
+    Chatbox.initBubble({
+      agentId: 'cmj4jidm500zle4isml9dm25y'
+    });
+  </script>
+
+  <!-- ========== GSAP Animations ========== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Show loader for 3 seconds
+      const loader = document.getElementById('loader');
+      const tutorialModal = document.getElementById('tutorial-modal');
+      const tutorialCloseBtn = document.getElementById('tutorial-close');
+      
+      // Hide loader after 3 seconds
+      setTimeout(() => {
+        loader.style.opacity = '0';
+        loader.style.visibility = 'hidden';
+        
+        // Initialize page animations after loader hides
+        initPageAnimations();        
+        // Show tutorial if it's the first visit
+        if (!localStorage.getItem('tutorialShown')) {
+          setTimeout(() => {
+            tutorialModal.classList.add('visible');
+            localStorage.setItem('tutorialShown', 'true');
+          }, 500);
+        }
+      }, 3000);
+      
+      // Close tutorial modal
+      tutorialCloseBtn.addEventListener('click', () => {
+        tutorialModal.classList.remove('visible');
+      });
+      
+      // Close modal when clicking on overlay
+      tutorialModal.querySelector('.modal-overlay').addEventListener('click', () => {
+        tutorialModal.classList.remove('visible');
+      });
+    });
+    
+    // Initialize page animations
+    function initPageAnimations() {
+      // Animate hero section
+      setTimeout(() => {
+        document.querySelector('.hero').classList.add('visible');
+      }, 300);
+      
+      // Animate navigation
+      setTimeout(() => {
+        document.querySelector('.nav').classList.add('visible');
+      }, 600);
+      
+      // Animate status indicator
+      setTimeout(() => {
+        document.querySelector('.status-indicator').classList.add('visible');
+      }, 900);
+      
+      // Animate glass cards with stagger
+      setTimeout(() => {
+        document.querySelectorAll('.glass').forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add('visible');
+          }, 300 + (index * 200));
+        });
+      }, 1200);
+      
+      // Scroll progress indicator
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+        document.getElementById('scroll-progress').style.width = `${scrolled}%`;
+      });
+      
+      // Add floating animation to orbs
+      document.querySelectorAll('.floating-orb').forEach((orb, index) => {
+        const duration = 25 + Math.random() * 15;
+        const delay = Math.random() * 10;
+        orb.style.animationDuration = `${duration}s`;
+        orb.style.animationDelay = `${-delay}s`;
+      });
+      
+      // Interactive effects for nav buttons
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+          btn.style.transform = 'translateY(-5px) scale(1.05)';
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'translateY(0) scale(1)';
+        });
+      });
+      
+      // Parallax effect on hero images
+      document.addEventListener('mousemove', (e) => {
+        const heroImgs = document.querySelectorAll('.hero-img');
+        if (window.innerWidth > 768) {
+          heroImgs.forEach(img => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            img.style.transform = `translate3d(${xAxis}px, ${yAxis}px, 0) rotate(${xAxis/10}deg)`;
+          });
+        }
+      });
+      
+      // Reset parallax on mouse leave
+      document.querySelector('.hero').addEventListener('mouseleave', () => {
+        document.querySelectorAll('.hero-img').forEach(img => {
+          img.style.transform = 'translate3d(0, 0, 0)';
+        });
+      });
+    }
+  </script>
+</body>
+</html>
