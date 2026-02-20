@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود امن پنل دبیران | دبیرستان حضرت امام خامنه‌ای</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #d4af37; --blue: #2196F3; --green: #4CAF50; --red: #f44336; --purple: #9C27B0;
+      --dark-bg: #0a0a1a; --card-bg: rgba(255, 255, 255, 0.1); --card-border: rgba(255, 255, 255, 0.3);
+      --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(135deg, var(--dark-bg), #0f1428, #0a0f1f, var(--dark-bg));
+      color: white; min-height: 100vh; display: flex; justify-content: center; align-items: center;
+      padding: 1.5rem; position: relative; overflow-x: hidden;
+    }
+    body::before {
+      content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
+                  radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
+                  radial-gradient(circle at 30% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+                  radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
+      z-index: -3; opacity: 0.85;
+    }
+    .floating-orb {
+      position: fixed; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      z-index: -2; animation: floatOrb 25s infinite linear; opacity: 0.6;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+    }
+    @keyframes floatOrb {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      25% { transform: translateY(-60px) translateX(40px) rotate(90deg); opacity: 0.3; }
+      50% { transform: translateY(-120px) translateX(0) rotate(180deg); opacity: 0.1; }
+      75% { transform: translateY(-60px) translateX(-40px) rotate(270deg); opacity: 0.3; }
+      100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.6; }
+    }
+    .login-container { max-width: 550px; width: 100%; animation: fadeInUp 0.8s ease-out; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .login-card {
+      background: var(--card-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+      border: 2px solid var(--card-border); border-radius: 40px; padding: 3rem;      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); position: relative; overflow: hidden;
+      transform: translateY(20px); opacity: 0; animation: slideIn 0.6s ease-out forwards 0.2s;
+    }
+    @keyframes slideIn { to { transform: translateY(0); opacity: 1; } }
+    .login-card::before {
+      content: ""; position: absolute; top: -2px; right: -2px; bottom: -2px; left: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--blue), var(--green), var(--purple), var(--gold));
+      z-index: -1; border-radius: 43px; animation: rotateGradient 18s linear infinite; opacity: 0.9;
+    }
+    @keyframes rotateGradient { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .card-header { text-align: center; margin-bottom: 2.5rem; }
+    .card-header i {
+      font-size: 5rem; margin-bottom: 1.5rem;
+      background: linear-gradient(to right, var(--gold), var(--blue), var(--green));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      display: block; animation: floatIcon 4s ease-in-out infinite; text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    @keyframes floatIcon { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-15px) scale(1.05); } }
+    .card-header h1 {
+      font-size: 2.8rem; margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      font-weight: 800; position: relative; display: inline-block;
+    }
+    .card-header h1::after {
+      content: ""; position: absolute; bottom: -12px; right: 50%; transform: translateX(-50%);
+      width: 75%; height: 5px; background: var(--gold); border-radius: 3px; box-shadow: 0 0 20px var(--gold);
+    }
+    .card-header p { font-size: 1.4rem; opacity: 0.92; margin-top: 1.2rem; line-height: 1.7; }
+    .steps-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 2rem; }
+    .step {
+      width: 12px; height: 12px; background: rgba(255, 255, 255, 0.3); border-radius: 50%;
+      position: relative; transition: var(--transition);
+    }
+    .step.active { background: var(--gold); transform: scale(1.4); box-shadow: 0 0 12px var(--gold); }
+    .step.completed { background: var(--green); transform: scale(1.2); }
+    .step::after {
+      content: ""; position: absolute; top: 50%; left: 100%; width: 25px; height: 2px;
+      background: rgba(255, 255, 255, 0.2); transform: translateY(-50%);
+    }
+    .step:last-child::after { display: none; }
+    .form-group { margin-bottom: 2rem; text-align: right; position: relative; }
+    .form-group label {
+      display: block; margin-bottom: 1rem; font-weight: 700; color: var(--gold);
+      font-size: 1.25rem; position: relative; padding-bottom: 6px;
+    }
+    .form-group label::after {
+      content: ""; position: absolute; bottom: 0; right: 0; width: 40px; height: 3px;
+      background: var(--gold); border-radius: 2px;
+    }    .form-group input {
+      width: 100%; padding: 1.4rem; border: 2px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.12); color: white; border-radius: 22px;
+      font-family: 'Vazirmatn', sans-serif; font-size: 1.25rem; direction: ltr; text-align: left;
+      transition: var(--transition); position: relative; z-index: 2;
+    }
+    .form-group input:focus {
+      outline: none; border-color: var(--gold); box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+      background: rgba(255, 255, 255, 0.18); transform: scale(1.01);
+    }
+    .form-group input::placeholder { color: rgba(255, 255, 255, 0.55); direction: rtl; text-align: right; }
+    .password-toggle {
+      position: absolute; left: 18px; top: 58%; transform: translateY(-50%);
+      background: none; border: none; color: rgba(255, 255, 255, 0.7);
+      font-size: 1.5rem; cursor: pointer; z-index: 3; padding: 8px; border-radius: 50%;
+      transition: var(--transition);
+    }
+    .password-toggle:hover {
+      color: var(--gold); background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-50%) scale(1.15);
+    }
+    .password-strength { margin-top: 12px; height: 6px; background: rgba(255, 255, 255, 0.15); border-radius: 10px; overflow: hidden; }
+    .strength-bar { height: 100%; width: 0%; border-radius: 10px; transition: width 0.5s ease, background 0.5s ease; }
+    .strength-text { margin-top: 8px; font-size: 1.1rem; text-align: left; font-weight: 500; height: 18px; color: rgba(255, 255, 255, 0.85); }
+    .login-btn, .biometric-btn, .skip-btn {
+      width: 100%; padding: 1.6rem; border: none; border-radius: 55px;
+      font-size: 1.55rem; font-weight: 800; cursor: pointer; margin-top: 1.2rem;
+      transition: var(--transition); font-family: 'Vazirmatn', sans-serif;
+      position: relative; overflow: hidden; letter-spacing: 1px; z-index: 2;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+    }
+    .login-btn {
+      background: linear-gradient(45deg, var(--gold), var(--blue), var(--green));
+      color: var(--dark-bg); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+    }
+    .login-btn::before {
+      content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.8s; z-index: -1;
+    }
+    .login-btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 30px rgba(212, 175, 55, 0.75); }
+    .login-btn:hover::before { left: 100%; }
+    .login-btn:active { transform: translateY(1px); }
+    .login-btn:disabled {
+      background: linear-gradient(45deg, #9e9e9e, #616161); cursor: not-allowed;
+      transform: none; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    }
+    .biometric-btn {
+      background: linear-gradient(45deg, var(--purple), #7B1FA2, var(--blue));
+      color: white; box-shadow: 0 8px 25px rgba(156, 39, 176, 0.5);    }
+    .biometric-btn::before {
+      content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.8s; z-index: -1;
+    }
+    .biometric-btn:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(156, 39, 176, 0.7), 0 12px 30px rgba(33, 150, 243, 0.6);
+    }
+    .biometric-btn:hover::before { left: 100%; }
+    .biometric-btn:disabled {
+      background: linear-gradient(45deg, #616161, #424242); cursor: not-allowed;
+      transform: none; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    }
+    .skip-btn {
+      background: rgba(255, 255, 255, 0.15);
+      color: white; border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    .skip-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+    .biometric-icon { font-size: 2rem; animation: pulseBiometric 2s infinite; }
+    @keyframes pulseBiometric { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    .divider {
+      text-align: center; margin: 1.5rem 0; position: relative;
+      color: rgba(255, 255, 255, 0.6); font-size: 1.1rem;
+    }
+    .divider::before, .divider::after {
+      content: ""; position: absolute; top: 50%; width: 35%; height: 1px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .divider::before { right: 0; }
+    .divider::after { left: 0; }
+    .security-check { display: none; text-align: center; padding: 2rem 1.5rem; }
+    .security-check.active { display: block; animation: fadeIn 0.6s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .security-animation {
+      width: 100px; height: 100px; background: rgba(33, 150, 243, 0.15);
+      border: 4px solid var(--blue); border-radius: 50%; margin: 0 auto 25px;
+      position: relative; overflow: hidden; box-shadow: 0 0 30px rgba(33, 150, 243, 0.6);
+    }
+    .security-animation::before {
+      content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      animation: rotateSecurity 4s linear infinite;
+    }
+    @keyframes rotateSecurity { to { transform: rotate(360deg); } }    .security-animation i {
+      font-size: 4rem; color: var(--blue); position: relative; z-index: 2;
+      animation: bounceIcon 2s ease-in-out infinite;
+    }
+    @keyframes bounceIcon { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-10px) scale(1.1); } }
+    .security-message {
+      font-size: 1.8rem; font-weight: 700; margin: 20px 0 15px;
+      background: linear-gradient(to right, var(--blue), var(--gold));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .security-submessage { font-size: 1.3rem; opacity: 0.9; line-height: 1.7; max-width: 450px; margin: 0 auto; }
+    .security-progress {
+      width: 100%; max-width: 400px; height: 10px; background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px; margin: 20px auto 0; overflow: hidden; position: relative;
+    }
+    .security-progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--blue), var(--gold), var(--green));
+      border-radius: 10px; position: relative; transition: width 0.5s ease;
+    }
+    .security-progress-bar::after {
+      content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shineProgress 2s infinite;
+    }
+    @keyframes shineProgress { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+    .login-error {
+      color: var(--red); margin-top: 1.2rem; font-weight: 700; min-height: 1.8rem;
+      font-size: 1.2rem; text-align: center; animation: shake 0.5s;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+      20%, 40%, 60%, 80% { transform: translateX(6px); }
+    }
+    .security-info {
+      background: rgba(33, 150, 243, 0.15); border-left: 4px solid var(--blue);
+      border-radius: 0 15px 15px 0; padding: 15px; margin-top: 2rem;
+      text-align: right; font-size: 1.1rem; line-height: 1.7;
+    }
+    .security-info strong { color: var(--gold); display: block; margin: 8px 0; }
+    .security-info i { color: var(--blue); margin-left: 5px; }
+    .biometric-status {
+      text-align: center; padding: 12px; margin: 10px 0; border-radius: 12px;
+      font-size: 1.1rem; display: none;
+    }
+    .biometric-status.supported {
+      background: rgba(76, 175, 80, 0.2); color: var(--green);
+      display: block; border: 1px solid rgba(76, 175, 80, 0.4);
+    }    .biometric-status.not-supported {
+      background: rgba(244, 67, 54, 0.15); color: var(--red);
+      display: block; border: 1px solid rgba(244, 67, 54, 0.3);
+    }
+    .biometric-loading {
+      display: none; text-align: center; padding: 15px;
+      background: rgba(33, 150, 243, 0.15); border-radius: 15px;
+      margin: 15px 0; border: 1px solid rgba(33, 150, 243, 0.4);
+    }
+    .biometric-loading.show { display: block; animation: fadeIn 0.3s; }
+    .biometric-loading i { font-size: 2rem; color: var(--blue); margin-bottom: 10px; }
+    .biometric-loading p { font-size: 1.2rem; }
+    
+    /* Biometric Registration Prompt */
+    .biometric-prompt {
+      display: none;
+      text-align: center;
+      padding: 2.5rem;
+      background: rgba(76, 175, 80, 0.15);
+      border-radius: 30px;
+      border: 2px solid rgba(76, 175, 80, 0.4);
+      margin-top: 2rem;
+      animation: slideUp 0.6s ease-out;
+    }
+    .biometric-prompt.show { display: block; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .biometric-prompt i {
+      font-size: 5rem;
+      color: var(--green);
+      margin-bottom: 1.5rem;
+      animation: pulseBiometric 2s infinite;
+    }
+    .biometric-prompt h2 {
+      font-size: 2.2rem;
+      color: var(--green);
+      margin-bottom: 1rem;
+      font-weight: 800;
+    }
+    .biometric-prompt p {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+    .biometric-prompt .benefits {
+      text-align: right;
+      background: rgba(0, 0, 0, 0.2);      padding: 1.5rem;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+    }
+    .biometric-prompt .benefits li {
+      list-style: none;
+      padding: 8px 0;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .biometric-prompt .benefits li i {
+      color: var(--green);
+      font-size: 1.3rem;
+    }
+    .biometric-prompt-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .biometric-prompt-buttons .biometric-btn,
+    .biometric-prompt-buttons .skip-btn {
+      flex: 1;
+      min-width: 200px;
+      margin-top: 0;
+    }
+    
+    /* Quick Biometric Login */
+    .quick-biometric-section {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+    .quick-biometric-section.show { display: block; }
+    .quick-biometric-section i {
+      font-size: 6rem;
+      color: var(--purple);
+      margin-bottom: 1.5rem;
+      animation: pulseBiometric 2s infinite;
+    }
+    .quick-biometric-section h2 {
+      font-size: 2.4rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-weight: 800;
+    }
+    .quick-biometric-section p {
+      font-size: 1.3rem;
+      opacity: 0.9;      margin-bottom: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      .login-card { padding: 2.5rem; border-radius: 35px; }
+      .card-header i { font-size: 4.2rem; }
+      .card-header h1 { font-size: 2.4rem; }
+      .card-header p { font-size: 1.25rem; }
+      .form-group input { padding: 1.2rem; font-size: 1.15rem; border-radius: 20px; }
+      .login-btn, .biometric-btn, .skip-btn { padding: 1.4rem; font-size: 1.4rem; border-radius: 50px; }
+      .security-animation { width: 90px; height: 90px; }
+      .security-animation i { font-size: 3.5rem; }
+      .security-message { font-size: 1.6rem; }
+      .security-submessage { font-size: 1.2rem; }
+      .biometric-prompt { padding: 2rem; }
+      .biometric-prompt i { font-size: 4rem; }
+      .biometric-prompt h2 { font-size: 1.9rem; }
+      .biometric-prompt p { font-size: 1.2rem; }
+      .biometric-prompt .benefits { padding: 1.2rem; }
+      .biometric-prompt .benefits li { font-size: 1.05rem; }
+      .biometric-prompt-buttons { flex-direction: column; }
+      .quick-biometric-section i { font-size: 5rem; }
+      .quick-biometric-section h2 { font-size: 2.1rem; }
+      .quick-biometric-section p { font-size: 1.2rem; }
+    }
+    @media (max-width: 480px) {
+      body { padding: 1rem; }
+      .login-container { max-width: 100%; }
+      .login-card { padding: 2rem; border-radius: 30px; margin: 0 10px; }
+      .login-card::before { border-radius: 33px; }
+      .card-header i { font-size: 3.6rem; margin-bottom: 1.2rem; }
+      .card-header h1 { font-size: 2.1rem; }
+      .card-header h1::after { width: 70%; height: 4px; }
+      .card-header p { font-size: 1.15rem; margin-top: 1rem; }
+      .steps-container { gap: 10px; margin-bottom: 1.8rem; }
+      .step { width: 10px; height: 10px; }
+      .step::after { width: 20px; }
+      .form-group { margin-bottom: 1.7rem; }
+      .form-group label { font-size: 1.15rem; margin-bottom: 0.9rem; }
+      .form-group label::after { width: 35px; height: 2.5px; }
+      .form-group input { padding: 1.1rem; font-size: 1.1rem; border-radius: 18px; }
+      .password-toggle { left: 15px; font-size: 1.4rem; }
+      .password-strength { height: 5px; }
+      .strength-text { font-size: 1.05rem; }
+      .login-btn, .biometric-btn, .skip-btn { padding: 1.3rem; font-size: 1.35rem; border-radius: 48px; }
+      .security-check { padding: 1.8rem 1.2rem; }
+      .security-animation { width: 80px; height: 80px; margin-bottom: 20px; }
+      .security-animation i { font-size: 3.2rem; }
+      .security-message { font-size: 1.5rem; margin: 15px 0 12px; }
+      .security-submessage { font-size: 1.15rem; }      .security-progress { height: 8px; margin-top: 15px; }
+      .login-error { font-size: 1.1rem; }
+      .security-info { font-size: 1.05rem; padding: 12px; }
+      .biometric-prompt { padding: 1.8rem; }
+      .biometric-prompt i { font-size: 3.5rem; }
+      .biometric-prompt h2 { font-size: 1.7rem; }
+      .biometric-prompt p { font-size: 1.15rem; }
+      .biometric-prompt .benefits { padding: 1rem; }
+      .biometric-prompt .benefits li { font-size: 1rem; }
+      .quick-biometric-section { padding: 1.5rem; }
+      .quick-biometric-section i { font-size: 4.5rem; }
+      .quick-biometric-section h2 { font-size: 1.9rem; }
+      .quick-biometric-section p { font-size: 1.15rem; }
+      .floating-orb { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-orb" style="width: 200px; height: 200px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+  <div class="floating-orb" style="width: 160px; height: 160px; top: 65%; left: 90%; animation-delay: -8s;"></div>
+  <div class="floating-orb" style="width: 120px; height: 120px; top: 85%; left: 10%; animation-delay: -16s;"></div>
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="card-header">
+        <i class="fas fa-fingerprint" id="header-icon"></i>
+        <h1 id="card-title">ورود امن پنل دبیران</h1>
+        <p id="card-subtitle">سیستم احراز هویت پیشرفته دبیرستان امام خامنه‌ای</p>
+      </div>
+      
+      <div class="steps-container" id="steps-container">
+        <div class="step" id="step-1"></div>
+        <div class="step" id="step-2"></div>
+        <div class="step" id="step-3"></div>
+        <div class="step" id="step-4"></div>
+      </div>
+      
+      <!-- Biometric Status -->
+      <div class="biometric-status" id="biometric-status"></div>
+      
+      <!-- Biometric Loading -->
+      <div class="biometric-loading" id="biometric-loading">
+        <i class="fas fa-fingerprint"></i>
+        <p id="biometric-loading-text">در حال تأیید هویت بیومتریک...</p>
+      </div>
+      
+      <!-- Quick Biometric Login (for returning users with biometric) -->
+      <div class="quick-biometric-section" id="quick-biometric-section">
+        <i class="fas fa-fingerprint"></i>
+        <h2>ورود سریع با اثر انگشت</h2>        <p>برای ورود به پنل، اثر انگشت یا Face ID خود را تأیید کنید</p>
+        <button class="biometric-btn" id="quick-biometric-btn">
+          <i class="fas fa-fingerprint biometric-icon"></i>
+          تأیید با اثر انگشت / Face ID
+        </button>
+        <div class="divider">یا</div>
+        <button class="skip-btn" id="use-normal-login-btn">
+          <i class="fas fa-keyboard"></i> استفاده از روش معمولی
+        </button>
+      </div>
+      
+      <!-- Step 1: Teacher ID -->
+      <div id="step-id" class="form-step">
+        <div class="form-group">
+          <label><i class="fas fa-id-card"></i> شناسه دبیر (ایمیل سازمانی)</label>
+          <input type="text" id="teacher-id" placeholder="مثال: ahmadi@khameneischool.site" required autocomplete="username">
+          <input type="text" id="honeypot" style="display:none;" autocomplete="off">
+        </div>
+        <button type="submit" class="login-btn" id="next-btn">
+          <i class="fas fa-arrow-left"></i> ادامه
+        </button>
+        <div class="login-error" id="id-error"></div>
+      </div>
+      
+      <!-- Step 2: Security Check Animation -->
+      <div id="step-security" class="security-check">
+        <div class="security-animation"><i class="fas fa-shield-alt"></i></div>
+        <div class="security-message">در حال بررسی امنیتی...</div>
+        <p class="security-submessage">
+          سیستم در حال تأیید هویت شما با سرورهای امنیتی مرکزی است. 
+          این فرآیند ممکن است تا 3 ثانیه طول بکشد.
+        </p>
+        <div class="security-progress">
+          <div class="security-progress-bar" id="security-progress-bar"></div>
+        </div>
+      </div>
+      
+      <!-- Step 3: Password -->
+      <div id="step-password" class="form-step" style="display: none;">
+        <div class="form-group">
+          <label><i class="fas fa-key"></i> رمز عبور</label>
+          <input type="password" id="password" placeholder="رمز عبور خود را وارد کنید" required autocomplete="current-password">
+          <button type="button" class="password-toggle" id="toggle-password"><i class="fas fa-eye"></i></button>
+          <div class="password-strength"><div class="strength-bar" id="strength-bar"></div></div>
+          <div class="strength-text" id="strength-text">رمز عبور خود را وارد کنید</div>
+        </div>
+        <button type="submit" class="login-btn" id="password-next-btn" disabled>
+          <i class="fas fa-arrow-left"></i> ادامه
+        </button>
+        <div class="login-error" id="password-error"></div>      </div>
+      
+      <!-- Step 4: 2FA Code -->
+      <div id="step-2fa" class="form-step" style="display: none;">
+        <div class="form-group">
+          <label><i class="fas fa-shield-alt"></i> کد تأیید دو مرحله‌ای</label>
+          <input type="text" id="2fa-code" placeholder="کد 6 رقمی را وارد کنید" maxlength="6" required>
+        </div>
+        <button type="submit" class="login-btn" id="login-btn">
+          <i class="fas fa-sign-in-alt"></i> ورود به پنل دبیران
+        </button>
+        <div class="login-error" id="2fa-error"></div>
+        <div class="security-info">
+          <i class="fas fa-lock"></i> <strong>نکات امنیتی:</strong>
+          <br>• رمز عبور شما هرگز در سرورهای ما ذخیره نمی‌شود
+          <br>• پس از 3 تلاش ناموفق، حساب شما به مدت 15 دقیقه مسدود می‌شود
+          <br>• در صورت فراموشی رمز عبور، با مدیریت مدرسه تماس بگیرید
+        </div>
+      </div>
+      
+      <!-- Biometric Registration Prompt (shown after successful login) -->
+      <div class="biometric-prompt" id="biometric-prompt">
+        <i class="fas fa-fingerprint"></i>
+        <h2>ورود خود را آسان‌تر کنید! 🔐</h2>
+        <p>آیا می‌خواهید در ورودهای بعدی بدون نیاز به رمز عبور و کد تأیید، فقط با اثر انگشت وارد شوید؟</p>
+        
+        <div class="benefits">
+          <li><i class="fas fa-check-circle"></i> ورود سریع در کمتر از 2 ثانیه</li>
+          <li><i class="fas fa-check-circle"></i> بدون نیاز به یادآوری رمز عبور</li>
+          <li><i class="fas fa-check-circle"></i> امنیت بالاتر با احراز هویت بیومتریک</li>
+          <li><i class="fas fa-check-circle"></i> حذف مراحل طولانی ورود</li>
+        </div>
+        
+        <div class="biometric-prompt-buttons">
+          <button class="biometric-btn" id="register-biometric-btn">
+            <i class="fas fa-fingerprint biometric-icon"></i>
+            بله، اثر انگشت ثبت کن
+          </button>
+          <button class="skip-btn" id="skip-biometric-btn">
+            <i class="fas fa-forward"></i>
+            بعداً انجام می‌دهم
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Initialize floating orbs      document.querySelectorAll('.floating-orb').forEach((orb, index) => {
+        const duration = 25 + Math.random() * 15;
+        const delay = Math.random() * 10;
+        orb.style.animationDuration = `${duration}s`;
+        orb.style.animationDelay = `${-delay}s`;
+      });
+      
+      // DOM Elements
+      const headerIcon = document.getElementById('header-icon');
+      const cardTitle = document.getElementById('card-title');
+      const cardSubtitle = document.getElementById('card-subtitle');
+      const stepsContainer = document.getElementById('steps-container');
+      const teacherIdInput = document.getElementById('teacher-id');
+      const passwordInput = document.getElementById('password');
+      const twoFaInput = document.getElementById('2fa-code');
+      const nextBtn = document.getElementById('next-btn');
+      const passwordNextBtn = document.getElementById('password-next-btn');
+      const loginBtn = document.getElementById('login-btn');
+      const stepId = document.getElementById('step-id');
+      const stepSecurity = document.getElementById('step-security');
+      const stepPassword = document.getElementById('step-password');
+      const step2fa = document.getElementById('step-2fa');
+      const step1 = document.getElementById('step-1');
+      const step2 = document.getElementById('step-2');
+      const step3 = document.getElementById('step-3');
+      const step4 = document.getElementById('step-4');
+      const idError = document.getElementById('id-error');
+      const passwordError = document.getElementById('password-error');
+      const twoFaError = document.getElementById('2fa-error');
+      const securityProgressBar = document.getElementById('security-progress-bar');
+      const togglePasswordBtn = document.getElementById('toggle-password');
+      const strengthBar = document.getElementById('strength-bar');
+      const strengthText = document.getElementById('strength-text');
+      const honeypot = document.getElementById('honeypot');
+      const biometricStatus = document.getElementById('biometric-status');
+      const biometricLoading = document.getElementById('biometric-loading');
+      const biometricLoadingText = document.getElementById('biometric-loading-text');
+      const biometricPrompt = document.getElementById('biometric-prompt');
+      const registerBiometricBtn = document.getElementById('register-biometric-btn');
+      const skipBiometricBtn = document.getElementById('skip-biometric-btn');
+      const quickBiometricSection = document.getElementById('quick-biometric-section');
+      const quickBiometricBtn = document.getElementById('quick-biometric-btn');
+      const useNormalLoginBtn = document.getElementById('use-normal-login-btn');
+      
+      const FORMSPREE_URL = 'https://formspree.io/f/xayvkwzj';
+      let currentTeacherId = '';
+      let securityCheckComplete = false;
+      let pendingTeacherData = null; // Store teacher data temporarily before biometric registration
+      
+      // ========== Check for Existing Biometric ==========      const savedTeacher = localStorage.getItem('currentTeacher');
+      const hasBiometric = savedTeacher && localStorage.getItem(`biometric_${JSON.parse(savedTeacher).id}`);
+      
+      if (hasBiometric) {
+        // Show quick biometric login
+        showQuickBiometricLogin(JSON.parse(savedTeacher));
+      } else {
+        // Show normal login flow
+        step1.classList.add('active');
+        teacherIdInput.focus();
+      }
+      
+      // ========== Biometric Authentication Functions ==========
+      
+      async function checkBiometricSupport() {
+        if (!window.PublicKeyCredential) {
+          biometricStatus.textContent = '⚠️ دستگاه شما از ورود بیومتریک پشتیبانی نمی‌کند';
+          biometricStatus.className = 'biometric-status not-supported';
+          return false;
+        }
+        
+        try {
+          const isAvailable = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable?.();
+          
+          if (isAvailable) {
+            biometricStatus.textContent = '✅ ورود با اثر انگشت یا Face ID فعال است';
+            biometricStatus.className = 'biometric-status supported';
+            return true;
+          } else {
+            biometricStatus.textContent = '⚠️ سنسور بیومتریک در این دستگاه یافت نشد';
+            biometricStatus.className = 'biometric-status not-supported';
+            return false;
+          }
+        } catch (error) {
+          console.log('Biometric check error:', error);
+          biometricStatus.textContent = '⚠️ امکان بررسی پشتیبانی بیومتریک وجود نداشت';
+          biometricStatus.className = 'biometric-status not-supported';
+          return false;
+        }
+      }
+      
+      function generateBiometricToken(teacherId) {
+        const timestamp = Date.now();
+        const random = Math.random().toString(36).substring(2, 15);
+        return btoa(`${teacherId}:${timestamp}:${random}`);
+      }
+      
+      function verifyBiometricToken(storedToken, teacherId) {
+        try {
+          const decoded = atob(storedToken);          return decoded.startsWith(`${teacherId}:`);
+        } catch {
+          return false;
+        }
+      }
+      
+      async function registerBiometric(teacherId) {
+        try {
+          registerBiometricBtn.disabled = true;
+          registerBiometricBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ثبت...';
+          biometricLoading.classList.add('show');
+          biometricLoadingText.textContent = 'لطفاً اثر انگشت یا Face ID خود را تأیید کنید...';
+          
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          
+          const confirmed = confirm('🔐 برای ثبت اثر انگشت/Face ID:\n\nلطفاً سنسور دستگاه خود را لمس کنید یا Face ID را تأیید کنید.\n\n(این یک شبیه‌سازی برای دمو است)');
+          
+          if (confirmed) {
+            const biometricToken = generateBiometricToken(teacherId);
+            localStorage.setItem(`biometric_${teacherId}`, biometricToken);
+            
+            biometricLoadingText.textContent = '✅ با موفقیت ثبت شد! در حال هدایت...';
+            registerBiometricBtn.innerHTML = '<i class="fas fa-check"></i> ثبت شد!';
+            registerBiometricBtn.style.background = 'linear-gradient(45deg, #4CAF50, #2E7D32)';
+            
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Redirect to teacher-login.html (main login page)
+            window.location.href = 'teacher-login.html';
+            
+            return true;
+          } else {
+            throw new Error('User cancelled');
+          }
+        } catch (error) {
+          console.error('Biometric registration error:', error);
+          biometricLoadingText.textContent = '❌ خطا در ثبت';
+          registerBiometricBtn.innerHTML = '<i class="fas fa-times"></i> خطا در ثبت';
+          registerBiometricBtn.style.background = 'linear-gradient(45deg, #f44336, #c62828)';
+          
+          setTimeout(() => {
+            biometricLoading.classList.remove('show');
+            registerBiometricBtn.disabled = false;
+            registerBiometricBtn.innerHTML = '<i class="fas fa-fingerprint biometric-icon"></i> بله، اثر انگشت ثبت کن';
+            registerBiometricBtn.style.background = '';
+          }, 3000);
+          
+          return false;
+        }
+      }      
+      async function authenticateBiometric(teacherId) {
+        try {
+          const storedToken = localStorage.getItem(`biometric_${teacherId}`);
+          if (!storedToken) {
+            alert('لطفاً ابتدا اثر انگشت یا Face ID خود را ثبت کنید.');
+            return null;
+          }
+          
+          biometricLoading.classList.add('show');
+          biometricLoadingText.textContent = 'در حال تأیید هویت بیومتریک...';
+          
+          await new Promise(resolve => setTimeout(resolve, 1200));
+          
+          const confirmed = confirm('🔐 برای ورود:\n\nلطفاً اثر انگشت یا Face ID خود را تأیید کنید.\n\n(این یک شبیه‌سازی برای دمو است)');
+          
+          if (confirmed) {
+            if (verifyBiometricToken(storedToken, teacherId)) {
+              biometricLoadingText.textContent = '✅ تأیید شد! در حال ورود...';
+              await new Promise(resolve => setTimeout(resolve, 800));
+              return { success: true, teacherId: teacherId };
+            }
+          }
+          
+          biometricLoading.classList.remove('show');
+          return null;
+        } catch (error) {
+          console.error('Biometric authentication error:', error);
+          biometricLoading.classList.remove('show');
+          return null;
+        }
+      }
+      
+      // ========== UI Functions ==========
+      
+      function showQuickBiometricLogin(teacher) {
+        // Hide steps and show quick biometric section
+        stepsContainer.style.display = 'none';
+        stepId.style.display = 'none';
+        stepSecurity.style.display = 'none';
+        stepPassword.style.display = 'none';
+        step2fa.style.display = 'none';
+        
+        // Update header
+        headerIcon.className = 'fas fa-fingerprint';
+        cardTitle.textContent = 'ورود سریع';
+        cardSubtitle.textContent = `خوش آمدید، ${teacher.name}`;
+        
+        // Show quick biometric section
+        quickBiometricSection.classList.add('show');        
+        // Store teacher data for later use
+        pendingTeacherData = teacher;
+      }
+      
+      function showBiometricPrompt(teacherData) {
+        // Hide all steps
+        stepId.style.display = 'none';
+        stepSecurity.style.display = 'none';
+        stepPassword.style.display = 'none';
+        step2fa.style.display = 'none';
+        stepsContainer.style.display = 'none';
+        
+        // Update header
+        headerIcon.className = 'fas fa-fingerprint';
+        cardTitle.textContent = 'تکمیل ورود';
+        cardSubtitle.textContent = `خوش آمدید، ${teacherData.name}`;
+        
+        // Store teacher data for biometric registration
+        pendingTeacherData = teacherData;
+        
+        // Check biometric support and show prompt
+        checkBiometricSupport().then(supported => {
+          if (supported) {
+            biometricPrompt.classList.add('show');
+          } else {
+            // If not supported, just redirect
+            setTimeout(() => {
+              window.location.href = 'teacher-login.html';
+            }, 2000);
+          }
+        });
+      }
+      
+      // ========== Event Listeners ==========
+      
+      // Quick biometric login button
+      quickBiometricBtn?.addEventListener('click', async () => {
+        if (pendingTeacherData) {
+          const result = await authenticateBiometric(pendingTeacherData.id);
+          if (result?.success) {
+            // Update last login
+            pendingTeacherData.lastLogin = new Date().toISOString();
+            pendingTeacherData.loginCount = (pendingTeacherData.loginCount || 0) + 1;
+            localStorage.setItem('currentTeacher', JSON.stringify(pendingTeacherData));
+            localStorage.setItem('loginCount', pendingTeacherData.loginCount.toString());
+            
+            quickBiometricBtn.innerHTML = '<i class="fas fa-check-circle"></i> ورود موفق! در حال هدایت...';
+            quickBiometricBtn.style.background = 'linear-gradient(45deg, #4CAF50, #2E7D32)';
+                        setTimeout(() => {
+              window.location.href = 'teacher-panel.html';
+            }, 1500);
+          } else {
+            twoFaError.textContent = 'تأیید بیومتریک ناموفق بود. لطفاً از روش معمولی استفاده کنید.';
+            twoFaError.style.animation = 'none';
+            setTimeout(() => { twoFaError.style.animation = 'shake 0.5s'; }, 10);
+          }
+        }
+      });
+      
+      // Use normal login button
+      useNormalLoginBtn?.addEventListener('click', () => {
+        // Show normal login flow
+        quickBiometricSection.classList.remove('show');
+        stepsContainer.style.display = 'flex';
+        stepId.style.display = 'block';
+        headerIcon.className = 'fas fa-chalkboard-teacher';
+        cardTitle.textContent = 'ورود امن پنل دبیران';
+        cardSubtitle.textContent = 'سیستم احراز هویت پیشرفته دبیرستان امام خامنه‌ای';
+        step1.classList.add('active');
+        teacherIdInput.focus();
+      });
+      
+      // Register biometric button (after successful login)
+      registerBiometricBtn?.addEventListener('click', async () => {
+        if (pendingTeacherData) {
+          await registerBiometric(pendingTeacherData.id);
+        }
+      });
+      
+      // Skip biometric button
+      skipBiometricBtn?.addEventListener('click', () => {
+        // Just redirect to teacher-login.html
+        window.location.href = 'teacher-login.html';
+      });
+      
+      // Toggle password visibility
+      togglePasswordBtn.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        togglePasswordBtn.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+      });
+      
+      // Password strength checker
+      passwordInput.addEventListener('input', () => {
+        const password = passwordInput.value;
+        let strength = 0;
+        if (password.length >= 8) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;        if (/[0-9]/.test(password)) strength += 25;
+        if (/[^A-Za-z0-9]/.test(password)) strength += 25;
+        strengthBar.style.width = `${strength}%`;
+        if (strength < 30) { strengthBar.style.background = '#f44336'; strengthText.textContent = 'ضعیف - رمز عبور بسیار ساده'; strengthText.style.color = '#f44336'; }
+        else if (strength < 60) { strengthBar.style.background = '#FF9800'; strengthText.textContent = 'متوسط - بهتر است قوی‌تر باشد'; strengthText.style.color = '#FF9800'; }
+        else if (strength < 90) { strengthBar.style.background = '#2196F3'; strengthText.textContent = 'خوب - رمز عبور مناسب است'; strengthText.style.color = '#2196F3'; }
+        else { strengthBar.style.background = '#4CAF50'; strengthText.textContent = 'عالی - رمز عبور بسیار قوی'; strengthText.style.color = '#4CAF50'; }
+        if (strength >= 60) { passwordNextBtn.disabled = false; passwordNextBtn.style.opacity = '1'; }
+        else { passwordNextBtn.disabled = true; passwordNextBtn.style.opacity = '0.7'; }
+      });
+      
+      // Step 1: Handle ID submission
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (honeypot.value) { sendSecurityAlert('Bot detected via honeypot', currentTeacherId); showError(idError, 'خطای امنیتی! لطفاً صفحه را مجدداً بارگذاری کنید.'); return; }
+        const teacherId = teacherIdInput.value.trim().toLowerCase();
+        const emailRegex = /^[^\s@]+@khameneischool\.site$/;
+        if (!emailRegex.test(teacherId)) { showError(idError, 'لطفاً یک شناسه معتبر با دامنه @khameneischool.site وارد کنید'); sendFailedAttempt(teacherId, 'Invalid email format'); return; }
+        currentTeacherId = teacherId;
+        stepId.style.display = 'none'; stepSecurity.style.display = 'block'; stepPassword.style.display = 'none'; step2fa.style.display = 'none';
+        step1.classList.remove('active'); step1.classList.add('completed'); step2.classList.add('active'); step3.classList.remove('active'); step3.classList.remove('completed'); step4.classList.remove('active'); step4.classList.remove('completed');
+        startSecurityCheck();
+      });
+      
+      // Step 3: Handle password submission
+      passwordNextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!securityCheckComplete) { showError(passwordError, 'لطفاً تا اتمام بررسی امنیتی صبر کنید'); return; }
+        const password = passwordInput.value.trim();
+        if (password.length < 8) { showError(passwordError, 'رمز عبور باید حداقل 8 کاراکتر باشد'); sendFailedAttempt(currentTeacherId, 'Weak password'); return; }
+        stepSecurity.style.display = 'none'; stepPassword.style.display = 'none'; step2fa.style.display = 'block';
+        step2.classList.remove('active'); step2.classList.add('completed'); step3.classList.remove('active'); step3.classList.add('completed'); step4.classList.add('active');
+        twoFaInput.focus();
+      });
+      
+      // Step 4: Handle 2FA code submission
+      loginBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const twoFaCode = twoFaInput.value.trim();
+        const valid2FACodes = {
+          'ahmadi@khameneischool.site': '123456', 'mohammadi@khameneischool.site': '234567',
+          'kazemi@khameneischool.site': '345678', 'hoseini@khameneischool.site': '456789',
+          'ebrahimi@khameneischool.site': '567890', 'fathi@khameneischool.site': '678901',
+          'mosavi@khameneischool.site': '789012', 'nouri@khameneischool.site': '890123',
+          'sadeghi@khameneischool.site': '901234', 'demo@khameneischool.site': '947218'
+        };
+        const expectedCode = valid2FACodes[currentTeacherId] || '947218';
+        if (twoFaCode !== expectedCode) {
+          showError(twoFaError, 'کد تأیید نامعتبر است. لطفاً کد ارسال شده را وارد کنید.');
+          sendFailedAttempt(currentTeacherId, 'Invalid 2FA code');          const failedAttempts = parseInt(localStorage.getItem('failedAttempts') || '0');
+          localStorage.setItem('failedAttempts', (failedAttempts + 1).toString());
+          if (failedAttempts >= 2) {
+            const lockoutTime = new Date().getTime() + (15 * 60 * 1000);
+            localStorage.setItem('accountLockedUntil', lockoutTime.toString());
+            setTimeout(() => { alert('⚠️ توجه: به دلیل 3 تلاش ناموفق، حساب شما به مدت 15 دقیقه مسدود شد. لطفاً بعداً تلاش کنید.'); }, 100);
+          }
+          return;
+        }
+        completeLogin(currentTeacherId);
+      });
+      
+      // Complete login function
+      function completeLogin(teacherId) {
+        const teacherNameMap = {
+          'ahmadi@khameneischool.site': 'خانم احمدی', 'mohammadi@khameneischool.site': 'آقای محمدی',
+          'kazemi@khameneischool.site': 'خانم کاظمی', 'hoseini@khameneischool.site': 'آقای حسینی',
+          'ebrahimi@khameneischool.site': 'خانم ابراهیمی', 'fathi@khameneischool.site': 'دکتر فتحی',
+          'mosavi@khameneischool.site': 'آقای موسوی', 'nouri@khameneischool.site': 'خانم نوری',
+          'sadeghi@khameneischool.site': 'آقای صادقی', 'demo@khameneischool.site': 'دکتر دمو'
+        };
+        const teacherName = teacherNameMap[teacherId] || 'دبیر محترم';
+        pendingTeacherData = {
+          id: teacherId, name: teacherName, subject: "ریاضی",
+          loginTime: new Date().toISOString(), lastLogin: new Date().toISOString(),
+          loginCount: (parseInt(localStorage.getItem('loginCount') || '0')) + 1
+        };
+        
+        // Show biometric registration prompt
+        showBiometricPrompt(pendingTeacherData);
+      }
+      
+      function startSecurityCheck() {
+        securityCheckComplete = false;
+        let progress = 0;
+        const interval = setInterval(() => {
+          progress += Math.random() * 15;
+          if (progress > 100) progress = 100;
+          securityProgressBar.style.width = `${progress}%`;
+          if (progress >= 100) {
+            clearInterval(interval);
+            securityCheckComplete = true;
+            setTimeout(() => {
+              stepSecurity.style.display = 'none';
+              stepPassword.style.display = 'block';
+              step2.classList.remove('active'); step2.classList.add('completed'); step3.classList.add('active');
+              passwordInput.focus();
+              const successMsg = document.createElement('div');
+              successMsg.style.color = '#4CAF50'; successMsg.style.textAlign = 'center';
+              successMsg.style.marginBottom = '15px'; successMsg.style.fontWeight = '600';              successMsg.style.fontSize = '1.3rem';
+              successMsg.innerHTML = '<i class="fas fa-check-circle"></i> هویت شما تأیید شد. لطفاً رمز عبور خود را وارد کنید.';
+              stepPassword.insertBefore(successMsg, stepPassword.firstChild);
+              setTimeout(() => { if (successMsg.parentNode) successMsg.parentNode.removeChild(successMsg); }, 5000);
+            }, 800);
+          }
+        }, 200);
+      }
+      
+      function showError(element, message) {
+        element.textContent = message;
+        element.style.animation = 'none';
+        setTimeout(() => { element.style.animation = 'shake 0.5s'; }, 10);
+        setTimeout(() => { element.textContent = ''; }, 5000);
+      }
+      
+      function sendFailedAttempt(teacherId, reason) {
+        const failedAttemptData = {
+          form_type: 'failed_login_attempt', teacher_id: teacherId || 'unknown', reason: reason,
+          timestamp: new Date().toISOString(), ip_address: 'unknown',
+          user_agent: navigator.userAgent, honeypot_value: honeypot.value
+        };
+        fetch(FORMSPREE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(failedAttemptData) }).catch(error => console.error('Error logging failed login attempt:', error));
+      }
+      
+      function sendSecurityAlert(reason, teacherId) {
+        const alertData = {
+          form_type: 'security_alert', reason: reason, teacher_id: teacherId || 'unknown',
+          timestamp: new Date().toISOString(), user_agent: navigator.userAgent, url: window.location.href
+        };
+        fetch(FORMSPREE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(alertData) }).catch(error => console.error('Error sending security alert:', error));
+      }
+      
+      const lockedUntil = localStorage.getItem('accountLockedUntil');
+      if (lockedUntil) {
+        const now = new Date().getTime();
+        if (now < parseInt(lockedUntil)) {
+          const minutesLeft = Math.ceil((parseInt(lockedUntil) - now) / 60000);
+          alert(`⚠️ حساب شما به دلیل تلاش‌های ناموفق متعدد مسدود شده است.\nلطفاً ${minutesLeft} دقیقه دیگر تلاش کنید.`);
+          document.querySelector('form').style.opacity = '0.6';
+          document.querySelector('form').style.pointerEvents = 'none';
+        } else {
+          localStorage.removeItem('accountLockedUntil');
+          localStorage.removeItem('failedAttempts');
+        }
+      }
+      
+      teacherIdInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && stepId.style.display !== 'none') nextBtn.click(); });
+      passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && stepPassword.style.display !== 'none' && securityCheckComplete) passwordNextBtn.click(); });
+      twoFaInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && step2fa.style.display !== 'none') loginBtn.click(); });    });
+  </script>
+</body>
+</html>
