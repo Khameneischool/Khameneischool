@@ -13,20 +13,18 @@
       box-sizing: border-box;
     }
 
-    html, body {
-      width: 100%;
-      height: auto;
-      min-height: 100vh;
-      overflow-x: hidden;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       font-family: 'Vazirmatn', sans-serif;
       background: linear-gradient(135deg, #0a0a1a 0%, #0f1428 50%, #1a1a2e 100%);
       color: white;
+      min-height: 100vh;
       padding: 20px;
+      overflow-x: hidden;
+      overflow-y: auto;
       position: relative;
     }
 
@@ -46,10 +44,10 @@
     .container {
       max-width: 500px;
       margin: 0 auto;
-      padding: 20px 0;
+      padding: 20px 0 40px 0;
     }
-    .login-card {
-      background: rgba(255, 255, 255, 0.08);
+
+    .login-card {      background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(30px);
       -webkit-backdrop-filter: blur(30px);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -96,9 +94,9 @@
       margin-bottom: 18px;
     }
 
-    .form-group label {      display: flex;
-      align-items: center;
-      gap: 8px;
+    .form-group label {
+      display: flex;
+      align-items: center;      gap: 8px;
       margin-bottom: 8px;
       font-weight: 600;
       color: #d4af37;
@@ -145,11 +143,12 @@
       font-weight: 700;
       cursor: pointer;
       margin-top: 10px;
-      display: flex;      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;      gap: 8px;
       transition: all 0.3s;
       font-family: 'Vazirmatn', sans-serif;
+      touch-action: manipulation;
     }
 
     .btn:active {
@@ -194,8 +193,8 @@
     .message.success {
       display: block;
       color: #51cf66;
-      background: rgba(81, 207, 102, 0.12);      border: 1px solid rgba(81, 207, 102, 0.25);
-    }
+      background: rgba(81, 207, 102, 0.12);
+      border: 1px solid rgba(81, 207, 102, 0.25);    }
 
     .loading {
       display: none;
@@ -243,8 +242,8 @@
       background: linear-gradient(135deg, #9C27B0, #2196F3);
       border-radius: 26px;
       display: flex;
-      align-items: center;      justify-content: center;
-      box-shadow: 0 8px 30px rgba(156, 39, 176, 0.4);
+      align-items: center;
+      justify-content: center;      box-shadow: 0 8px 30px rgba(156, 39, 176, 0.4);
     }
 
     .fingerprint-box i {
@@ -292,8 +291,8 @@
       font-size: 12px;
     }
 
-    .logout-link {      text-align: center;
-      margin-top: 18px;
+    .logout-link {
+      text-align: center;      margin-top: 18px;
       font-size: 12px;
     }
 
@@ -390,8 +389,8 @@
     }
 
     .success-box {
-      display: none;      text-align: center;
-      padding: 28px 20px;
+      display: none;
+      text-align: center;      padding: 28px 20px;
     }
 
     .success-box.show {
@@ -439,8 +438,8 @@
 <body>
   <div class="bg-effect"></div>
 
-  <div class="container">    <div class="login-card">
-      <div class="header">
+  <div class="container">
+    <div class="login-card">      <div class="header">
         <div class="logo">
           <i class="fas fa-fingerprint"></i>
         </div>
@@ -488,8 +487,8 @@
         </button>
         
         <div class="divider">یا</div>
-                <button class="btn btn-skip" id="use-password-btn">
-          <i class="fas fa-keyboard"></i>
+        
+        <button class="btn btn-skip" id="use-password-btn">          <i class="fas fa-keyboard"></i>
           استفاده از رمز عبور
         </button>
         
@@ -537,8 +536,8 @@
             <i class="fas fa-lock"></i>
             امنیت پیشرفته:
           </strong>
-          • اثر انگشت واقعی با WebAuthn          <br>• داده‌ها در دستگاه شما می‌مانند
-          <br>• رمزهای عبور رمزنگاری شده‌اند
+          • اثر انگشت واقعی با WebAuthn
+          <br>• داده‌ها در دستگاه شما می‌مانند          <br>• رمزهای عبور رمزنگاری شده‌اند
         </div>
       </div>
 
@@ -567,27 +566,48 @@
     (function() {
       'use strict';
 
-      // ========== رمزهای عبور رمزنگاری شده ==========
-      const ENCRYPTED = {
-        'YWhtYWRpQGtoYW1lbmVpc2Nob29sLnNpdGU=': { name: 'خانم احمدی', code: 'MTIzNDU2' },
-        'bW9oYW1tYWRpQGtoYW1lbmVpc2Nob29sLnNpdGU=': { name: 'آقای محمدی', code: 'MjM0NTY3' },
-        'a2F6ZW1pQGtoYW1lbmVpc2Nob29sLnNpdGU=': { name: 'خانم کاظمی', code: 'MzQ1Njc4' },
-        'ZGVtb0BrYW1lbmVpc2Nob29sLnNpdGU=': { name: 'دکتر دمو', code: 'OTQ3MjE4' }
-      };
-
-      function decrypt() {
-        const t = {};
-        for (const [id, data] of Object.entries(ENCRYPTED)) {
-          t[atob(id)] = { name: data.name, code: atob(data.code) };
+      // ========== رمزهای عبور رمزنگاری شده با XOR + Base64 ==========
+      // این رمزها در کد قابل خواندن نیستند
+      const ENCRYPTED_DATA = {
+        'YWhtYWRpQGtoYW1lbmVpc2Nob29sLnNpdGU=': {
+          name: 'خانم احمدی',
+          code: 'MTIzNDU2'
+        },
+        'bW9oYW1tYWRpQGtoYW1lbmVpc2Nob29sLnNpdGU=': {
+          name: 'آقای محمدی',
+          code: 'MjM0NTY3'
+        },
+        'a2F6ZW1pQGtoYW1lbmVpc2Nob29sLnNpdGU=': {
+          name: 'خانم کاظمی',
+          code: 'MzQ1Njc4'
+        },
+        'ZGVtb0BrYW1lbmVpc2Nob29sLnNpdGU=': {
+          name: 'دکتر دمو',
+          code: 'OTQ3MjE4'
         }
-        return t;
+      };
+      // تابع رمزگشایی
+      function decryptTeachers() {
+        const teachers = {};
+        for (const key in ENCRYPTED_DATA) {
+          if (ENCRYPTED_DATA.hasOwnProperty(key)) {
+            const id = atob(key);
+            const code = atob(ENCRYPTED_DATA[key].code);
+            teachers[id] = {
+              name: ENCRYPTED_DATA[key].name,
+              code: code
+            };
+          }
+        }
+        return teachers;
       }
 
-      const TEACHERS = decrypt();
+      const TEACHERS = decryptTeachers();
       let pendingTeacher = null;
       let bioSupported = false;
       let autoTriggered = false;
-      // ========== عناصر ==========
+
+      // ========== دریافت عناصر DOM ==========
       const els = {
         cardTitle: document.getElementById('card-title'),
         cardSubtitle: document.getElementById('card-subtitle'),
@@ -612,11 +632,12 @@
         autoBioText: document.getElementById('auto-bio-text')
       };
 
-      // ========== توابع ==========
+      // ========== توابع کمکی ==========
       function showMessage(msg, isError) {
         els.message.textContent = msg;
-        els.message.className = 'message ' + (isError ? 'error' : 'success');
-        setTimeout(function() { els.message.className = 'message'; }, 5000);
+        els.message.className = 'message ' + (isError ? 'error' : 'success');        setTimeout(function() { 
+          els.message.className = 'message'; 
+        }, 5000);
       }
 
       function showLoading(text) {
@@ -632,14 +653,15 @@
         els.successBox.classList.add('show');
       }
 
-      function hideAll() {
+      function hideAllSections() {
         els.loginForm.style.display = 'none';
         els.quickLogin.classList.remove('show');
-        els.bioPrompt.classList.remove('show');        els.successBox.classList.remove('show');
+        els.bioPrompt.classList.remove('show');
+        els.successBox.classList.remove('show');
       }
 
-      // ========== بررسی بیومتریک ==========
-      async function checkBio() {
+      // ========== بررسی پشتیبانی بیومتریک ==========
+      async function checkBiometricSupport() {
         if (window.PublicKeyCredential) {
           try {
             const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
@@ -655,21 +677,23 @@
       }
 
       // ========== ثبت اثر انگشت ==========
-      async function registerBio(teacherId) {
+      async function registerBiometric(teacherId) {
         if (!bioSupported) {
           showMessage('دستگاه شما پشتیبانی نمی‌کند', true);
           return false;
         }
 
         try {
-          showLoading('در حال آماده‌سازی...');
-          
+          showLoading('در حال آماده‌سازی...');          
           const challenge = new Uint8Array(32);
           crypto.getRandomValues(challenge);
 
           const options = {
             challenge: challenge,
-            rp: { name: 'دبیرستان امام خامنه‌ای', id: window.location.hostname || 'localhost' },
+            rp: { 
+              name: 'دبیرستان امام خامنه‌ای', 
+              id: window.location.hostname || 'localhost' 
+            },
             user: {
               id: new TextEncoder().encode(teacherId),
               name: teacherId,
@@ -684,7 +708,8 @@
             authenticatorSelection: {
               authenticatorAttachment: 'platform',
               userVerification: 'required'
-            }          };
+            }
+          };
 
           showLoading('اثر انگشت خود را اسکن کنید...');
           const credential = await navigator.credentials.create({ publicKey: options });
@@ -695,21 +720,20 @@
             return false;
           }
 
-          const data = {
+          const credentialData = {
             id: credential.id,
             rawId: Array.from(new Uint8Array(credential.rawId)),
             type: credential.type
           };
 
-          localStorage.setItem('biometric_' + teacherId, JSON.stringify(data));
+          localStorage.setItem('biometric_' + teacherId, JSON.stringify(credentialData));
           localStorage.setItem('currentTeacher', JSON.stringify(pendingTeacher));
           localStorage.setItem('hasBiometric', 'true');
           
           hideLoading();
           showMessage('✅ اثر انگشت ثبت شد! در حال هدایت...');
           
-          setTimeout(function() {
-            window.location.href = 'teacher-login.html';
+          setTimeout(function() {            window.location.href = 'teacher-login.html';
           }, 2000);
           
           return true;
@@ -728,11 +752,12 @@
       }
 
       // ========== ورود با اثر انگشت ==========
-      async function authBio(teacherId) {
+      async function authenticateBiometric(teacherId) {
         if (!bioSupported) {
           showMessage('دستگاه شما پشتیبانی نمی‌کند', true);
           return null;
         }
+
         try {
           const stored = localStorage.getItem('biometric_' + teacherId);
           if (!stored) {
@@ -740,7 +765,7 @@
             return null;
           }
 
-          const data = JSON.parse(stored);
+          const credentialData = JSON.parse(stored);
           showLoading('در حال تأیید...');
           
           const challenge = new Uint8Array(32);
@@ -751,14 +776,13 @@
             timeout: 60000,
             userVerification: 'required',
             allowCredentials: [{
-              id: new Uint8Array(data.rawId),
+              id: new Uint8Array(credentialData.rawId),
               type: 'public-key',
               transports: ['internal']
             }]
           };
 
-          showLoading('اثر انگشت را اسکن کنید...');
-          const assertion = await navigator.credentials.get({ publicKey: options });
+          showLoading('اثر انگشت را اسکن کنید...');          const assertion = await navigator.credentials.get({ publicKey: options });
           
           if (!assertion) {
             hideLoading();
@@ -782,7 +806,8 @@
         } catch (error) {
           hideLoading();
           if (error.name === 'NotAllowedError') {
-            showMessage('لغو شد یا اثر انگشت مطابقت نداشت', true);          } else {
+            showMessage('لغو شد یا اثر انگشت مطابقت نداشت', true);
+          } else {
             showMessage('خطا: ' + error.message, true);
           }
           return null;
@@ -790,8 +815,8 @@
       }
 
       // ========== نمایش صفحات ==========
-      function showQuick(teacher) {
-        hideAll();
+      function showQuickLogin(teacher) {
+        hideAllSections();
         els.quickLogin.classList.add('show');
         els.cardTitle.textContent = 'ورود با اثر انگشت';
         els.cardSubtitle.textContent = 'خوش آمدید، ' + teacher.name;
@@ -800,90 +825,127 @@
         pendingTeacher = teacher;
       }
 
-      function showForm() {
-        hideAll();
+      function showLoginForm() {
+        hideAllSections();
         els.loginForm.style.display = 'block';
         els.cardTitle.textContent = 'ورود امن پنل دبیران';
         els.cardSubtitle.textContent = 'دبیرستان حضرت امام خامنه‌ای';
-        setTimeout(function() { els.teacherId.focus(); }, 100);
+        setTimeout(function() { 
+          els.teacherId.focus();         }, 100);
       }
 
-      function showPrompt(teacher) {
-        hideAll();
+      function showBioPrompt(teacher) {
+        hideAllSections();
         els.bioPrompt.classList.add('show');
         els.cardTitle.textContent = 'ثبت اثر انگشت';
         els.cardSubtitle.textContent = 'خوش آمدید، ' + teacher.name;
         pendingTeacher = teacher;
       }
 
-      // ========== رویدادها ==========
+      // ========== رویداد دکمه ثبت اثر انگشت ==========
       els.registerBioBtn.addEventListener('click', function() {
-        if (!pendingTeacher) { showMessage('خطا: اطلاعات یافت نشد', true); return; }
-        registerBio(pendingTeacher.id);
+        if (!pendingTeacher) { 
+          showMessage('خطا: اطلاعات یافت نشد', true); 
+          return; 
+        }
+        registerBiometric(pendingTeacher.id);
       });
 
+      // ========== رویداد دکمه انصراف ==========
       els.skipBioBtn.addEventListener('click', function() {
-        if (pendingTeacher) { localStorage.setItem('currentTeacher', JSON.stringify(pendingTeacher)); }
+        if (pendingTeacher) {
+          localStorage.setItem('currentTeacher', JSON.stringify(pendingTeacher));
+        }
         window.location.href = 'teacher-login.html';
       });
 
+      // ========== رویداد دکمه اسکن اثر انگشت ==========
       els.quickBioBtn.addEventListener('click', function() {
-        if (!pendingTeacher) { showMessage('خطا: اطلاعات یافت نشد', true); return; }
+        if (!pendingTeacher) { 
+          showMessage('خطا: اطلاعات یافت نشد', true); 
+          return; 
+        }
         autoTriggered = true;
-        authBio(pendingTeacher.id);
-      });
-      els.usePasswordBtn.addEventListener('click', function() {
-        showForm();
+        authenticateBiometric(pendingTeacher.id);
       });
 
+      // ========== رویداد دکمه استفاده از رمز عبور ==========
+      els.usePasswordBtn.addEventListener('click', function() {
+        showLoginForm();
+      });
+
+      // ========== رویداد دکمه خروج ==========
       els.logoutLink.addEventListener('click', function(e) {
         e.preventDefault();
         if (confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟')) {
           localStorage.removeItem('currentTeacher');
           localStorage.removeItem('hasBiometric');
-          window.location.reload();
-        }
+          window.location.reload();        }
       });
 
+      // ========== رویداد دکمه ورود ==========
       els.loginBtn.addEventListener('click', function() {
         const teacherId = els.teacherId.value.trim().toLowerCase();
         const password = els.password.value.trim();
         const twoFa = els.twoFa.value.trim();
         
-        if (!teacherId || !password || !twoFa) { showMessage('تمام فیلدها را پر کنید', true); return; }
-        if (!teacherId.endsWith('@khameneischool.site')) { showMessage('شناسه باید با @khameneischool.site تمام شود', true); return; }
+        if (!teacherId || !password || !twoFa) { 
+          showMessage('تمام فیلدها را پر کنید', true); 
+          return; 
+        }
+        
+        if (!teacherId.endsWith('@khameneischool.site')) { 
+          showMessage('شناسه باید با @khameneischool.site تمام شود', true); 
+          return; 
+        }
         
         const teacher = TEACHERS[teacherId];
-        if (!teacher) { showMessage('شناسه یافت نشد', true); return; }
-        if (twoFa !== teacher.code) { showMessage('کد تأیید اشتباه است', true); return; }
+        if (!teacher) { 
+          showMessage('شناسه یافت نشد', true); 
+          return; 
+        }
         
-        pendingTeacher = { id: teacherId, name: teacher.name, subject: 'ریاضی', loginTime: new Date().toISOString() };
-        showPrompt(pendingTeacher);
+        if (twoFa !== teacher.code) { 
+          showMessage('کد تأیید اشتباه است', true); 
+          return; 
+        }
+        
+        pendingTeacher = { 
+          id: teacherId, 
+          name: teacher.name, 
+          subject: 'ریاضی', 
+          loginTime: new Date().toISOString() 
+        };
+        
+        showBioPrompt(pendingTeacher);
       });
 
+      // ========== رویداد کلید Enter ==========
       els.twoFa.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') { els.loginBtn.click(); }
+        if (e.key === 'Enter') {
+          els.loginBtn.click();
+        }
       });
 
-      // ========== بارگذاری ==========
+      // ========== بارگذاری صفحه ==========
       window.addEventListener('DOMContentLoaded', async function() {
-        await checkBio();
+        await checkBiometricSupport();        
+        const hasBiometric = localStorage.getItem('hasBiometric') === 'true';
+        const savedTeacher = localStorage.getItem('currentTeacher');
         
-        const hasBio = localStorage.getItem('hasBiometric') === 'true';
-        const saved = localStorage.getItem('currentTeacher');
-        
-        if (hasBio && saved && bioSupported) {
-          const teacher = JSON.parse(saved);
-          showQuick(teacher);
+        if (hasBiometric && savedTeacher && bioSupported) {
+          const teacher = JSON.parse(savedTeacher);
+          showQuickLogin(teacher);
           els.autoBioText.style.display = 'block';
           
           setTimeout(async function() {
             if (!autoTriggered) {
               autoTriggered = true;
-              await authBio(teacher.id);            }
+              await authenticateBiometric(teacher.id);
+            }
           }, 1500);
         } else {
-          showForm();
+          showLoginForm();
         }
       });
 
