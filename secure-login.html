@@ -2,113 +2,124 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ورود پنل دبیران | دبیرستان امام خامنه‌ای</title>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     body {
       font-family: 'Vazirmatn', sans-serif;
-      background: linear-gradient(135deg, #0a0a1a 0%, #0f1428 50%, #0a0a1a 100%);
+      background: linear-gradient(135deg, #0a0a1a 0%, #0f1428 50%, #1a1a2e 100%);
       color: white;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       padding: 20px;
-      overflow: hidden;
       position: relative;
     }
 
-    .bg-gradient {
+    .bg-effect {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: 
-        radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(33, 150, 243, 0.15) 0%, transparent 50%);
-      z-index: 0;
+        radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(33, 150, 243, 0.1) 0%, transparent 50%);
+      z-index: -1;
+      pointer-events: none;
     }
 
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
     .login-card {
       background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 32px;
-      padding: 45px 35px;
-      max-width: 460px;
-      width: 100%;
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
-      position: relative;
-      z-index: 10;
-      animation: cardSlideIn 0.7s ease-out;
+      border-radius: 28px;
+      padding: 40px 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     }
 
-    @keyframes cardSlideIn {      from { opacity: 0; transform: translateY(40px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .card-header {
+    .header {
       text-align: center;
-      margin-bottom: 35px;
+      margin-bottom: 30px;
     }
 
-    .logo-container {
-      width: 90px;
-      height: 90px;
+    .logo {
+      width: 80px;
+      height: 80px;
       margin: 0 auto 20px;
-      background: linear-gradient(135deg, #d4af37 0%, #2196F3 100%);
-      border-radius: 24px;
+      background: linear-gradient(135deg, #d4af37, #2196F3);
+      border-radius: 22px;
       display: flex;
-      justify-content: center;
       align-items: center;
-      box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
+      justify-content: center;
+      box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
     }
 
-    .logo-container i {
-      font-size: 42px;
+    .logo i {
+      font-size: 38px;
       color: white;
     }
 
-    .card-header h1 {
-      font-size: 24px;
+    .header h1 {
+      font-size: 22px;
       font-weight: 800;
       color: #d4af37;
       margin-bottom: 8px;
     }
 
-    .card-header p {
-      font-size: 14px;
+    .header p {
+      font-size: 13px;
       color: rgba(255, 255, 255, 0.7);
     }
 
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
-    .form-group label {
-      display: flex;
+    .form-group label {      display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       font-weight: 600;
       color: #d4af37;
-      font-size: 14px;    }
+      font-size: 14px;
+    }
+
+    .form-group label i {
+      width: 18px;
+      text-align: center;
+    }
 
     .form-group input {
       width: 100%;
-      padding: 15px 18px;
+      padding: 14px 16px;
       border: 1.5px solid rgba(255, 255, 255, 0.2);
       background: rgba(255, 255, 255, 0.06);
       color: white;
-      border-radius: 16px;
+      border-radius: 14px;
       font-size: 15px;
       text-align: left;
       direction: ltr;
-      transition: all 0.3s ease;
       font-family: 'Vazirmatn', sans-serif;
     }
 
@@ -127,46 +138,34 @@
 
     .btn {
       width: 100%;
-      padding: 16px;
+      padding: 15px;
       border: none;
-      border-radius: 16px;
+      border-radius: 14px;
       font-size: 16px;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 12px;
-      display: flex;
-      align-items: center;
+      margin-top: 10px;
+      display: flex;      align-items: center;
       justify-content: center;
-      gap: 10px;
-      transition: all 0.3s ease;
+      gap: 8px;
+      transition: all 0.3s;
       font-family: 'Vazirmatn', sans-serif;
     }
 
     .btn:active {
       transform: scale(0.98);
     }
-    .btn-primary {
-      background: linear-gradient(135deg, #d4af37 0%, #2196F3 100%);
-      color: #0a0a1a;
-      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
-    }
 
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5);
+    .btn-primary {
+      background: linear-gradient(135deg, #d4af37, #2196F3);
+      color: #0a0a1a;
     }
 
     .btn-biometric {
-      background: linear-gradient(135deg, #9C27B0 0%, #2196F3 100%);
+      background: linear-gradient(135deg, #9C27B0, #2196F3);
       color: white;
-      font-size: 17px;
-      padding: 18px;
-      box-shadow: 0 8px 25px rgba(156, 39, 176, 0.35);
-    }
-
-    .btn-biometric:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 35px rgba(156, 39, 176, 0.5);
+      padding: 17px;
+      font-size: 16px;
     }
 
     .btn-skip {
@@ -175,40 +174,35 @@
       border: 1.5px solid rgba(255, 255, 255, 0.2);
     }
 
-    .btn-skip:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.35);
-    }
-
-    .message-box {
+    .message {
       text-align: center;
+      padding: 12px;
+      border-radius: 12px;
       margin-top: 15px;
       font-weight: 600;
       font-size: 13px;
-      padding: 12px 15px;
-      border-radius: 12px;
       display: none;
     }
 
-    .message-box.error {
+    .message.error {
       display: block;
       color: #ff6b6b;
       background: rgba(255, 107, 107, 0.12);
-      border: 1px solid rgba(255, 107, 107, 0.25);    }
+      border: 1px solid rgba(255, 107, 107, 0.25);
+    }
 
-    .message-box.success {
+    .message.success {
       display: block;
       color: #51cf66;
-      background: rgba(81, 207, 102, 0.12);
-      border: 1px solid rgba(81, 207, 102, 0.25);
+      background: rgba(81, 207, 102, 0.12);      border: 1px solid rgba(81, 207, 102, 0.25);
     }
 
     .loading {
       display: none;
       text-align: center;
-      padding: 20px;
+      padding: 18px;
       background: rgba(33, 150, 243, 0.12);
-      border-radius: 16px;
+      border-radius: 14px;
       margin: 15px 0;
       border: 1px solid rgba(33, 150, 243, 0.25);
     }
@@ -218,9 +212,9 @@
     }
 
     .loading i {
-      font-size: 38px;
+      font-size: 35px;
       color: #2196F3;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       animation: spin 1s linear infinite;
     }
 
@@ -242,66 +236,65 @@
       display: block;
     }
 
-    .quick-login .fingerprint-icon {
-      width: 100px;      height: 100px;
-      margin: 0 auto 20px;
-      background: linear-gradient(135deg, #9C27B0 0%, #2196F3 100%);
-      border-radius: 28px;
+    .fingerprint-box {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 18px;
+      background: linear-gradient(135deg, #9C27B0, #2196F3);
+      border-radius: 26px;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 10px 40px rgba(156, 39, 176, 0.4);
+      align-items: center;      justify-content: center;
+      box-shadow: 0 8px 30px rgba(156, 39, 176, 0.4);
     }
 
-    .quick-login .fingerprint-icon i {
-      font-size: 50px;
+    .fingerprint-box i {
+      font-size: 45px;
       color: white;
     }
 
     .teacher-info {
       background: rgba(212, 175, 55, 0.12);
-      padding: 16px;
-      border-radius: 16px;
-      margin-bottom: 20px;
+      padding: 14px;
+      border-radius: 14px;
+      margin-bottom: 18px;
       border: 1px solid rgba(212, 175, 55, 0.3);
     }
 
     .teacher-info h3 {
       color: #d4af37;
-      font-size: 18px;
-      margin-bottom: 6px;
+      font-size: 17px;
+      margin-bottom: 5px;
       font-weight: 700;
     }
 
     .teacher-info p {
-      font-size: 13px;
+      font-size: 12px;
       color: rgba(255, 255, 255, 0.7);
     }
 
     .quick-login h2 {
       color: #d4af37;
-      font-size: 20px;
-      margin-bottom: 10px;
+      font-size: 19px;
+      margin-bottom: 8px;
       font-weight: 700;
     }
 
     .quick-login p {
       color: rgba(255, 255, 255, 0.7);
-      font-size: 14px;
-      margin-bottom: 20px;
+      font-size: 13px;
+      margin-bottom: 18px;
     }
 
     .divider {
-      text-align: center;      margin: 20px 0;
+      text-align: center;
+      margin: 18px 0;
       color: rgba(255, 255, 255, 0.4);
-      font-size: 13px;
-      position: relative;
+      font-size: 12px;
     }
 
-    .logout-link {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 13px;
+    .logout-link {      text-align: center;
+      margin-top: 18px;
+      font-size: 12px;
     }
 
     .logout-link a {
@@ -310,17 +303,17 @@
       font-weight: 600;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .biometric-prompt {
       display: none;
       text-align: center;
-      padding: 28px;
+      padding: 25px;
       background: rgba(76, 175, 80, 0.12);
-      border-radius: 24px;
+      border-radius: 22px;
       border: 1.5px solid rgba(76, 175, 80, 0.3);
-      margin-top: 22px;
+      margin-top: 20px;
     }
 
     .biometric-prompt.show {
@@ -328,37 +321,37 @@
     }
 
     .biometric-prompt .icon {
-      width: 70px;
-      height: 70px;
-      margin: 0 auto 16px;
-      background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);
-      border-radius: 20px;
+      width: 65px;
+      height: 65px;
+      margin: 0 auto 14px;
+      background: linear-gradient(135deg, #4CAF50, #8BC34A);
+      border-radius: 18px;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
     }
 
     .biometric-prompt .icon i {
-      font-size: 35px;
+      font-size: 32px;
       color: white;
     }
+
     .biometric-prompt h2 {
       color: #4CAF50;
-      font-size: 20px;
-      margin-bottom: 12px;
+      font-size: 18px;
+      margin-bottom: 10px;
       font-weight: 700;
     }
-
     .biometric-prompt p {
       color: rgba(255, 255, 255, 0.8);
-      font-size: 14px;
-      margin-bottom: 20px;
+      font-size: 13px;
+      margin-bottom: 18px;
       line-height: 1.6;
     }
 
     .biometric-prompt-buttons {
       display: flex;
-      gap: 12px;
+      gap: 10px;
     }
 
     .biometric-prompt-buttons .btn {
@@ -366,202 +359,206 @@
       margin-top: 0;
     }
 
-    .auto-biometric-text {
+    .auto-bio-text {
       text-align: center;
-      font-size: 15px;
+      font-size: 14px;
       color: #51cf66;
-      margin: 16px 0;
+      margin: 14px 0;
       font-weight: 700;
-      padding: 14px;
+      padding: 12px;
       background: rgba(81, 207, 102, 0.1);
-      border-radius: 14px;
+      border-radius: 12px;
       border: 1px solid rgba(81, 207, 102, 0.25);
     }
 
     .security-info {
       background: rgba(33, 150, 243, 0.1);
       border-right: 3px solid #2196F3;
-      border-radius: 12px;
-      padding: 14px;
-      margin-top: 20px;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 18px;
       text-align: right;
-      font-size: 12px;
-      line-height: 2;
+      font-size: 11px;
+      line-height: 1.9;
     }
 
     .security-info strong {
-      color: #d4af37;      display: block;
-      margin-bottom: 6px;
-      font-size: 13px;
+      color: #d4af37;
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
     }
 
-    .success-checkmark {
-      display: none;
-      text-align: center;
-      padding: 30px 20px;
+    .success-box {
+      display: none;      text-align: center;
+      padding: 28px 20px;
     }
 
-    .success-checkmark.show {
+    .success-box.show {
       display: block;
     }
 
-    .success-checkmark .icon {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 18px;
-      background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);
+    .success-box .icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, #4CAF50, #8BC34A);
       border-radius: 50%;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
     }
 
-    .success-checkmark .icon i {
-      font-size: 45px;
+    .success-box .icon i {
+      font-size: 40px;
       color: white;
     }
 
-    .success-checkmark h2 {
+    .success-box h2 {
       color: #51cf66;
-      font-size: 22px;
-      margin-bottom: 8px;
+      font-size: 20px;
+      margin-bottom: 6px;
       font-weight: 700;
     }
 
-    .success-checkmark p {
+    .success-box p {
       color: rgba(255, 255, 255, 0.7);
-      font-size: 14px;
+      font-size: 13px;
     }
 
     @media (max-width: 480px) {
       body { padding: 15px; }
-      .login-card { padding: 35px 25px; border-radius: 26px; }
-      .logo-container { width: 75px; height: 75px; }
-      .logo-container i { font-size: 36px; }
-      .card-header h1 { font-size: 21px; }
-      .biometric-prompt-buttons { flex-direction: column; }      .biometric-prompt-buttons .btn { min-width: 100%; }
+      .login-card { padding: 35px 25px; border-radius: 24px; }
+      .logo { width: 70px; height: 70px; }
+      .logo i { font-size: 34px; }
+      .header h1 { font-size: 20px; }
+      .biometric-prompt-buttons { flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <div class="bg-gradient"></div>
+  <div class="bg-effect"></div>
 
-  <div class="login-card">
-    <div class="card-header">
-      <div class="logo-container">
-        <i class="fas fa-fingerprint"></i>
-      </div>
-      <h1 id="card-title">ورود امن پنل دبیران</h1>
-      <p id="card-subtitle">دبیرستان حضرت امام خامنه‌ای</p>
-    </div>
-
-    <div class="loading" id="loading">
-      <i class="fas fa-spinner"></i>
-      <p id="loading-text">در حال پردازش...</p>
-    </div>
-
-    <div class="message-box" id="message-box"></div>
-
-    <div class="success-checkmark" id="success-checkmark">
-      <div class="icon">
-        <i class="fas fa-check"></i>
-      </div>
-      <h2>ورود موفق!</h2>
-      <p>در حال هدایت به پنل...</p>
-    </div>
-
-    <div class="auto-biometric-text" id="auto-bio-text" style="display: none;">
-      <i class="fas fa-hand-pointer"></i>
-      لطفاً اثر انگشت خود را اسکن کنید...
-    </div>
-
-    <div class="quick-login" id="quick-login">
-      <div class="fingerprint-icon">
-        <i class="fas fa-fingerprint"></i>
-      </div>
-      
-      <div class="teacher-info">
-        <h3 id="teacher-name-display">نام دبیر</h3>
-        <p id="teacher-id-display">آیدی دبیر</p>
-      </div>
-      
-      <h2>ورود با اثر انگشت</h2>
-      <p>سنسور دستگاه خود را لمس کنید</p>
-      
-      <button class="btn btn-biometric" id="quick-bio-btn">        <i class="fas fa-fingerprint"></i>
-        اسکن اثر انگشت
-      </button>
-      
-      <div class="divider">یا</div>
-      
-      <button class="btn btn-skip" id="use-password-btn">
-        <i class="fas fa-keyboard"></i>
-        استفاده از رمز عبور
-      </button>
-      
-      <div class="logout-link">
-        <a href="#" id="logout-link">
-          <i class="fas fa-sign-out-alt"></i>
-          خروج از حساب
-        </a>
-      </div>
-    </div>
-
-    <div id="login-form">
-      <div class="form-group">
-        <label>
-          <i class="fas fa-id-card"></i>
-          شناسه دبیر
-        </label>
-        <input type="text" id="teacher-id" placeholder="ahmadi@khameneischool.site" autocomplete="username">
-      </div>
-      
-      <div class="form-group">
-        <label>
-          <i class="fas fa-key"></i>
-          رمز عبور
-        </label>
-        <input type="password" id="password" placeholder="رمز عبور" autocomplete="current-password">
-      </div>
-      
-      <div class="form-group">
-        <label>
-          <i class="fas fa-shield-alt"></i>
-          کد تأیید
-        </label>
-        <input type="text" id="two-fa" placeholder="123456" maxlength="6" inputmode="numeric">
-      </div>
-      
-      <button class="btn btn-primary" id="login-btn">
-        <i class="fas fa-sign-in-alt"></i>
-        ورود به پنل
-      </button>
-      
-      <div class="security-info">        <strong>
-          <i class="fas fa-lock"></i>
-          امنیت پیشرفته:
-        </strong>
-        • اثر انگشت واقعی با WebAuthn API
-        <br>• داده‌ها در دستگاه شما ذخیره می‌شوند
-        <br>• رمزهای عبور رمزنگاری شده‌اند
-      </div>
-    </div>
-
-    <div class="biometric-prompt" id="bio-prompt">
-      <div class="icon">
-        <i class="fas fa-fingerprint"></i>
-      </div>
-      <h2>ثبت اثر انگشت! 🔐</h2>
-      <p>آیا می‌خواهید دفعه بعد فقط با اثر انگشت وارد شوید؟</p>
-      <div class="biometric-prompt-buttons">
-        <button class="btn btn-biometric" id="register-bio-btn">
+  <div class="container">    <div class="login-card">
+      <div class="header">
+        <div class="logo">
           <i class="fas fa-fingerprint"></i>
-          بله، ثبت کن
+        </div>
+        <h1 id="card-title">ورود امن پنل دبیران</h1>
+        <p id="card-subtitle">دبیرستان حضرت امام خامنه‌ای</p>
+      </div>
+
+      <div class="loading" id="loading">
+        <i class="fas fa-spinner"></i>
+        <p id="loading-text">در حال پردازش...</p>
+      </div>
+
+      <div class="message" id="message"></div>
+
+      <div class="success-box" id="success-box">
+        <div class="icon">
+          <i class="fas fa-check"></i>
+        </div>
+        <h2>ورود موفق!</h2>
+        <p>در حال هدایت به پنل...</p>
+      </div>
+
+      <div class="auto-bio-text" id="auto-bio-text" style="display: none;">
+        <i class="fas fa-hand-pointer"></i>
+        لطفاً اثر انگشت خود را اسکن کنید...
+      </div>
+
+      <!-- ورود سریع -->
+      <div class="quick-login" id="quick-login">
+        <div class="fingerprint-box">
+          <i class="fas fa-fingerprint"></i>
+        </div>
+        
+        <div class="teacher-info">
+          <h3 id="teacher-name-display">نام دبیر</h3>
+          <p id="teacher-id-display">آیدی دبیر</p>
+        </div>
+        
+        <h2>ورود با اثر انگشت</h2>
+        <p>سنسور دستگاه خود را لمس کنید</p>
+        
+        <button class="btn btn-biometric" id="quick-bio-btn">
+          <i class="fas fa-fingerprint"></i>
+          اسکن اثر انگشت
         </button>
-        <button class="btn btn-skip" id="skip-bio-btn">
-          <i class="fas fa-forward"></i>
-          بعداً
+        
+        <div class="divider">یا</div>
+                <button class="btn btn-skip" id="use-password-btn">
+          <i class="fas fa-keyboard"></i>
+          استفاده از رمز عبور
         </button>
+        
+        <div class="logout-link">
+          <a href="#" id="logout-link">
+            <i class="fas fa-sign-out-alt"></i>
+            خروج از حساب
+          </a>
+        </div>
+      </div>
+
+      <!-- فرم ورود -->
+      <div id="login-form">
+        <div class="form-group">
+          <label>
+            <i class="fas fa-id-card"></i>
+            شناسه دبیر
+          </label>
+          <input type="text" id="teacher-id" placeholder="ahmadi@khameneischool.site">
+        </div>
+        
+        <div class="form-group">
+          <label>
+            <i class="fas fa-key"></i>
+            رمز عبور
+          </label>
+          <input type="password" id="password" placeholder="رمز عبور">
+        </div>
+        
+        <div class="form-group">
+          <label>
+            <i class="fas fa-shield-alt"></i>
+            کد تأیید
+          </label>
+          <input type="text" id="two-fa" placeholder="123456" maxlength="6">
+        </div>
+        
+        <button class="btn btn-primary" id="login-btn">
+          <i class="fas fa-sign-in-alt"></i>
+          ورود به پنل
+        </button>
+        
+        <div class="security-info">
+          <strong>
+            <i class="fas fa-lock"></i>
+            امنیت پیشرفته:
+          </strong>
+          • اثر انگشت واقعی با WebAuthn          <br>• داده‌ها در دستگاه شما می‌مانند
+          <br>• رمزهای عبور رمزنگاری شده‌اند
+        </div>
+      </div>
+
+      <!-- پیام ثبت اثر انگشت -->
+      <div class="biometric-prompt" id="bio-prompt">
+        <div class="icon">
+          <i class="fas fa-fingerprint"></i>
+        </div>
+        <h2>ثبت اثر انگشت! 🔐</h2>
+        <p>آیا می‌خواهید دفعه بعد فقط با اثر انگشت وارد شوید؟</p>
+        <div class="biometric-prompt-buttons">
+          <button class="btn btn-biometric" id="register-bio-btn">
+            <i class="fas fa-fingerprint"></i>
+            بله، ثبت کن
+          </button>
+          <button class="btn btn-skip" id="skip-bio-btn">
+            <i class="fas fa-forward"></i>
+            بعداً
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -570,36 +567,34 @@
     (function() {
       'use strict';
 
-      // ========== تنظیمات امنیتی ==========
-      const ENCRYPTED_TEACHERS = {
+      // ========== رمزهای عبور رمزنگاری شده ==========
+      const ENCRYPTED = {
         'YWhtYWRpQGtoYW1lbmVpc2Nob29sLnNpdGU=': { name: 'خانم احمدی', code: 'MTIzNDU2' },
         'bW9oYW1tYWRpQGtoYW1lbmVpc2Nob29sLnNpdGU=': { name: 'آقای محمدی', code: 'MjM0NTY3' },
         'a2F6ZW1pQGtoYW1lbmVpc2Nob29sLnNpdGU=': { name: 'خانم کاظمی', code: 'MzQ1Njc4' },
         'ZGVtb0BrYW1lbmVpc2Nob29sLnNpdGU=': { name: 'دکتر دمو', code: 'OTQ3MjE4' }
       };
 
-      function decryptTeachers() {
-        const teachers = {};
-        for (const [encryptedId, data] of Object.entries(ENCRYPTED_TEACHERS)) {
-          const id = atob(encryptedId);
-          const code = atob(data.code);
-          teachers[id] = { name: data.name, code: code };
+      function decrypt() {
+        const t = {};
+        for (const [id, data] of Object.entries(ENCRYPTED)) {
+          t[atob(id)] = { name: data.name, code: atob(data.code) };
         }
-        return teachers;
+        return t;
       }
-      const TEACHERS = decryptTeachers();
+
+      const TEACHERS = decrypt();
       let pendingTeacher = null;
       let bioSupported = false;
-      let autoBiometricTriggered = false;
-
-      // ========== عناصر DOM ==========
+      let autoTriggered = false;
+      // ========== عناصر ==========
       const els = {
         cardTitle: document.getElementById('card-title'),
         cardSubtitle: document.getElementById('card-subtitle'),
         loading: document.getElementById('loading'),
         loadingText: document.getElementById('loading-text'),
-        messageBox: document.getElementById('message-box'),
-        successCheckmark: document.getElementById('success-checkmark'),
+        message: document.getElementById('message'),
+        successBox: document.getElementById('success-box'),
         quickLogin: document.getElementById('quick-login'),
         loginForm: document.getElementById('login-form'),
         bioPrompt: document.getElementById('bio-prompt'),
@@ -617,11 +612,11 @@
         autoBioText: document.getElementById('auto-bio-text')
       };
 
-      // ========== توابع کمکی ==========
+      // ========== توابع ==========
       function showMessage(msg, isError) {
-        els.messageBox.textContent = msg;
-        els.messageBox.className = 'message-box ' + (isError ? 'error' : 'success');
-        setTimeout(function() { els.messageBox.className = 'message-box'; }, 5000);
+        els.message.textContent = msg;
+        els.message.className = 'message ' + (isError ? 'error' : 'success');
+        setTimeout(function() { els.message.className = 'message'; }, 5000);
       }
 
       function showLoading(text) {
@@ -634,17 +629,17 @@
       }
 
       function showSuccess() {
-        els.successCheckmark.classList.add('show');
-      }
-      function hideAllSections() {
-        els.loginForm.style.display = 'none';
-        els.quickLogin.classList.remove('show');
-        els.bioPrompt.classList.remove('show');
-        els.successCheckmark.classList.remove('show');
+        els.successBox.classList.add('show');
       }
 
-      // ========== بررسی پشتیبانی بیومتریک ==========
-      async function checkBioSupport() {
+      function hideAll() {
+        els.loginForm.style.display = 'none';
+        els.quickLogin.classList.remove('show');
+        els.bioPrompt.classList.remove('show');        els.successBox.classList.remove('show');
+      }
+
+      // ========== بررسی بیومتریک ==========
+      async function checkBio() {
         if (window.PublicKeyCredential) {
           try {
             const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
@@ -660,7 +655,7 @@
       }
 
       // ========== ثبت اثر انگشت ==========
-      async function registerBiometric(teacherId) {
+      async function registerBio(teacherId) {
         if (!bioSupported) {
           showMessage('دستگاه شما پشتیبانی نمی‌کند', true);
           return false;
@@ -684,12 +679,12 @@
               { type: 'public-key', alg: -7 },
               { type: 'public-key', alg: -257 }
             ],
-            timeout: 60000,            attestation: 'none',
+            timeout: 60000,
+            attestation: 'none',
             authenticatorSelection: {
               authenticatorAttachment: 'platform',
               userVerification: 'required'
-            }
-          };
+            }          };
 
           showLoading('اثر انگشت خود را اسکن کنید...');
           const credential = await navigator.credentials.create({ publicKey: options });
@@ -700,13 +695,13 @@
             return false;
           }
 
-          const credentialData = {
+          const data = {
             id: credential.id,
             rawId: Array.from(new Uint8Array(credential.rawId)),
             type: credential.type
           };
 
-          localStorage.setItem('biometric_' + teacherId, JSON.stringify(credentialData));
+          localStorage.setItem('biometric_' + teacherId, JSON.stringify(data));
           localStorage.setItem('currentTeacher', JSON.stringify(pendingTeacher));
           localStorage.setItem('hasBiometric', 'true');
           
@@ -733,11 +728,11 @@
       }
 
       // ========== ورود با اثر انگشت ==========
-      async function authenticateBiometric(teacherId) {        if (!bioSupported) {
+      async function authBio(teacherId) {
+        if (!bioSupported) {
           showMessage('دستگاه شما پشتیبانی نمی‌کند', true);
           return null;
         }
-
         try {
           const stored = localStorage.getItem('biometric_' + teacherId);
           if (!stored) {
@@ -745,7 +740,7 @@
             return null;
           }
 
-          const credentialData = JSON.parse(stored);
+          const data = JSON.parse(stored);
           showLoading('در حال تأیید...');
           
           const challenge = new Uint8Array(32);
@@ -756,7 +751,7 @@
             timeout: 60000,
             userVerification: 'required',
             allowCredentials: [{
-              id: new Uint8Array(credentialData.rawId),
+              id: new Uint8Array(data.rawId),
               type: 'public-key',
               transports: ['internal']
             }]
@@ -782,12 +777,12 @@
             window.location.href = 'teacher-panel.html';
           }, 2000);
           
-          return { success: true, teacherId: teacherId };          
+          return { success: true, teacherId: teacherId };
+          
         } catch (error) {
           hideLoading();
           if (error.name === 'NotAllowedError') {
-            showMessage('لغو شد یا اثر انگشت مطابقت نداشت', true);
-          } else {
+            showMessage('لغو شد یا اثر انگشت مطابقت نداشت', true);          } else {
             showMessage('خطا: ' + error.message, true);
           }
           return null;
@@ -795,8 +790,8 @@
       }
 
       // ========== نمایش صفحات ==========
-      function showQuickLogin(teacher) {
-        hideAllSections();
+      function showQuick(teacher) {
+        hideAll();
         els.quickLogin.classList.add('show');
         els.cardTitle.textContent = 'ورود با اثر انگشت';
         els.cardSubtitle.textContent = 'خوش آمدید، ' + teacher.name;
@@ -805,61 +800,44 @@
         pendingTeacher = teacher;
       }
 
-      function showLoginForm() {
-        hideAllSections();
+      function showForm() {
+        hideAll();
         els.loginForm.style.display = 'block';
         els.cardTitle.textContent = 'ورود امن پنل دبیران';
         els.cardSubtitle.textContent = 'دبیرستان حضرت امام خامنه‌ای';
         setTimeout(function() { els.teacherId.focus(); }, 100);
       }
 
-      function showBioPrompt(teacher) {
-        hideAllSections();
+      function showPrompt(teacher) {
+        hideAll();
         els.bioPrompt.classList.add('show');
         els.cardTitle.textContent = 'ثبت اثر انگشت';
         els.cardSubtitle.textContent = 'خوش آمدید، ' + teacher.name;
         pendingTeacher = teacher;
       }
 
-      // ========== رویداد دکمه ثبت اثر انگشت ==========
+      // ========== رویدادها ==========
       els.registerBioBtn.addEventListener('click', function() {
-        console.log('🔐 کلیک روی دکمه ثبت اثر انگشت');
-        if (!pendingTeacher) { 
-          showMessage('خطا: اطلاعات یافت نشد', true); 
-          return; 
-        }
-        registerBiometric(pendingTeacher.id);
+        if (!pendingTeacher) { showMessage('خطا: اطلاعات یافت نشد', true); return; }
+        registerBio(pendingTeacher.id);
       });
 
-      // ========== رویداد دکمه انصراف ==========      els.skipBioBtn.addEventListener('click', function() {
-        console.log('⏭️ کلیک روی دکمه بعداً');
-        if (pendingTeacher) {
-          localStorage.setItem('currentTeacher', JSON.stringify(pendingTeacher));
-        }
+      els.skipBioBtn.addEventListener('click', function() {
+        if (pendingTeacher) { localStorage.setItem('currentTeacher', JSON.stringify(pendingTeacher)); }
         window.location.href = 'teacher-login.html';
       });
 
-      // ========== رویداد دکمه اسکن اثر انگشت ==========
       els.quickBioBtn.addEventListener('click', function() {
-        console.log('👆 کلیک روی دکمه اسکن اثر انگشت');
-        if (!pendingTeacher) { 
-          showMessage('خطا: اطلاعات یافت نشد', true); 
-          return; 
-        }
-        autoBiometricTriggered = true;
-        authenticateBiometric(pendingTeacher.id);
+        if (!pendingTeacher) { showMessage('خطا: اطلاعات یافت نشد', true); return; }
+        autoTriggered = true;
+        authBio(pendingTeacher.id);
       });
-
-      // ========== رویداد دکمه استفاده از رمز عبور ==========
       els.usePasswordBtn.addEventListener('click', function() {
-        console.log('⌨️ کلیک روی دکمه استفاده از رمز عبور');
-        showLoginForm();
+        showForm();
       });
 
-      // ========== رویداد دکمه خروج ==========
       els.logoutLink.addEventListener('click', function(e) {
         e.preventDefault();
-        console.log('🚪 کلیک روی دکمه خروج');
         if (confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟')) {
           localStorage.removeItem('currentTeacher');
           localStorage.removeItem('hasBiometric');
@@ -867,86 +845,45 @@
         }
       });
 
-      // ========== رویداد دکمه ورود ==========
       els.loginBtn.addEventListener('click', function() {
-        console.log('🔑 کلیک روی دکمه ورود');
-        
         const teacherId = els.teacherId.value.trim().toLowerCase();
         const password = els.password.value.trim();
         const twoFa = els.twoFa.value.trim();
         
-        console.log('📝 اطلاعات ورود:', { teacherId: teacherId, twoFa: twoFa });
-        
-        if (!teacherId || !password || !twoFa) { 
-          showMessage('تمام فیلدها را پر کنید', true); 
-          return; 
-        }        
-        if (!teacherId.endsWith('@khameneischool.site')) { 
-          showMessage('شناسه باید با @khameneischool.site تمام شود', true); 
-          return; 
-        }
+        if (!teacherId || !password || !twoFa) { showMessage('تمام فیلدها را پر کنید', true); return; }
+        if (!teacherId.endsWith('@khameneischool.site')) { showMessage('شناسه باید با @khameneischool.site تمام شود', true); return; }
         
         const teacher = TEACHERS[teacherId];
-        if (!teacher) { 
-          showMessage('شناسه یافت نشد', true); 
-          return; 
-        }
+        if (!teacher) { showMessage('شناسه یافت نشد', true); return; }
+        if (twoFa !== teacher.code) { showMessage('کد تأیید اشتباه است', true); return; }
         
-        if (twoFa !== teacher.code) { 
-          showMessage('کد تأیید اشتباه است', true); 
-          return; 
-        }
-        
-        console.log('✅ ورود موفق برای:', teacher.name);
-        
-        pendingTeacher = { 
-          id: teacherId, 
-          name: teacher.name, 
-          subject: 'ریاضی', 
-          loginTime: new Date().toISOString() 
-        };
-        
-        showBioPrompt(pendingTeacher);
+        pendingTeacher = { id: teacherId, name: teacher.name, subject: 'ریاضی', loginTime: new Date().toISOString() };
+        showPrompt(pendingTeacher);
       });
 
-      // ========== رویداد کلید Enter ==========
       els.twoFa.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          console.log('⏎ کلید Enter فشرده شد');
-          els.loginBtn.click();
-        }
+        if (e.key === 'Enter') { els.loginBtn.click(); }
       });
 
-      // ========== بارگذاری صفحه ==========
+      // ========== بارگذاری ==========
       window.addEventListener('DOMContentLoaded', async function() {
-        console.log('✅ صفحه بارگذاری شد');
+        await checkBio();
         
-        await checkBioSupport();
-        console.log('🔐 پشتیبانی بیومتریک:', bioSupported);
+        const hasBio = localStorage.getItem('hasBiometric') === 'true';
+        const saved = localStorage.getItem('currentTeacher');
         
-        const hasBiometric = localStorage.getItem('hasBiometric') === 'true';
-        const savedTeacher = localStorage.getItem('currentTeacher');
-        
-        console.log('📊 hasBiometric:', hasBiometric);
-        console.log('📊 savedTeacher:', savedTeacher);
-                if (hasBiometric && savedTeacher && bioSupported) {
-          const teacher = JSON.parse(savedTeacher);
-          console.log('🚀 نمایش ورود سریع برای:', teacher.name);
-          
-          showQuickLogin(teacher);
+        if (hasBio && saved && bioSupported) {
+          const teacher = JSON.parse(saved);
+          showQuick(teacher);
           els.autoBioText.style.display = 'block';
           
           setTimeout(async function() {
-            if (!autoBiometricTriggered) {
-              console.log('🔐 درخواست خودکار اثر انگشت...');
-              autoBiometricTriggered = true;
-              await authenticateBiometric(teacher.id);
-            }
+            if (!autoTriggered) {
+              autoTriggered = true;
+              await authBio(teacher.id);            }
           }, 1500);
-          
         } else {
-          console.log('📝 نمایش فرم ورود');
-          showLoginForm();
+          showForm();
         }
       });
 
