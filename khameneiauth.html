@@ -356,16 +356,16 @@
 
       // معلمان
       const TEACHER_DATA = {
-        'ahmadi@khameneischool.site': { name: 'خانم احمدی', code: 'MTIzNDU2', type: 'teacher', panel: 'teacher-panel.html' },
-        'mohammadi@khameneischool.site': { name: 'آقای محمدی', code: 'MjM0NTY3', type: 'teacher', panel: 'teacher-panel.html' },
-        'kazemi@khameneischool.site': { name: 'خانم کاظمی', code: 'MzQ1Njc4', type: 'teacher', panel: 'teacher-panel.html' },
-        'demo@khameneischool.site': { name: 'دکتر دمو', code: 'OTQ3MjE4', type: 'teacher', panel: 'teacher-panel.html' }
+        'ahmadi@khameneischool.site': { name: 'خانم احمدی', code: 'MTIzNDU2', type: 'teacher', panel: 'teacher-login.html' },
+        'mohammadi@khameneischool.site': { name: 'آقای محمدی', code: 'MjM0NTY3', type: 'teacher', panel: 'teacher-login.html' },
+        'kazemi@khameneischool.site': { name: 'خانم کاظمی', code: 'MzQ1Njc4', type: 'teacher', panel: 'teacher-login.html' },
+        'demo@khameneischool.site': { name: 'دکتر دمو', code: 'OTQ3MjE4', type: 'teacher', panel: 'teacher-login.html' }
       };
 
       // مشاوران
       const COUNSELOR_DATA = {
-        'counselor1@khameneischool.site': { name: 'خانم رضوی', code: 'Y291bnNlbG9yMTIz', type: 'counselor', panel: 'counselor-panel.html' },
-        'counselor2@khameneischool.site': { name: 'آقای حسینی', code: 'Y291bnNlbG9yNDU2', type: 'counselor', panel: 'counselor-panel.html' }
+        'counselor1@khameneischool.site': { name: 'خانم رضوی', code: 'Y291bnNlbG9yMTIz', type: 'counselor', panel: 'counselor.html' },
+        'counselor2@khameneischool.site': { name: 'آقای حسینی', code: 'Y291bnNlbG9yNDU2', type: 'counselor', panel: 'counselor.html' }
       };
 
       // ترکیب همه کاربران
@@ -408,9 +408,6 @@
       let bioSupported = false;
       let autoTriggered = false;
 
-      // ========== صفحه مقصد واحد ==========
-      const REDIRECT_PAGE = 'teacher-login.html';
-
       // ========== عناصر DOM ==========
       const els = {
         userTypeBadge: document.getElementById('user-type-badge'),
@@ -439,10 +436,10 @@
 
       // ========== توابع کمکی ==========
       function showMessage(msg, isError) {
-        els.message.textContent = msg;        els.message.className = 'message ' + (isError ? 'error' : 'success');
+        els.message.textContent = msg;
+        els.message.className = 'message ' + (isError ? 'error' : 'success');
         setTimeout(function() { els.message.className = 'message'; }, 5000);
       }
-
       function showLoading(text) {
         els.loadingText.textContent = text;
         els.loading.classList.add('show');
@@ -488,10 +485,10 @@
             const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
             bioSupported = available;
             return available;
-          } catch (e) {            bioSupported = false;
+          } catch (e) {
+            bioSupported = false;
             return false;
-          }
-        }
+          }        }
         bioSupported = false;
         return false;
       }
@@ -537,12 +534,13 @@
             rawId: Array.from(new Uint8Array(credential.rawId)),
             type: credential.type
           };
-          localStorage.setItem('biometric_' + userId, JSON.stringify(credentialData));          localStorage.setItem('currentUser', JSON.stringify(pendingUser));
+          localStorage.setItem('biometric_' + userId, JSON.stringify(credentialData));
+          localStorage.setItem('currentUser', JSON.stringify(pendingUser));
           localStorage.setItem('hasBiometric', 'true');
-          hideLoading();
-          showMessage('✅ اثر انگشت ثبت شد! در حال هدایت...');
+          hideLoading();          showMessage('✅ اثر انگشت ثبت شد! در حال هدایت...');
+          // ✅ هدایت به صفحه مقصد بر اساس نوع کاربر
           setTimeout(function() {
-            window.location.href = REDIRECT_PAGE;
+            window.location.href = pendingUser.panel;
           }, 2000);
           return true;
         } catch (error) {
@@ -586,15 +584,16 @@
           };
           showLoading('اثر انگشت را اسکن کنید...');
           const assertion = await navigator.credentials.get({ publicKey: options });
-          if (!assertion) {            hideLoading();
-            showMessage('لغو شد', true);
-            return null;
+          if (!assertion) {
+            hideLoading();
+            showMessage('لغو شد', true);            return null;
           }
           hideLoading();
           showSuccess();
           showMessage('✅ تأیید شد! در حال هدایت به پنل ' + getUserTypeLabel(pendingUser.type) + '...', false);
           pendingUser.lastLogin = new Date().toISOString();
           localStorage.setItem('currentUser', JSON.stringify(pendingUser));
+          // ✅ هدایت به صفحه مقصد بر اساس نوع کاربر
           setTimeout(function() {
             window.location.href = pendingUser.panel;
           }, 2000);
@@ -635,11 +634,11 @@
       // ========== رویدادها ==========
       els.registerBioBtn.addEventListener('click', function() {
         if (!pendingUser) { showMessage('خطا: اطلاعات یافت نشد', true); return; }
-        registerBiometric(pendingUser.id);      });
-
+        registerBiometric(pendingUser.id);
+      });
       els.skipBioBtn.addEventListener('click', function() {
         if (pendingUser) { localStorage.setItem('currentUser', JSON.stringify(pendingUser)); }
-        window.location.href = REDIRECT_PAGE;
+        window.location.href = pendingUser.panel;
       });
 
       els.quickBioBtn.addEventListener('click', function() {
@@ -684,8 +683,8 @@
         showBioPrompt(pendingUser);
       });
 
-      els.twoFa.addEventListener('keypress', function(e) {        if (e.key === 'Enter') { els.loginBtn.click(); }
-      });
+      els.twoFa.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') { els.loginBtn.click(); }      });
 
       // ========== بارگذاری صفحه ==========
       window.addEventListener('DOMContentLoaded', async function() {
