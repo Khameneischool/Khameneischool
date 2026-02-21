@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ورود به حساب | دبیرستان امام خامنه‌ای</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(135deg, #0a0a1a 0%, #0f1428 50%, #1a1a2e 100%);
+      color: white;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+    }
+    .bg-effect {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(33, 150, 243, 0.1) 0%, transparent 50%);
+      z-index: -1; pointer-events: none;
+    }
+    .container { max-width: 520px; margin: 0 auto; padding: 20px 0 40px 0; }
+    .login-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 28px;
+      padding: 40px 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+    .header { text-align: center; margin-bottom: 30px; }
+    .logo {
+      width: 90px; height: 90px; margin: 0 auto 20px;
+      background: linear-gradient(135deg, #d4af37, #2196F3, #4CAF50);
+      border-radius: 24px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 10px 35px rgba(212, 175, 55, 0.4);
+      animation: logoPulse 3s ease-in-out infinite;
+    }
+    @keyframes logoPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 10px 35px rgba(212, 175, 55, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 15px 45px rgba(212, 175, 55, 0.6); }
+    }    .logo i { font-size: 42px; color: white; }
+    .header h1 { font-size: 24px; font-weight: 800; color: #d4af37; margin-bottom: 8px; }
+    .header p { font-size: 13px; color: rgba(255, 255, 255, 0.7); }
+    .user-type-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 12px;
+      background: rgba(212, 175, 55, 0.2);
+      color: #d4af37;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+    }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 8px; font-weight: 600; color: #d4af37; font-size: 14px;
+    }
+    .form-group label i { width: 18px; text-align: center; }
+    .form-group input {
+      width: 100%; padding: 14px 16px;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.06);
+      color: white; border-radius: 14px;
+      font-size: 15px; text-align: left; direction: ltr;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    .form-group input:focus {
+      outline: none; border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .form-group input::placeholder { text-align: right; direction: rtl; color: rgba(255, 255, 255, 0.4); }
+    .btn {
+      width: 100%; padding: 16px; border: none; border-radius: 14px;
+      font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.3s; font-family: 'Vazirmatn', sans-serif; touch-action: manipulation;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: linear-gradient(135deg, #d4af37, #2196F3, #4CAF50);
+      color: #0a0a1a;
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(212, 175, 55, 0.6);
+    }    .btn-biometric {
+      background: linear-gradient(135deg, #9C27B0, #2196F3);
+      color: white;
+      padding: 17px;
+      font-size: 16px;
+      box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4);
+    }
+    .btn-biometric:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(156, 39, 176, 0.6);
+    }
+    .btn-skip {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+    }
+    .message {
+      text-align: center; padding: 12px; border-radius: 12px;
+      margin-top: 15px; font-weight: 600; font-size: 13px; display: none;
+    }
+    .message.error { display: block; color: #ff6b6b; background: rgba(255, 107, 107, 0.12); border: 1px solid rgba(255, 107, 107, 0.25); }
+    .message.success { display: block; color: #51cf66; background: rgba(81, 207, 102, 0.12); border: 1px solid rgba(81, 207, 102, 0.25); }
+    .loading {
+      display: none; text-align: center; padding: 18px;
+      background: rgba(33, 150, 243, 0.12); border-radius: 14px;
+      margin: 15px 0; border: 1px solid rgba(33, 150, 243, 0.25);
+    }
+    .loading.show { display: block; }
+    .loading i { font-size: 35px; color: #2196F3; margin-bottom: 10px; animation: spin 1s linear infinite; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .loading p { font-size: 14px; color: rgba(255, 255, 255, 0.8); }
+    .quick-login { display: none; text-align: center; }
+    .quick-login.show { display: block; }
+    .fingerprint-box {
+      width: 95px; height: 95px; margin: 0 auto 18px;
+      background: linear-gradient(135deg, #9C27B0, #2196F3);
+      border-radius: 28px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 10px 35px rgba(156, 39, 176, 0.4);
+      animation: fingerprintPulse 2s ease-in-out infinite;
+    }
+    @keyframes fingerprintPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 10px 35px rgba(156, 39, 176, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 15px 45px rgba(156, 39, 176, 0.6); }
+    }
+    .fingerprint-box i { font-size: 48px; color: white; }
+    .teacher-info {
+      background: rgba(212, 175, 55, 0.12);
+      padding: 16px; border-radius: 16px;
+      margin-bottom: 18px; border: 1px solid rgba(212, 175, 55, 0.3);    }
+    .teacher-info h3 { color: #d4af37; font-size: 18px; margin-bottom: 5px; font-weight: 700; }
+    .teacher-info p { font-size: 12px; color: rgba(255, 255, 255, 0.7); }
+    .quick-login h2 { color: #d4af37; font-size: 20px; margin-bottom: 8px; font-weight: 700; }
+    .quick-login p { color: rgba(255, 255, 255, 0.7); font-size: 13px; margin-bottom: 18px; }
+    .divider { text-align: center; margin: 18px 0; color: rgba(255, 255, 255, 0.4); font-size: 12px; }
+    .logout-link { text-align: center; margin-top: 18px; font-size: 12px; }
+    .logout-link a {
+      color: #ff6b6b; text-decoration: none; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .biometric-prompt {
+      display: none; text-align: center; padding: 25px;
+      background: rgba(76, 175, 80, 0.12); border-radius: 22px;
+      border: 1.5px solid rgba(76, 175, 80, 0.3); margin-top: 20px;
+    }
+    .biometric-prompt.show { display: block; }
+    .biometric-prompt .icon {
+      width: 70px; height: 70px; margin: 0 auto 14px;
+      background: linear-gradient(135deg, #4CAF50, #8BC34A);
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .biometric-prompt .icon i { font-size: 35px; color: white; }
+    .biometric-prompt h2 { color: #4CAF50; font-size: 19px; margin-bottom: 10px; font-weight: 700; }
+    .biometric-prompt p { color: rgba(255, 255, 255, 0.8); font-size: 13px; margin-bottom: 18px; line-height: 1.6; }
+    .biometric-prompt-buttons { display: flex; gap: 10px; }
+    .biometric-prompt-buttons .btn { flex: 1; margin-top: 0; }
+    .auto-bio-text {
+      text-align: center; font-size: 14px; color: #51cf66;
+      margin: 14px 0; font-weight: 700; padding: 12px;
+      background: rgba(81, 207, 102, 0.1); border-radius: 12px;
+      border: 1px solid rgba(81, 207, 102, 0.25);
+    }
+    .security-info {
+      background: rgba(33, 150, 243, 0.1);
+      border-right: 3px solid #2196F3; border-radius: 10px;
+      padding: 14px; margin-top: 18px; text-align: right;
+      font-size: 11px; line-height: 2;
+    }
+    .security-info strong { color: #d4af37; display: block; margin-bottom: 5px; font-size: 12px; }
+    .success-box { display: none; text-align: center; padding: 28px 20px; }
+    .success-box.show { display: block; }
+    .success-box .icon {
+      width: 85px; height: 85px; margin: 0 auto 16px;
+      background: linear-gradient(135deg, #4CAF50, #8BC34A);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      animation: successPop 0.6s ease;
+    }    @keyframes successPop {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .success-box .icon i { font-size: 42px; color: white; }
+    .success-box h2 { color: #51cf66; font-size: 21px; margin-bottom: 6px; font-weight: 700; }
+    .success-box p { color: rgba(255, 255, 255, 0.7); font-size: 13px; }
+    @media (max-width: 480px) {
+      body { padding: 15px; }
+      .login-card { padding: 35px 25px; border-radius: 24px; }
+      .logo { width: 75px; height: 75px; }
+      .logo i { font-size: 36px; }
+      .header h1 { font-size: 21px; }
+      .biometric-prompt-buttons { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-effect"></div>
+  <div class="container">
+    <div class="login-card">
+      <div class="header">
+        <div class="logo">
+          <i class="fas fa-school"></i>
+        </div>
+        <h1>ورود به حساب کاربری</h1>
+        <p>دبیرستان حضرت امام خامنه‌ای</p>
+        <div class="user-type-badge" id="user-type-badge">
+          <i class="fas fa-user"></i>
+          <span id="user-type-text">همه کاربران</span>
+        </div>
+      </div>
+
+      <div class="loading" id="loading">
+        <i class="fas fa-spinner"></i>
+        <p id="loading-text">در حال پردازش...</p>
+      </div>
+
+      <div class="message" id="message"></div>
+
+      <div class="success-box" id="success-box">
+        <div class="icon">
+          <i class="fas fa-check"></i>
+        </div>
+        <h2>ورود موفق!</h2>
+        <p>در حال هدایت به پنل...</p>
+      </div>
+
+      <div class="auto-bio-text" id="auto-bio-text" style="display: none;">        <i class="fas fa-hand-pointer"></i>
+        لطفاً اثر انگشت خود را اسکن کنید...
+      </div>
+
+      <!-- ورود سریع -->
+      <div class="quick-login" id="quick-login">
+        <div class="fingerprint-box">
+          <i class="fas fa-fingerprint"></i>
+        </div>
+        
+        <div class="teacher-info">
+          <h3 id="user-name-display">نام کاربر</h3>
+          <p id="user-type-display">نوع کاربری</p>
+          <p id="user-id-display" style="margin-top: 5px; font-size: 11px;">آیدی کاربر</p>
+        </div>
+        
+        <h2>ورود با اثر انگشت</h2>
+        <p>سنسور دستگاه خود را لمس کنید</p>
+        
+        <button class="btn btn-biometric" id="quick-bio-btn">
+          <i class="fas fa-fingerprint"></i>
+          اسکن اثر انگشت
+        </button>
+        
+        <div class="divider">یا</div>
+        
+        <button class="btn btn-skip" id="use-password-btn">
+          <i class="fas fa-keyboard"></i>
+          استفاده از رمز عبور
+        </button>
+        
+        <div class="logout-link">
+          <a href="#" id="logout-link">
+            <i class="fas fa-sign-out-alt"></i>
+            خروج از حساب
+          </a>
+        </div>
+      </div>
+
+      <!-- فرم ورود -->
+      <div id="login-form">
+        <div class="form-group">
+          <label>
+            <i class="fas fa-id-card"></i>
+            شناسه کاربری
+          </label>
+          <input type="text" id="user-id" placeholder="example@khameneischool.site">
+        </div>
+        
+        <div class="form-group">          <label>
+            <i class="fas fa-key"></i>
+            رمز عبور
+          </label>
+          <input type="password" id="password" placeholder="رمز عبور">
+        </div>
+        
+        <div class="form-group">
+          <label>
+            <i class="fas fa-shield-alt"></i>
+            کد تأیید
+          </label>
+          <input type="text" id="two-fa" placeholder="123456" maxlength="6">
+        </div>
+        
+        <button class="btn btn-primary" id="login-btn">
+          <i class="fas fa-sign-in-alt"></i>
+          ادامه دادن با حساب مدرسه خامنه‌ای
+        </button>
+        
+        <div class="security-info">
+          <strong>
+            <i class="fas fa-lock"></i>
+            امنیت پیشرفته:
+          </strong>
+          • اثر انگشت واقعی با WebAuthn API
+          <br>• داده‌ها در دستگاه شما ذخیره می‌شوند
+          <br>• رمزهای عبور با Base64 رمزنگاری شده‌اند
+          <br>• تشخیص خودکار نوع کاربری (مدیر/معلم/مشاور)
+        </div>
+      </div>
+
+      <!-- پیام ثبت اثر انگشت -->
+      <div class="biometric-prompt" id="bio-prompt">
+        <div class="icon">
+          <i class="fas fa-fingerprint"></i>
+        </div>
+        <h2>ثبت اثر انگشت! 🔐</h2>
+        <p>آیا می‌خواهید دفعه بعد فقط با اثر انگشت وارد شوید؟</p>
+        <div class="biometric-prompt-buttons">
+          <button class="btn btn-biometric" id="register-bio-btn">
+            <i class="fas fa-fingerprint"></i>
+            بله، ثبت کن
+          </button>
+          <button class="btn btn-skip" id="skip-bio-btn">
+            <i class="fas fa-forward"></i>
+            بعداً
+          </button>
+        </div>
+      </div>    </div>
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // ========== رمزهای عبور رمزنگاری شده با Base64 ==========
+      // مدیران
+      const ADMIN_DATA = {
+        'admin@khameneischool.site': { name: 'مدیر مدرسه', code: 'YWRtaW4xMjM=', type: 'admin', panel: 'admin-panel.html' }
+      };
+
+      // معلمان
+      const TEACHER_DATA = {
+        'ahmadi@khameneischool.site': { name: 'خانم احمدی', code: 'MTIzNDU2', type: 'teacher', panel: 'teacher-panel.html' },
+        'mohammadi@khameneischool.site': { name: 'آقای محمدی', code: 'MjM0NTY3', type: 'teacher', panel: 'teacher-panel.html' },
+        'kazemi@khameneischool.site': { name: 'خانم کاظمی', code: 'MzQ1Njc4', type: 'teacher', panel: 'teacher-panel.html' },
+        'demo@khameneischool.site': { name: 'دکتر دمو', code: 'OTQ3MjE4', type: 'teacher', panel: 'teacher-panel.html' }
+      };
+
+      // مشاوران
+      const COUNSELOR_DATA = {
+        'counselor1@khameneischool.site': { name: 'خانم رضوی', code: 'Y291bnNlbG9yMTIz', type: 'counselor', panel: 'counselor-panel.html' },
+        'counselor2@khameneischool.site': { name: 'آقای حسینی', code: 'Y291bnNlbG9yNDU2', type: 'counselor', panel: 'counselor-panel.html' }
+      };
+
+      // ترکیب همه کاربران
+      function getAllUsers() {
+        const users = {};
+        for (const key in ADMIN_DATA) {
+          if (ADMIN_DATA.hasOwnProperty(key)) {
+            users[key] = {
+              name: ADMIN_DATA[key].name,
+              code: atob(ADMIN_DATA[key].code),
+              type: ADMIN_DATA[key].type,
+              panel: ADMIN_DATA[key].panel
+            };
+          }
+        }
+        for (const key in TEACHER_DATA) {
+          if (TEACHER_DATA.hasOwnProperty(key)) {
+            users[key] = {
+              name: TEACHER_DATA[key].name,
+              code: atob(TEACHER_DATA[key].code),
+              type: TEACHER_DATA[key].type,
+              panel: TEACHER_DATA[key].panel
+            };
+          }
+        }        for (const key in COUNSELOR_DATA) {
+          if (COUNSELOR_DATA.hasOwnProperty(key)) {
+            users[key] = {
+              name: COUNSELOR_DATA[key].name,
+              code: atob(COUNSELOR_DATA[key].code),
+              type: COUNSELOR_DATA[key].type,
+              panel: COUNSELOR_DATA[key].panel
+            };
+          }
+        }
+        return users;
+      }
+
+      const USERS = getAllUsers();
+      let pendingUser = null;
+      let bioSupported = false;
+      let autoTriggered = false;
+
+      // ========== صفحه مقصد واحد ==========
+      const REDIRECT_PAGE = 'teacher-login.html';
+
+      // ========== عناصر DOM ==========
+      const els = {
+        userTypeBadge: document.getElementById('user-type-badge'),
+        userTypeText: document.getElementById('user-type-text'),
+        loading: document.getElementById('loading'),
+        loadingText: document.getElementById('loading-text'),
+        message: document.getElementById('message'),
+        successBox: document.getElementById('success-box'),
+        quickLogin: document.getElementById('quick-login'),
+        loginForm: document.getElementById('login-form'),
+        bioPrompt: document.getElementById('bio-prompt'),
+        userNameDisplay: document.getElementById('user-name-display'),
+        userTypeDisplay: document.getElementById('user-type-display'),
+        userIdDisplay: document.getElementById('user-id-display'),
+        userId: document.getElementById('user-id'),
+        password: document.getElementById('password'),
+        twoFa: document.getElementById('two-fa'),
+        loginBtn: document.getElementById('login-btn'),
+        quickBioBtn: document.getElementById('quick-bio-btn'),
+        usePasswordBtn: document.getElementById('use-password-btn'),
+        registerBioBtn: document.getElementById('register-bio-btn'),
+        skipBioBtn: document.getElementById('skip-bio-btn'),
+        logoutLink: document.getElementById('logout-link'),
+        autoBioText: document.getElementById('auto-bio-text')
+      };
+
+      // ========== توابع کمکی ==========
+      function showMessage(msg, isError) {
+        els.message.textContent = msg;        els.message.className = 'message ' + (isError ? 'error' : 'success');
+        setTimeout(function() { els.message.className = 'message'; }, 5000);
+      }
+
+      function showLoading(text) {
+        els.loadingText.textContent = text;
+        els.loading.classList.add('show');
+      }
+
+      function hideLoading() {
+        els.loading.classList.remove('show');
+      }
+
+      function showSuccess() {
+        els.successBox.classList.add('show');
+      }
+
+      function hideAllSections() {
+        els.loginForm.style.display = 'none';
+        els.quickLogin.classList.remove('show');
+        els.bioPrompt.classList.remove('show');
+        els.successBox.classList.remove('show');
+      }
+
+      function getUserTypeLabel(type) {
+        switch(type) {
+          case 'admin': return 'مدیر مدرسه';
+          case 'teacher': return 'دبیر';
+          case 'counselor': return 'مشاور';
+          default: return 'کاربر';
+        }
+      }
+
+      function getUserTypeIcon(type) {
+        switch(type) {
+          case 'admin': return 'fa-user-shield';
+          case 'teacher': return 'fa-chalkboard-teacher';
+          case 'counselor': return 'fa-user-graduate';
+          default: return 'fa-user';
+        }
+      }
+
+      // ========== بررسی پشتیبانی بیومتریک ==========
+      async function checkBiometricSupport() {
+        if (window.PublicKeyCredential) {
+          try {
+            const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+            bioSupported = available;
+            return available;
+          } catch (e) {            bioSupported = false;
+            return false;
+          }
+        }
+        bioSupported = false;
+        return false;
+      }
+
+      // ========== ثبت اثر انگشت ==========
+      async function registerBiometric(userId) {
+        if (!bioSupported) {
+          showMessage('دستگاه شما پشتیبانی نمی‌کند', true);
+          return false;
+        }
+        try {
+          showLoading('در حال آماده‌سازی...');
+          const challenge = new Uint8Array(32);
+          crypto.getRandomValues(challenge);
+          const options = {
+            challenge: challenge,
+            rp: { name: 'دبیرستان امام خامنه‌ای', id: window.location.hostname || 'localhost' },
+            user: {
+              id: new TextEncoder().encode(userId),
+              name: userId,
+              displayName: pendingUser.name
+            },
+            pubKeyCredParams: [
+              { type: 'public-key', alg: -7 },
+              { type: 'public-key', alg: -257 }
+            ],
+            timeout: 60000,
+            attestation: 'none',
+            authenticatorSelection: {
+              authenticatorAttachment: 'platform',
+              userVerification: 'required'
+            }
+          };
+          showLoading('اثر انگشت خود را اسکن کنید...');
+          const credential = await navigator.credentials.create({ publicKey: options });
+          if (!credential) {
+            hideLoading();
+            showMessage('لغو شد', true);
+            return false;
+          }
+          const credentialData = {
+            id: credential.id,
+            rawId: Array.from(new Uint8Array(credential.rawId)),
+            type: credential.type
+          };
+          localStorage.setItem('biometric_' + userId, JSON.stringify(credentialData));          localStorage.setItem('currentUser', JSON.stringify(pendingUser));
+          localStorage.setItem('hasBiometric', 'true');
+          hideLoading();
+          showMessage('✅ اثر انگشت ثبت شد! در حال هدایت...');
+          setTimeout(function() {
+            window.location.href = REDIRECT_PAGE;
+          }, 2000);
+          return true;
+        } catch (error) {
+          hideLoading();
+          if (error.name === 'NotAllowedError') {
+            showMessage('لغو شد یا دستگاه قفل است', true);
+          } else if (error.name === 'NotSupportedError') {
+            showMessage('پشتیبانی نمی‌شود', true);
+          } else {
+            showMessage('خطا: ' + error.message, true);
+          }
+          return false;
+        }
+      }
+
+      // ========== ورود با اثر انگشت ==========
+      async function authenticateBiometric(userId) {
+        if (!bioSupported) {
+          showMessage('دستگاه شما پشتیبانی نمی‌کند', true);
+          return null;
+        }
+        try {
+          const stored = localStorage.getItem('biometric_' + userId);
+          if (!stored) {
+            showMessage('اثر انگشتی ثبت نشده', true);
+            return null;
+          }
+          const credentialData = JSON.parse(stored);
+          showLoading('در حال تأیید...');
+          const challenge = new Uint8Array(32);
+          crypto.getRandomValues(challenge);
+          const options = {
+            challenge: challenge,
+            timeout: 60000,
+            userVerification: 'required',
+            allowCredentials: [{
+              id: new Uint8Array(credentialData.rawId),
+              type: 'public-key',
+              transports: ['internal']
+            }]
+          };
+          showLoading('اثر انگشت را اسکن کنید...');
+          const assertion = await navigator.credentials.get({ publicKey: options });
+          if (!assertion) {            hideLoading();
+            showMessage('لغو شد', true);
+            return null;
+          }
+          hideLoading();
+          showSuccess();
+          showMessage('✅ تأیید شد! در حال هدایت به پنل ' + getUserTypeLabel(pendingUser.type) + '...', false);
+          pendingUser.lastLogin = new Date().toISOString();
+          localStorage.setItem('currentUser', JSON.stringify(pendingUser));
+          setTimeout(function() {
+            window.location.href = pendingUser.panel;
+          }, 2000);
+          return { success: true, userId: userId };
+        } catch (error) {
+          hideLoading();
+          if (error.name === 'NotAllowedError') {
+            showMessage('لغو شد یا اثر انگشت مطابقت نداشت', true);
+          } else {
+            showMessage('خطا: ' + error.message, true);
+          }
+          return null;
+        }
+      }
+
+      // ========== نمایش صفحات ==========
+      function showQuickLogin(user) {
+        hideAllSections();
+        els.quickLogin.classList.add('show');
+        els.userNameDisplay.textContent = user.name;
+        els.userTypeDisplay.textContent = getUserTypeLabel(user.type);
+        els.userIdDisplay.textContent = user.id;
+        pendingUser = user;
+      }
+
+      function showLoginForm() {
+        hideAllSections();
+        els.loginForm.style.display = 'block';
+        setTimeout(function() { els.userId.focus(); }, 100);
+      }
+
+      function showBioPrompt(user) {
+        hideAllSections();
+        els.bioPrompt.classList.add('show');
+        pendingUser = user;
+      }
+
+      // ========== رویدادها ==========
+      els.registerBioBtn.addEventListener('click', function() {
+        if (!pendingUser) { showMessage('خطا: اطلاعات یافت نشد', true); return; }
+        registerBiometric(pendingUser.id);      });
+
+      els.skipBioBtn.addEventListener('click', function() {
+        if (pendingUser) { localStorage.setItem('currentUser', JSON.stringify(pendingUser)); }
+        window.location.href = REDIRECT_PAGE;
+      });
+
+      els.quickBioBtn.addEventListener('click', function() {
+        if (!pendingUser) { showMessage('خطا: اطلاعات یافت نشد', true); return; }
+        autoTriggered = true;
+        authenticateBiometric(pendingUser.id);
+      });
+
+      els.usePasswordBtn.addEventListener('click', function() {
+        showLoginForm();
+      });
+
+      els.logoutLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (confirm('آیا مطمئن هستید که می‌خواهید خارج شوید؟')) {
+          localStorage.removeItem('currentUser');
+          localStorage.removeItem('hasBiometric');
+          window.location.reload();
+        }
+      });
+
+      els.loginBtn.addEventListener('click', function() {
+        const userId = els.userId.value.trim().toLowerCase();
+        const password = els.password.value.trim();
+        const twoFa = els.twoFa.value.trim();
+        
+        if (!userId || !password || !twoFa) { showMessage('تمام فیلدها را پر کنید', true); return; }
+        if (!userId.endsWith('@khameneischool.site')) { showMessage('شناسه باید با @khameneischool.site تمام شود', true); return; }
+        
+        const user = USERS[userId];
+        if (!user) { showMessage('شناسه یافت نشد', true); return; }
+        if (twoFa !== user.code) { showMessage('کد تأیید اشتباه است', true); return; }
+        
+        pendingUser = { 
+          id: userId, 
+          name: user.name, 
+          type: user.type, 
+          panel: user.panel,
+          loginTime: new Date().toISOString() 
+        };
+        
+        showBioPrompt(pendingUser);
+      });
+
+      els.twoFa.addEventListener('keypress', function(e) {        if (e.key === 'Enter') { els.loginBtn.click(); }
+      });
+
+      // ========== بارگذاری صفحه ==========
+      window.addEventListener('DOMContentLoaded', async function() {
+        await checkBiometricSupport();
+        const hasBiometric = localStorage.getItem('hasBiometric') === 'true';
+        const savedUser = localStorage.getItem('currentUser');
+        
+        if (hasBiometric && savedUser && bioSupported) {
+          const user = JSON.parse(savedUser);
+          showQuickLogin(user);
+          els.autoBioText.style.display = 'block';
+          setTimeout(async function() {
+            if (!autoTriggered) {
+              autoTriggered = true;
+              await authenticateBiometric(user.id);
+            }
+          }, 1500);
+        } else {
+          showLoginForm();
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>
