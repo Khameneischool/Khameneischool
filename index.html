@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title></title>دبیرستان حضرت امام خامنه‌ای | پیشخوان الکترونیک</title>
-  <meta name="description" content="پیشخوان رسمی دبیرستان حضرت امام خامنه ای">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#0a0a1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>دبیرستان حضرت امام خامنه‌ای | پیشخوان شیشه‌ای</title>
+  <meta name="description" content="پیشخوان رسمی دبیرستان با طراحی مدرن شیشه‌ای">
+  
+  <!-- Preconnect for faster loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   
   <style>
-    /* ========== BASE ========== */
+    /* ========== CSS VARIABLES ========== */
     :root {
       --red: #b31b1b;
       --gold: #d4af37;
@@ -27,46 +39,53 @@
       --border-strong: rgba(255, 255, 255, 0.42);
       --shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
       --shadow-hover: 0 18px 50px rgba(0, 0, 0, 0.75);
-      --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+      --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
       --status-color: #4CAF50;
-    }
+      --spacing-sm: 1rem;
+      --spacing-md: 1.5rem;
+      --spacing-lg: 2.5rem;
+      --radius-sm: 14px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-xl: 35px;    }
 
-    * {
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 80px;
     }
 
     body {
       font-family: 'Vazirmatn', sans-serif;
-      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f);
       color: white;
       min-height: 100vh;
       overflow-x: hidden;
-      line-height: 1.6;      background-attachment: fixed;
+      line-height: 1.6;
+      background-attachment: fixed;
       background-size: 400% 400%;
       animation: gradientBG 20s ease infinite;
       position: relative;
+      font-size: clamp(14px, 1.5vw, 16px);
     }
 
     @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
+      0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
-    /* ========== GLASS SHADER EFFECT ========== */
+    /* ========== BACKGROUND EFFECTS ========== */
     body::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background: 
         radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
         radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
@@ -74,99 +93,87 @@
         radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
       z-index: -3;
       opacity: 0.85;
+      pointer-events: none;
     }
 
-    /* ========== FLOATING ORBS ========== */
-    .floating-orb {
-      position: fixed;
+    .floating-orb {      position: fixed;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
       z-index: -1;
       animation: floatOrb 25s infinite linear;
       opacity: 0.6;
       box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+      pointer-events: none;
     }
 
     @keyframes floatOrb {
-      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
       25% { transform: translateY(-60px) translateX(40px) rotate(90deg); opacity: 0.3; }
       50% { transform: translateY(-120px) translateX(0) rotate(180deg); opacity: 0.1; }
       75% { transform: translateY(-60px) translateX(-40px) rotate(270deg); opacity: 0.3; }
-      100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.6; }
     }
 
     /* ========== SCROLL PROGRESS ========== */
-    .scroll-progress {      position: fixed;
+    .scroll-progress {
+      position: fixed;
       top: 0;
       right: 0;
-      height: 6px;
+      height: 4px;
       background: linear-gradient(90deg, var(--live-red), var(--accent), var(--purple), var(--secondary), var(--primary), var(--gold));
       z-index: 10000;
       width: 0%;
-      box-shadow: 0 0 15px rgba(255, 60, 78, 0.9), 0 0 25px rgba(255, 152, 0, 0.8);
-      transition: width 0.12s ease;
+      box-shadow: 0 0 15px rgba(255, 60, 78, 0.9);
+      transition: width 0.1s ease;
     }
 
     /* ========== LOADER ========== */
     #loader {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f, #0a0a1a);
+      inset: 0;
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index: 99999;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
 
     .spinner {
-      width: 80px;
-      height: 80px;
-      border: 8px solid rgba(212, 175, 55, 0.2);
-      border-top: 8px solid var(--gold);
+      width: clamp(50px, 12vw, 80px);
+      height: clamp(50px, 12vw, 80px);
+      border: clamp(4px, 1vw, 8px) solid rgba(212, 175, 55, 0.2);
+      border-top-color: var(--gold);
       border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 2rem;
+      animation: spin 1s linear infinite;      margin-bottom: 2rem;
     }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
 
     #loader p {
-      font-family: 'Vazirmatn', sans-serif;
-      font-size: 1.8rem;
+      font-size: clamp(1.3rem, 3.5vw, 1.8rem);
       font-weight: 700;
       color: white;
       text-align: center;
       line-height: 1.5;
-      max-width: 90%;    }
+      max-width: 90%;
+      padding: 0 1rem;
+    }
 
     #loader p span {
       color: var(--gold);
       display: block;
-      font-size: 1.4rem;
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
       margin-top: 0.5rem;
       animation: pulse 2s infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
-    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
-    /* ========== TUTORIAL MODAL ========== */
+    /* ========== MODAL ========== */
     #tutorial-modal {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background: rgba(0, 0, 0, 0.85);
       display: flex;
       justify-content: center;
@@ -174,7 +181,8 @@
       z-index: 99998;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      padding: 1rem;
     }
 
     #tutorial-modal.visible {
@@ -184,28 +192,25 @@
 
     .modal-overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(5px);
-    }
+      backdrop-filter: blur(5px);    }
 
     .modal-content {
       background: var(--glass-dark);
-      backdrop-filter: blur(40px);      -webkit-backdrop-filter: blur(40px);
-      border: 3px solid var(--border-strong);
-      border-radius: 40px;
-      padding: 3rem;
-      max-width: 600px;
-      width: 90%;
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.5rem, 4vw, 3rem);
+      max-width: 500px;
+      width: 100%;
       text-align: center;
       position: relative;
       z-index: 2;
-      transform: translateY(30px);
+      transform: translateY(20px);
       opacity: 0;
-      transition: transform 0.5s ease, opacity 0.5s ease;
+      transition: transform 0.4s ease, opacity 0.4s ease;
       box-shadow: var(--shadow);
     }
 
@@ -217,20 +222,17 @@
     .modal-content::before {
       content: "";
       position: absolute;
-      top: -3px;
-      right: -3px;
-      bottom: -3px;
-      left: -3px;
+      inset: -2px;
       background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));
       z-index: -1;
-      border-radius: 43px;
+      border-radius: var(--radius-lg);
       animation: rotateGradient 10s linear infinite;
       opacity: 0.85;
     }
 
     .modal-content h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
+      font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+      margin-bottom: 1.2rem;
       color: var(--gold);
       font-weight: 800;
       position: relative;
@@ -240,47 +242,45 @@
     .modal-content h2::after {
       content: "";
       position: absolute;
-      bottom: -10px;
-      right: 50%;
-      transform: translateX(50%);
-      width: 70%;      height: 4px;
+      bottom: -8px;
+      left: 50%;      transform: translateX(-50%);
+      width: 60%;
+      height: 3px;
       background: var(--gold);
       border-radius: 2px;
-      box-shadow: 0 0 15px var(--gold);
+      box-shadow: 0 0 12px var(--gold);
     }
 
     .modal-content p {
-      font-size: 1.3rem;
-      line-height: 1.8;
-      margin: 1.2rem 0;
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      line-height: 1.7;
+      margin: 1rem 0;
       opacity: 0.95;
     }
 
     .tutorial-btn {
       background: var(--glass-light);
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
       border: 2px solid var(--border-strong);
       color: white;
-      padding: 1rem 2.5rem;
+      padding: 0.9rem 2rem;
       border-radius: 50px;
-      font-size: 1.3rem;
+      font-size: clamp(1rem, 3vw, 1.3rem);
       font-weight: 700;
-      margin-top: 1.5rem;
+      margin-top: 1.2rem;
       cursor: pointer;
       transition: var(--transition);
       position: relative;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 250px;
     }
 
     .tutorial-btn::before {
       content: "";
       position: absolute;
-      top: -2px;
-      right: -2px;
-      bottom: -2px;
-      left: -2px;
+      inset: -2px;
       background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
       z-index: -1;
       border-radius: 53px;
@@ -288,28 +288,31 @@
       opacity: 0.85;
     }
 
-    .tutorial-btn:hover {
-      transform: translateY(-5px) scale(1.05);
+    .tutorial-btn:hover, .tutorial-btn:active {
+      transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
     }
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
     /* ========== STATUS INDICATOR ========== */
     .status-indicator {
       text-align: center;
       margin-bottom: 2rem;
-      display: flex;
+      display: inline-flex;
       justify-content: center;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       font-weight: 700;
-      font-size: 1.4rem;
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
       background: var(--glass-dark);
       backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
       border: 2px solid var(--border-strong);
-      border-radius: 40px;
-      padding: 1rem 2rem;
-      display: inline-block;
-      transform: translateY(30px);
+      border-radius: 50px;
+      padding: 0.8rem 1.5rem;
+      transform: translateY(20px);
       opacity: 0;
       transition: var(--transition);
       position: relative;
@@ -324,13 +327,10 @@
     .status-indicator::before {
       content: "";
       position: absolute;
-      top: -2px;
-      right: -2px;
-      bottom: -2px;
-      left: -2px;
+      inset: -2px;
       background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent), var(--primary));
       z-index: -1;
-      border-radius: 43px;
+      border-radius: 53px;
       animation: rotateGradient 8s linear infinite;
       opacity: 0.85;
     }
@@ -338,28 +338,24 @@
     .status-indicator::after {
       content: "";
       position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
-      border-radius: 40px;
-      z-index: -1;
-    }
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: 50px;
+      z-index: -1;    }
 
     .status-circle {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       background-color: var(--status-color);
       display: inline-block;
       animation: blink 1.2s infinite;
-      box-shadow: 0 0 12px var(--status-color);
-      position: relative;
+      box-shadow: 0 0 10px var(--status-color);
     }
 
     @keyframes blink {
-      0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--status-color); }
-      50% { opacity: 0.6; box-shadow: 0 0 20px var(--status-color), 0 0 30px var(--status-color); }
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--status-color); }
+      50% { opacity: 0.6; box-shadow: 0 0 18px var(--status-color); }
     }
 
     /* ========== GLASS CARD ========== */
@@ -368,13 +364,13 @@
       backdrop-filter: blur(35px);
       -webkit-backdrop-filter: blur(35px);
       border: 2px solid var(--border-strong);
-      border-radius: 35px;
+      border-radius: var(--radius-lg);
       box-shadow: var(--shadow);
-      padding: 2.5rem;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
       transition: var(--transition);
       position: relative;
       overflow: hidden;
-      transform: translateY(40px);
+      transform: translateY(30px);
       opacity: 0;
     }
 
@@ -386,47 +382,35 @@
     .glass::before {
       content: "";
       position: absolute;
-      top: -3px;
-      right: -3px;
-      bottom: -3px;
-      left: -3px;
-      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));      z-index: -1;
-      border-radius: 38px;
+      inset: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--primary), var(--purple), var(--accent), var(--gold));
+      z-index: -1;
+      border-radius: var(--radius-lg);
       animation: rotateGradient 12s linear infinite;
       opacity: 0.85;
     }
 
-    .glass::after {
-      content: "";
+    .glass::after {      content: "";
       position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
+      inset: 0;
       background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
-      border-radius: 35px;
+      border-radius: var(--radius-lg);
       z-index: -1;
     }
 
     .glass:hover {
-      transform: translateY(-10px) scale(1.02);
+      transform: translateY(-8px);
       box-shadow: var(--shadow-hover);
-      border-color: var(--border-strong);
-    }
-
-    @keyframes rotateGradient {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
     }
 
     /* ========== HERO SECTION ========== */
     .hero {
       text-align: center;
-      padding: 5rem 2rem 4rem;
+      padding: clamp(3rem, 8vw, 5rem) 1rem clamp(2.5rem, 6vw, 4rem);
       position: relative;
       overflow: hidden;
-      margin-bottom: 3rem;
-      transform: translateY(50px);
+      margin-bottom: 2rem;
+      transform: translateY(40px);
       opacity: 0;
       transition: var(--transition);
     }
@@ -439,24 +423,23 @@
     .hero::before {
       content: "";
       position: absolute;
-      top: -50%;      left: -50%;
+      top: -50%;
+      left: -50%;
       width: 200%;
       height: 200%;
       background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
       animation: rotate 30s linear infinite;
       z-index: -1;
+      pointer-events: none;
     }
 
-    @keyframes rotate {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes rotate { to { transform: rotate(360deg); } }
 
     .hero-content {
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 2.5rem;
+      flex-wrap: wrap;      gap: clamp(1.5rem, 4vw, 2.5rem);
       max-width: 1100px;
       margin: 0 auto;
       position: relative;
@@ -464,23 +447,24 @@
     }
 
     .hero-img {
-      width: 130px;
-      height: 130px;
+      width: clamp(70px, 18vw, 130px);
+      height: clamp(70px, 18vw, 130px);
       border-radius: 50%;
       border: 3px solid white;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 25px var(--gold);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 20px var(--gold);
       animation: floatHero 4s ease-in-out infinite;
       transition: var(--transition);
+      object-fit: cover;
     }
 
     .hero-img:hover {
-      transform: scale(1.05) rotate(5deg);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 35px var(--gold), 0 0 50px var(--secondary);
+      transform: scale(1.05);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 30px var(--gold);
     }
 
     @keyframes floatHero {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-8px); }
     }
 
     .hero-text {
@@ -488,62 +472,54 @@
       max-width: 650px;
     }
 
-    .hero-text h1 {      font-size: 3.2rem;
+    .hero-text h1 {
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
       font-weight: 800;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       background: linear-gradient(to right, white, var(--gold), white, var(--secondary), white);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      text-shadow: 0 3px 15px rgba(0,0,0,0.5);
       line-height: 1.2;
-      letter-spacing: -0.5px;
       animation: pulseGlow 3s infinite;
     }
 
     @keyframes pulseGlow {
-      0%, 100% { text-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 25px rgba(212, 175, 55, 0.7); }
-      50% { text-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 35px rgba(212, 175, 55, 1), 0 0 50px rgba(33, 150, 243, 0.8); }
+      0%, 100% { text-shadow: 0 3px 15px rgba(0,0,0,0.5), 0 0 20px rgba(212, 175, 55, 0.7); }
+      50% { text-shadow: 0 3px 15px rgba(0,0,0,0.5), 0 0 30px rgba(212, 175, 55, 1); }
     }
-
     .hero-text p {
-      font-size: 1.5rem;
+      font-size: clamp(1.1rem, 3.5vw, 1.5rem);
       opacity: 0.92;
-      font-weight: 400;
-      margin-top: 1rem;
-      letter-spacing: 1px;
+      margin-top: 0.8rem;
+      letter-spacing: 0.5px;
       font-style: italic;
       position: relative;
+      padding: 0 0.5rem;
     }
 
     .hero-text p::before,
     .hero-text p::after {
       content: """;
       position: absolute;
-      font-size: 2.8rem;
-      opacity: 0.7;
-      font-family: 'Vazirmatn', sans-serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      opacity: 0.6;
     }
 
-    .hero-text p::before {
-      top: -1.2rem;
-      right: -1rem;
-    }
-
-    .hero-text p::after {
-      bottom: -1.5rem;
-      left: -1rem;
-    }
+    .hero-text p::before { top: -0.8rem; right: -0.5rem; }
+    .hero-text p::after { bottom: -1.2rem; left: -0.5rem; }
 
     /* ========== NAVIGATION ========== */
     .nav {
-      display: flex;      justify-content: center;
+      display: flex;
+      justify-content: center;
       flex-wrap: wrap;
-      gap: 1.2rem;
-      margin: 2.5rem auto 3.5rem;
+      gap: 0.8rem;
+      margin: 2rem auto 3rem;
       max-width: 1400px;
-      padding: 0 1.5rem;
-      transform: translateY(40px);
+      padding: 0 1rem;
+      transform: translateY(30px);
       opacity: 0;
       transition: var(--transition);
     }
@@ -556,58 +532,48 @@
     .nav-btn {
       background: var(--glass-light);
       backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
       border: 1px solid var(--border);
       color: white;
-      padding: 1rem 1.8rem;
+      padding: 0.8rem 1.5rem;
       border-radius: 50px;
       font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
+      cursor: pointer;      transition: var(--transition);
       text-decoration: none;
       display: inline-block;
       text-align: center;
-      min-width: 150px;
+      min-width: 130px;
       position: relative;
       overflow: hidden;
-      font-size: 1.05rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
     }
 
     .nav-btn::before {
       content: "";
       position: absolute;
-      top: 0;
-      right: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
       z-index: 1;
       animation: shineNav 3s infinite;
       opacity: 0;
     }
+
     @keyframes shineNav {
       0%, 100% { transform: translateX(-100%); }
       50% { transform: translateX(100%); }
     }
 
-    .nav-btn:hover::before {
-      opacity: 1;
-    }
-
-    .nav-btn:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    .nav-btn:hover::before { opacity: 1; }
+    .nav-btn:hover, .nav-btn:active {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
       border-color: var(--border-strong);
     }
 
     .nav-btn::after {
       content: "";
       position: absolute;
-      top: -2px;
-      right: -2px;
-      bottom: -2px;
-      left: -2px;
+      inset: -2px;
       background: linear-gradient(45deg, var(--secondary), var(--purple), var(--accent), var(--gold));
       z-index: -1;
       border-radius: 53px;
@@ -615,34 +581,18 @@
       transition: opacity 0.3s ease;
     }
 
-    .nav-btn:hover::after {
-      opacity: 0.85;
-    }
+    .nav-btn:hover::after { opacity: 0.85; }
 
-    .nav-btn.support {
-      background: rgba(33, 150, 243, 0.25);
-    }
-    .nav-btn.admin {
-      background: rgba(244, 67, 54, 0.25);
-    }
-    .nav-btn.class {
-      background: rgba(76, 175, 80, 0.25);
-    }
-    .nav-btn.blog {
-      background: rgba(156, 39, 176, 0.25);
-    }
-    .nav-btn.library {
-      background: rgba(255, 152, 0, 0.25);
-    }
-    .nav-btn.tv {
-      background: rgba(233, 30, 99, 0.25);    }
-    .nav-btn.feedback {
-      background: rgba(156, 39, 176, 0.3);
-    }
+    .nav-btn.support { background: rgba(33, 150, 243, 0.25); }
+    .nav-btn.admin { background: rgba(244, 67, 54, 0.25); }
+    .nav-btn.class { background: rgba(76, 175, 80, 0.25); }
+    .nav-btn.blog { background: rgba(156, 39, 176, 0.25); }    .nav-btn.library { background: rgba(255, 152, 0, 0.25); }
+    .nav-btn.tv { background: rgba(233, 30, 99, 0.25); }
+    .nav-btn.feedback { background: rgba(156, 39, 176, 0.3); }
 
     /* ========== SECTIONS ========== */
     .section {
-      padding: 4rem 2rem 3rem;
+      padding: clamp(2.5rem, 6vw, 4rem) 1rem clamp(2rem, 5vw, 3rem);
       position: relative;
       z-index: 15;
     }
@@ -650,13 +600,13 @@
     .container {
       max-width: 1300px;
       margin: 0 auto;
-      padding: 0 1.5rem;
+      padding: 0 1rem;
     }
 
     .section-title {
       text-align: center;
-      font-size: 3rem;
-      margin-bottom: 3rem;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin-bottom: clamp(2rem, 5vw, 3rem);
       font-weight: 800;
       position: relative;
       display: inline-block;
@@ -666,101 +616,101 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 3px 15px rgba(0,0,0,0.4);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
     }
 
     .section-title::after {
       content: "";
       position: absolute;
-      bottom: -10px;
+      bottom: -8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 70%;
-      height: 5px;
+      width: 60%;
+      height: 4px;
       background: var(--gold);
       border-radius: 2px;
-      box-shadow: 0 0 15px var(--gold);
+      box-shadow: 0 0 12px var(--gold);
     }
 
-    /* Grids */
+    /* Grid */
     .grid {
-      display: grid;      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));      gap: clamp(1.5rem, 4vw, 2.5rem);
     }
 
     /* Announcement Card */
     .ann-card img {
       width: 100%;
-      height: 200px;
+      height: clamp(150px, 35vw, 200px);
       object-fit: cover;
-      border-radius: 18px;
-      margin: 1.2rem 0;
+      border-radius: var(--radius-md);
+      margin: 1rem 0;
       transition: var(--transition);
       border: 2px solid var(--border);
     }
 
     .ann-card img:hover {
-      transform: scale(1.03);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      transform: scale(1.02);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
     }
 
     .ann-card strong {
       display: inline-block;
       background: rgba(212, 175, 55, 0.2);
-      padding: 0.4rem 1rem;
+      padding: 0.3rem 0.9rem;
       border-radius: 20px;
       font-weight: 700;
-      margin-bottom: 0.8rem;
-      font-size: 1.1rem;
+      margin-bottom: 0.7rem;
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
       border: 1px solid var(--gold);
     }
 
     .ann-card h3 {
-      font-size: 1.6rem;
-      margin: 0.6rem 0;
+      font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+      margin: 0.5rem 0;
       font-weight: 700;
       color: var(--gold);
     }
 
     .ann-card p {
-      font-size: 1.1rem;
+      font-size: clamp(0.95rem, 2.8vw, 1.1rem);
       line-height: 1.7;
-      margin-top: 0.8rem;
+      margin-top: 0.7rem;
       opacity: 0.92;
     }
 
     /* Teachers */
     .student-card {
       text-align: center;
-      padding: 2.2rem;
+      padding: clamp(1.5rem, 4vw, 2.2rem);
     }
     .student-card img {
-      width: 120px;
-      height: 120px;
+      width: clamp(90px, 22vw, 120px);
+      height: clamp(90px, 22vw, 120px);
       border-radius: 50%;
       border: 4px solid var(--gold);
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
       object-fit: cover;
       transition: var(--transition);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 5px 18px rgba(0,0,0,0.3);
     }
 
     .student-card img:hover {
-      transform: scale(1.1) rotate(5deg);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 25px var(--gold);
+      transform: scale(1.08);
+      box-shadow: 0 7px 25px rgba(0,0,0,0.4), 0 0 20px var(--gold);
     }
 
     .student-card h3 {
-      font-size: 1.6rem;
-      margin-bottom: 0.6rem;
+      font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+      margin-bottom: 0.5rem;
       font-weight: 700;
       color: var(--gold);
     }
 
     .student-card p {
-      font-size: 1.15rem;
+      font-size: clamp(0.95rem, 2.8vw, 1.15rem);
       opacity: 0.9;
-      margin-top: 0.4rem;
+      margin-top: 0.3rem;
     }
 
     /* Contact Section */
@@ -768,13 +718,13 @@
       text-align: center;
       max-width: 750px;
       margin: 0 auto;
-      padding: 3rem;
+      padding: clamp(2rem, 5vw, 3rem);
     }
 
     .contact-card p {
-      font-size: 1.4rem;
+      font-size: clamp(1.2rem, 3.5vw, 1.4rem);
       line-height: 1.8;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
       opacity: 0.95;
     }
 
@@ -782,20 +732,20 @@
       color: var(--gold);
       font-weight: 700;
     }
-    .contact-card i {
-      font-size: 4.5rem;
-      margin-top: 1.5rem;
+
+    .contact-card i {      font-size: clamp(3.5rem, 9vw, 4.5rem);
+      margin-top: 1.2rem;
       background: linear-gradient(to right, var(--secondary), var(--gold));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      text-shadow: 0 3px 15px rgba(0,0,0,0.4);
       animation: floatIcon 3s infinite ease-in-out;
     }
 
     @keyframes floatIcon {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-8px); }
     }
 
     /* Location Section */
@@ -803,18 +753,18 @@
       text-align: center;
       max-width: 950px;
       margin: 0 auto;
-      padding: 2.5rem;
+      padding: clamp(2rem, 5vw, 2.5rem);
     }
 
     .location-card p {
-      font-size: 1.4rem;
-      margin-bottom: 1.5rem;
+      font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+      margin-bottom: 1.2rem;
       opacity: 0.95;
     }
 
     .map-container {
-      margin: 2rem 0;
-      border-radius: 20px;
+      margin: 1.5rem 0;
+      border-radius: var(--radius-md);
       overflow: hidden;
       box-shadow: var(--shadow);
       border: 2px solid var(--border-strong);
@@ -824,49 +774,44 @@
     .map-container::before {
       content: "";
       position: absolute;
-      top: -2px;
-      right: -2px;
-      bottom: -2px;
-      left: -2px;
+      inset: -2px;
       background: linear-gradient(45deg, var(--red), var(--gold), var(--blue), var(--red));
       z-index: -1;
-      border-radius: 23px;
-      animation: rotateGradient 10s linear infinite;      opacity: 0.85;
+      border-radius: var(--radius-md);
+      animation: rotateGradient 10s linear infinite;
+      opacity: 0.85;
     }
 
-    .map-container iframe {
-      border: none;
-      border-radius: 18px;
+    .map-container iframe {      border: none;
+      border-radius: var(--radius-sm);
       width: 100%;
-      height: 380px;
+      height: clamp(250px, 60vw, 380px);
       display: block;
     }
 
     .map-btn {
       display: inline-block;
-      margin-top: 1.5rem;
+      margin-top: 1.2rem;
       background: var(--glass-light);
       backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
       border: 2px solid var(--border-strong);
       color: white;
-      padding: 1rem 2.2rem;
+      padding: 0.9rem 2rem;
       border-radius: 50px;
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 3vw, 1.2rem);
       text-decoration: none;
       transition: var(--transition);
       position: relative;
       overflow: hidden;
+      width: 100%;
+      max-width: 300px;
     }
 
     .map-btn::before {
       content: "";
       position: absolute;
-      top: -2px;
-      right: -2px;
-      bottom: -2px;
-      left: -2px;
+      inset: -2px;
       background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--gold));
       z-index: -1;
       border-radius: 53px;
@@ -874,20 +819,19 @@
       opacity: 0.85;
     }
 
-    .map-btn:hover {
-      transform: translateY(-5px) scale(1.05);
+    .map-btn:hover, .map-btn:active {
+      transform: translateY(-4px);
       box-shadow: var(--shadow-hover);
     }
 
     /* Footer */
-    .footer {      text-align: center;
-      padding: 3rem 1.5rem 4rem;
-      font-size: 1.15rem;
+    .footer {
+      text-align: center;
+      padding: clamp(2rem, 5vw, 3rem) 1rem clamp(2.5rem, 6vw, 4rem);
+      font-size: clamp(0.95rem, 2.8vw, 1.15rem);
       opacity: 0.9;
       background: var(--glass-dark);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border-top: 2px solid var(--border-strong);
+      backdrop-filter: blur(30px);      border-top: 2px solid var(--border-strong);
       margin-top: 2rem;
       position: relative;
       overflow: hidden;
@@ -910,7 +854,7 @@
     }
 
     .footer p {
-      margin: 0.6rem 0;
+      margin: 0.5rem 0;
       line-height: 1.6;
     }
 
@@ -927,223 +871,114 @@
     }
 
     .footer a:hover {
-      text-shadow: 0 0 10px var(--gold);
-      transform: scale(1.05);
-    }
-    /* Responsive */
-    @media (max-width: 1200px) {
-      .hero-text h1 { font-size: 2.8rem; }
-      .hero-img { width: 110px; height: 110px; }
-      .section-title { font-size: 2.7rem; }
-      .nav-btn { padding: 0.9rem 1.6rem; font-size: 1rem; min-width: 140px; }
-      .student-card img { width: 110px; height: 110px; }
-      .grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+      text-shadow: 0 0 8px var(--gold);
     }
 
+    /* ========== MOBILE OPTIMIZATIONS ========== */
     @media (max-width: 768px) {
-      .hero {
-        padding: 4rem 1.5rem 3rem;
-      }
-      
-      .hero-text h1 {
-        font-size: 2.4rem;
-        letter-spacing: 0;
-      }
-      
-      .hero-text p {
-        font-size: 1.35rem;
-      }
-      
-      .hero-img {
-        width: 90px;
-        height: 90px;
-      }
-      
       .hero-content {
-        gap: 1.5rem;
+        flex-direction: column;
+        gap: 1.2rem;
       }
-      
-      .nav {
-        gap: 0.8rem;
-        margin: 2rem auto 3rem;
+            .nav {
+        gap: 0.6rem;
         flex-direction: column;
         align-items: center;
       }
       
       .nav-btn {
-        padding: 0.9rem 1.5rem;
-        font-size: 1rem;
         width: 100%;
-        max-width: 300px;
+        max-width: 320px;
+        padding: 0.8rem 1.2rem;
       }
       
       .status-indicator {
-        flex-direction: column;        gap: 8px;
-        padding: 1.2rem 1.8rem;
-      }
-      
-      .status-circle {
-        width: 20px;
-        height: 20px;
-      }
-      
-      .section {
-        padding: 3rem 1.5rem 2.5rem;
+        flex-direction: column;
+        gap: 6px;
+        padding: 1rem 1.5rem;
       }
       
       .section-title {
-        font-size: 2.4rem;
-        margin-bottom: 2.2rem;
+        font-size: clamp(1.6rem, 4.5vw, 2.4rem);
       }
       
-      .grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .ann-card img {
-        height: 180px;
-      }
-      
-      .student-card {
-        padding: 2rem;
-      }
-      
-      .student-card img {
-        width: 100px;
-        height: 100px;
-      }
-      
-      .student-card h3 {
-        font-size: 1.5rem;
-      }
-      
-      .contact-card {
-        padding: 2.2rem;
-      }
-      
-      .contact-card p {
-        font-size: 1.3rem;
-      }
-      
-      .contact-card i {
-        font-size: 4rem;
-      }      
       .map-container iframe {
-        height: 300px;
-      }
-      
-      .map-btn {
-        padding: 0.9rem 1.8rem;
-        font-size: 1.1rem;
-      }
-      
-      .footer {
-        padding: 2.5rem 1.5rem 3rem;
-        font-size: 1.05rem;
-      }
-      
-      .modal-content {
-        padding: 2rem;
-        border-radius: 30px;
-      }
-      
-      .modal-content h2 {
-        font-size: 2rem;
-      }
-      
-      .modal-content p {
-        font-size: 1.15rem;
-      }
-      
-      .tutorial-btn {
-        padding: 0.9rem 2rem;
-        font-size: 1.15rem;
+        height: clamp(200px, 50vw, 300px);
       }
     }
 
     @media (max-width: 480px) {
       body {
-        padding: 0;
-      }
-      
-      .hero {
-        padding: 3.5rem 1rem 2.5rem;
-      }
-      
-      .hero-text h1 {
-        font-size: 2rem;
-      }
-      
-      .hero-text p {
-        font-size: 1.25rem;
-      }      
-      .hero-img {
-        width: 80px;
-        height: 80px;
-      }
-      
-      .nav-btn {
-        padding: 0.85rem 1.5rem;
-        font-size: 1rem;
-      }
-      
-      .section-title {
-        font-size: 2.1rem;
-      }
-      
-      .ann-card img {
-        height: 160px;
-      }
-      
-      .student-card img {
-        width: 90px;
-        height: 90px;
-      }
-      
-      .map-container iframe {
-        height: 250px;
-      }
-      
-      .footer {
-        font-size: 1rem;
-      }
-      
-      .spinner {
-        width: 60px;
-        height: 60px;
-        border-width: 6px;
-      }
-      
-      #loader p {
-        font-size: 1.5rem;
-      }
-      
-      #loader p span {
-        font-size: 1.2rem;
-      }
-      
-      .modal-content {
-        padding: 1.8rem;
-        border-radius: 25px;
-        margin: 1rem;      }
-      
-      .modal-content h2 {
-        font-size: 1.8rem;
-      }
-      
-      .modal-content p {
-        font-size: 1.1rem;
-      }
-      
-      .tutorial-btn {
-        padding: 0.8rem 1.8rem;
-        font-size: 1.1rem;
-        width: 100%;
+        font-size: 14px;
       }
       
       .floating-orb {
         display: none;
       }
+      
+      .hero {
+        padding: 2.5rem 0.5rem 2rem;
+      }
+      
+      .hero-img {
+        width: 70px;
+        height: 70px;
+      }
+      
+      .section {
+        padding: 2rem 0.5rem 1.5rem;
+      }
+      
+      .glass {        padding: 1.5rem;
+      }
+      
+      .modal-content {
+        margin: 0.5rem;
+        padding: 1.5rem;
+      }
+      
+      .tutorial-btn {
+        padding: 0.8rem 1.5rem;
+      }
+      
+      .nav-btn {
+        min-width: auto;
+        font-size: 0.95rem;
+      }
+      
+      .ann-card img {
+        height: 140px;
+      }
+    }
+
+    /* ========== REDUCED MOTION ========== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      
+      html {
+        scroll-behavior: auto;
+      }
+    }
+
+    /* ========== PRINT STYLES ========== */
+    @media print {
+      .nav, .scroll-progress, #loader, #tutorial-modal, .floating-orb {
+        display: none !important;
+      }
+      
+      body {
+        background: white;
+        color: black;
+      }
+      
+      .glass {
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: none;      }
     }
   </style>
 </head>
@@ -1152,7 +987,7 @@
   <!-- Loader -->
   <div id="loader">
     <div class="spinner"></div>
-    <p>در حال بارگذاری...<br><span>طراحی شده با ❤️ توسط سپهر قاسمی و ماهان جهاندیده</span></p>
+    <p>در حال بارگذاری...<br><span>طراحی شده با 🩷 توسط سپهر قاسمی و ماهان جهاندیده</span></p>
   </div>
 
   <!-- Tutorial Modal -->
@@ -1160,50 +995,48 @@
     <div class="modal-overlay"></div>
     <div class="modal-content">
       <h2>سلام دوست عزیز!</h2>
-      <p>برای اضافه کردن سایت به صفحه اصلی لطفا روی دکمه سه نقطه بزن و افزودن به صفحه اصلی رو بزن و تمام</p>
+      <p>برای اضافه کردن سایت به صفحه اصلی، روی دکمه سه نقطه بزن و «افزودن به صفحه اصلی» رو انتخاب کن.</p>
       <button id="tutorial-close" class="tutorial-btn">متوجه شدم</button>
     </div>
   </div>
 
-  <!-- Floating decorative orbs -->
+  <!-- Floating decorative orbs (hidden on mobile) -->
   <div class="floating-orb" style="width: 220px; height: 220px; top: 15%; left: 8%; animation-delay: 0s;"></div>
   <div class="floating-orb" style="width: 180px; height: 180px; top: 55%; left: 92%; animation-delay: -7s;"></div>
-  <div class="floating-orb" style="width: 140px; height: 140px; top: 80%; left: 12%; animation-delay: -15s;"></div>
-  <div class="floating-orb" style="width: 200px; height: 200px; top: 35%; left: 85%; animation-delay: -10s;"></div>
   
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress" id="scroll-progress"></div>
 
-  <!-- Hero Section -->  <div class="hero">
+  <!-- Hero Section -->
+  <div class="hero">
     <div class="hero-content">
-      <img src="https://cdn.nody.ir/files/2025/03/31/nody-%D8%B9%DA%A9%D8%B3-%D8%A2%D9%82%D8%A7%DB%8C-%D8%AE%D9%85%DB%8C%D9%86%DB%8C-%D8%AE%D8%A7%D9%85%D9%86%D9%87-%D8%A7%DB%8C-1743377593.webp" alt="رهبر انقلاب" class="hero-img">
+      <img src="https://cdn.nody.ir/files/2025/03/31/nody-%D8%B9%DA%A9%D8%B3-%D8%A2%D9%82%D8%A7%DB%8C-%D8%AE%D9%85%DB%8C%D9%86%DB%8C-%D8%AE%D8%A7%D9%85%D9%86%D9%87-%D8%A7%DB%8C-1743377593.webp" alt="رهبر انقلاب" class="hero-img" loading="lazy">
       <div class="hero-text">
         <h1>به پیشخوان دبیرستان حضرت امام خامنه‌ای خوش آمدید</h1>
         <p>گام‌هایی فراتر از دانش، در سایه ولایت</p>
       </div>
-      <img src="https://uploadkon.ir/do.php?imgf=dddd27_26-2147483648-210314-1-.png" alt="لوگوی مدرسه" class="hero-img">
+      <img src="https://uploadkon.ir/do.php?imgf=dddd27_26-2147483648-210314-1-.png" alt="لوگوی مدرسه" class="hero-img" loading="lazy">
     </div>
   </div>
   
   <!-- Navigation Buttons -->
-  <div class="nav">
+  <nav class="nav" aria-label="منوی اصلی">
     <a href="#announcements" class="nav-btn">اطلاعیه‌ها</a>
     <a href="register-student.html" class="nav-btn">ثبت‌نام دانش‌آموز</a>
     <a href="consoler.html" class="nav-btn">پنل مشاور مدرسه</a>
     <a href="secure-login.html" class="nav-btn">پنل دبیران</a>
     <a href="student-panel.html" class="nav-btn">پنل دانش‌آموز</a>
     <a href="deputy-panel.html" class="nav-btn admin">خدمات پرورشی</a>
-    <a href="counselor-panel.html" class="nav-btn admin">دریافت نوبت مشاوره</a>
-    <a href="private-classes.html" class="nav-btn class">کلاس خصوصی</a>
+    <a href="counselor-panel.html" class="nav-btn admin">دریافت نوبت مشاوره</a>    <a href="private-classes.html" class="nav-btn class">کلاس خصوصی</a>
     <a href="study-hub.html" class="nav-btn" style="background: rgba(106, 27, 154, 0.25);">پنل اولیا</a>
     <a href="exam-review-package.html" class="nav-btn" style="background: rgba(156, 39, 176, 0.25);">بسته جمع‌بندی شب امتحان</a>
-    <a href="https://app.mu.chat/@imamschool" class="nav-btn support">سوالی دارید؟</a>
+    <a href="soal.html" class="nav-btn support">سوالی دارید؟</a>
     <a href="admin-panel.html" class="nav-btn admin">پنل مدیر</a>
     <a href="feedback.html" class="nav-btn feedback">پیشنهادات و انتقادات</a>
     <a href="blog.html" class="nav-btn blog">بلاگ</a>
-    <a href="library.html" class="nav-btn library">کتابخانه(بزودی)</a>
-    <a href="tv.html" class="nav-btn tv">تلویزیون اینترنتی(بزودی)</a>
-  </div>
+    <a href="library.html" class="nav-btn library">کتابخانه (بزودی)</a>
+    <a href="tv.html" class="nav-btn tv">تلویزیون اینترنتی</a>
+  </nav>
 
   <!-- Announcements -->
   <section class="section" id="announcements">
@@ -1215,17 +1048,18 @@
       
       <h2 class="section-title">📢 اطلاعیه‌های رسمی</h2>
       <div class="grid">
-        <div class="glass ann-card">
-          <strong>1404/11/27</strong>
-          <h3>اختلال در وبسایت</h3>
-          <p>کاربران گرامی،به علت بروزرسانی زیرساخت های وبسایت دبیرستان ممکن است در برخی از خدمات سایت اختلال ایجاد شود. از صبر و بردباری شما سپاسگزاریم.</p>
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSUu4Wp_e9zHUIJIsboKb3BOjRGIuSrMyw7g&s" alt="بروزرسانی">
-        </div>
-        <div class="glass ann-card">
-          <strong>1404/11/25</strong>
-          <h3>پوشیدن لباس فرم اجباری شد!</h3>          <p>پوشیدن لباس فرم جهت حفظ نظم و هماهنگی مدرسه اجباری می باشد</p>
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ4b7tJa8Omw3E-bGLTXVGU-uUGhUlTk02mw&s" alt="اطلاعیه">
-        </div>
+        <article class="glass ann-card">
+          <strong>1404/11/6</strong>
+          <h3>اطلاعیه آزمون‌های ابلاغ‌شده</h3>
+          <p>قابل توجه دانش‌آموزان پایه هفتم: دوره سوم آزمون تیمز در تاریخ 1404/11/9 برگزار خواهد شد. این آزمون به صورت تستی و در دروس ریاضی و علوم می‌باشد.</p>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5lrIqBBcIT7wc1-HmyfAWpcK1m3_s0TY4Dw&s" alt="آزمون تیمز" loading="lazy">
+        </article>
+        <article class="glass ann-card">
+          <strong>1404/10/11</strong>
+          <h3>وضعیت سایت دبیرستان</h3>
+          <p>همراهان گرامی، تمامی خدمات وبسایت دبیرستان متصل و پایدار هستند. اختلالات اینترنت ممکن است بر خدمات تأثیرگذار باشد. این مشکل خارج از کنترل تیم فنی است. از صبوری شما سپاسگزاریم.</p>
+          <img src="https://static2.jamaran.news/servev2/2vH3fzVR6YY7/lLl5vbV5w7c,/%D8%A7%DB%8C%D9%86%D8%AA%D8%B1%D9%86%D8%AA+%D8%A7%DB%8C%D8%B1%D8%A7%D9%86+%D9%82%D8%B7%D8%B9+%D8%A7%D8%B3%D8%AA.jpg" alt="وضعیت اینترنت" loading="lazy">
+        </article>
       </div>
     </div>
   </section>
@@ -1233,23 +1067,22 @@
   <!-- Teachers -->
   <section class="section">
     <div class="container">
-      <h2 class="section-title">👨‍🏫 اساتید دبیرستان حضرت امام خامنه‌ای</h2>
+      <h2 class="section-title">👨‍🏫 اساتید دبیرستان</h2>
       <div class="grid">
-        <div class="glass student-card">
-          <img src="https://via.placeholder.com/120/b31b1b/ffffff?text=آ." alt="آقای پوریوسفی">
+        <article class="glass student-card">
+          <img src="https://via.placeholder.com/120/b31b1b/ffffff?text=آ." alt="حسن پوریوسفی بهان" loading="lazy">
           <h3>حسن پوریوسفی بهان</h3>
           <p>مدیریت دبیرستان</p>
-        </div>
-        <div class="glass student-card">
-          <img src="https://via.placeholder.com/120/b31b1b/ffffff?text=س." alt="آقای دادجوی">
-          <h3>امیرمنصور کاشانی ادیب</h3>
-          <p>معاون پرورشی دبیرستان</p>
-        </div>
-        <div class="glass student-card">
-          <img src="https://via.placeholder.com/120/b31b1b/ffffff?text=ا." alt="آقای بابایی">
-          <h3>مجید علی نیا</h3>
+        </article>
+        <article class="glass student-card">
+          <img src="https://via.placeholder.com/120/b31b1b/ffffff?text=س." alt="امیرمنصور کاشانی ادیب" loading="lazy">
+          <h3>امیرمنصور کاشانی ادیب</h3>          <p>معاون پرورشی</p>
+        </article>
+        <article class="glass student-card">
+          <img src="https://via.placeholder.com/120/b31b1b/ffffff?text=ا." alt="مجید علی‌نیا" loading="lazy">
+          <h3>مجید علی‌نیا</h3>
           <p>معاون انضباط</p>
-        </div>
+        </article>
       </div>
     </div>
   </section>
@@ -1259,20 +1092,22 @@
     <div class="container">
       <h2 class="section-title">📞 تماس با ما</h2>
       <div class="glass contact-card">
-        <p>تماس با مدرسه: <strong>02155536959</strong><br>
-          آدرس: خانی آباد نو، خیابان میثاق، خیابان گلستان</p>
-        <i class="fas fa-graduation-cap"></i>
+        <p>
+          تماس با مدرسه: <strong><a href="tel:02155536959" style="color:var(--gold);text-decoration:none;">021-55536959</a></strong><br>
+          آدرس: خانی‌آباد نو، خیابان میثاق، خیابان گلستان
+        </p>
+        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
       </div>
     </div>
   </section>
 
-  <!-- Location with Embedded Map -->
+  <!-- Location -->
   <section class="section">
     <div class="container">
-      <h2 class="section-title">📍 موقعیت مکانی مدرسه</h2>
+      <h2 class="section-title">📍 موقعیت مکانی</h2>
       <div class="glass location-card">
-        <p>آدرس: خانی آباد نو، خیابان میثاق، خیابان گلستان</p>
-                <div class="map-container">
+        <p>آدرس: خانی‌آباد نو، خیابان میثاق، خیابان گلستان</p>
+        <div class="map-container">
           <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.531277653521!2d51.40183027556105!3d35.73672647262817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x9518e982d0fe9f5a!2z2KfYr9uM2KfYp9mH2KfYp9ix2KfYp9mHINmF2YbZhNuM2YfYp9mGINi32YjbjNin2KfYp9ix2KfYp9mH!5e0!3m2!1sfa!2sir!4v1710000000000!5m2!1sfa!2sir" 
             width="100%" 
@@ -1280,140 +1115,133 @@
             style="border:0;" 
             allowfullscreen="" 
             loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
+            referrerpolicy="no-referrer-when-downgrade"
+            title="موقعیت دبیرستان روی نقشه">
           </iframe>
         </div>
-
-        <a href="https://www.google.com/maps/place/%D9%85%D8%AF%D8%B1%D8%B3%D9%87+%D8%A2%DB%8C%D8%AA+%D8%A7%D9%84%D9%84%D9%87+%D8%AE%D8%A7%D9%85%D9%86%D9%87+%D8%A7%DB%8C%E2%80%AD/data=!4m2!3m1!1s0x0:0x9518e982d0fe9f5a?sa=X&ved=1t:2428&ictx=111" 
+        <a href="https://www.google.com/maps/place/%D9%85%D8%AF%D8%B1%D8%B3%D9%87+%D8%A2%DB%8C%D8%AA+%D8%A7%D9%84%D9%84%D9%87+%D8%AE%D8%A7%D9%85%D9%86%D9%87+%D8%A7%DB%8C%E2%80%AD" 
            target="_blank" 
+           rel="noopener noreferrer"
            class="map-btn">
-          🗺️ نمایش در گوگل مپس (تمام‌صفحه)
+          🗺️ نمایش در گوگل مپس
         </a>
-      </div>
-    </div>
+      </div>    </div>
   </section>
 
   <!-- Footer -->
   <footer class="footer">
-    <p>طراحی و توسعه داده‌شده توسط <a href="sepehr.html">سپهر قاسمی</a> و <a href="mahan.html">ماهان جهاندیده</a></p>
-    <p>© ۱۴۰۵ — تمامی حقوق این وبسایت محفوظ است.</p>
+    <p>طراحی و توسعه: <a href="sepehr.html">سپهر قاسمی</a> و <a href="mahan.html">ماهان جهاندیده</a></p>
+    <p>© ۱۴۰۵ — تمامی حقوق محفوظ است.</p>
   </footer>
 
-  <!-- ========== Mu.Chat Widget ========== -->
-  <script type="module">
+  <!-- Mu.Chat Widget (deferred) -->
+  <script type="module" defer>
     import Chatbox from 'https://cdn.mu.chat/embeds/dist/chatbox/index.js?v=2';
-    Chatbox.initBubble({
-      agentId: 'cmj4jidm500zle4isml9dm25y'
-    });
+    Chatbox.initBubble({ agentId: 'cmj4jidm500zle4isml9dm25y' });
   </script>
 
-  <!-- ========== GSAP Animations ========== -->
+  <!-- ========== OPTIMIZED JAVASCRIPT ========== -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Show loader for 3 seconds
+      // Cache DOM elements
       const loader = document.getElementById('loader');
       const tutorialModal = document.getElementById('tutorial-modal');
       const tutorialCloseBtn = document.getElementById('tutorial-close');
+      const scrollProgress = document.getElementById('scroll-progress');
       
-      // Hide loader after 3 seconds
+      // Hide loader after 2.5s
       setTimeout(() => {
         loader.style.opacity = '0';
         loader.style.visibility = 'hidden';
+        setTimeout(() => loader.remove(), 400);
         
-        // Initialize page animations after loader hides
-        initPageAnimations();        
-        // Show tutorial if it's the first visit
+        // Initialize animations
+        initAnimations();
+        
+        // Show tutorial for first-time visitors
         if (!localStorage.getItem('tutorialShown')) {
           setTimeout(() => {
             tutorialModal.classList.add('visible');
             localStorage.setItem('tutorialShown', 'true');
-          }, 500);
+          }, 800);
         }
-      }, 3000);
+      }, 2500);
       
-      // Close tutorial modal
-      tutorialCloseBtn.addEventListener('click', () => {
-        tutorialModal.classList.remove('visible');
-      });
+      // Modal interactions
+      const closeModal = () => tutorialModal.classList.remove('visible');
+      tutorialCloseBtn?.addEventListener('click', closeModal);
+      tutorialModal?.querySelector('.modal-overlay')?.addEventListener('click', closeModal);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && tutorialModal.classList.contains('visible')) {
+          closeModal();
+        }      });
       
-      // Close modal when clicking on overlay
-      tutorialModal.querySelector('.modal-overlay').addEventListener('click', () => {
-        tutorialModal.classList.remove('visible');
-      });
+      // Scroll progress with throttling
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+            scrollProgress.style.width = `${Math.min(scrolled, 100)}%`;
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
     });
     
-    // Initialize page animations
-    function initPageAnimations() {
-      // Animate hero section
-      setTimeout(() => {
-        document.querySelector('.hero').classList.add('visible');
-      }, 300);
-      
-      // Animate navigation
-      setTimeout(() => {
-        document.querySelector('.nav').classList.add('visible');
-      }, 600);
-      
-      // Animate status indicator
-      setTimeout(() => {
-        document.querySelector('.status-indicator').classList.add('visible');
-      }, 900);
-      
-      // Animate glass cards with stagger
-      setTimeout(() => {
-        document.querySelectorAll('.glass').forEach((card, index) => {
-          setTimeout(() => {
-            card.classList.add('visible');
-          }, 300 + (index * 200));
+    // Initialize animations efficiently
+    function initAnimations() {
+      const animateOnScroll = (elements, delay = 0) => {
+        elements.forEach((el, i) => {
+          setTimeout(() => el.classList.add('visible'), delay + i * 150);
         });
-      }, 1200);
+      };
       
-      // Scroll progress indicator
-      window.addEventListener('scroll', () => {
-        const scrollTop = document.documentElement.scrollTop;        const scrollHeight = document.documentElement.scrollHeight;
-        const clientHeight = document.documentElement.clientHeight;
-        const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
-        document.getElementById('scroll-progress').style.width = `${scrolled}%`;
-      });
+      // Stagger animations
+      setTimeout(() => document.querySelector('.hero')?.classList.add('visible'), 200);
+      setTimeout(() => document.querySelector('.nav')?.classList.add('visible'), 400);
+      setTimeout(() => document.querySelector('.status-indicator')?.classList.add('visible'), 600);
       
-      // Add floating animation to orbs
-      document.querySelectorAll('.floating-orb').forEach((orb, index) => {
-        const duration = 25 + Math.random() * 15;
-        const delay = Math.random() * 10;
-        orb.style.animationDuration = `${duration}s`;
-        orb.style.animationDelay = `${-delay}s`;
-      });
+      // Animate glass cards
+      const glassCards = document.querySelectorAll('.glass');
+      animateOnScroll(glassCards, 800);
       
-      // Interactive effects for nav buttons
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.addEventListener('mouseenter', () => {
-          btn.style.transform = 'translateY(-5px) scale(1.05)';
-        });
-        
-        btn.addEventListener('mouseleave', () => {
-          btn.style.transform = 'translateY(0) scale(1)';
-        });
-      });
+      // Optimize floating orbs on mobile
+      if (window.innerWidth <= 768) {
+        document.querySelectorAll('.floating-orb').forEach(orb => orb.style.display = 'none');
+      }
       
-      // Parallax effect on hero images
-      document.addEventListener('mousemove', (e) => {
-        const heroImgs = document.querySelectorAll('.hero-img');
-        if (window.innerWidth > 768) {
-          heroImgs.forEach(img => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            img.style.transform = `translate3d(${xAxis}px, ${yAxis}px, 0) rotate(${xAxis/10}deg)`;
-          });
-        }
-      });
-      
-      // Reset parallax on mouse leave
-      document.querySelector('.hero').addEventListener('mouseleave', () => {
-        document.querySelectorAll('.hero-img').forEach(img => {
-          img.style.transform = 'translate3d(0, 0, 0)';
-        });
+      // Touch-friendly button feedback
+      document.querySelectorAll('.nav-btn, .tutorial-btn, .map-btn').forEach(btn => {
+        btn.addEventListener('touchstart', () => btn.style.transform = 'translateY(-2px)', { passive: true });
+        btn.addEventListener('touchend', () => btn.style.transform = '', { passive: true });
       });
     }
+    
+    // Performance: Debounce resize events
+    function debounce(func, wait) {      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+    
+    window.addEventListener('resize', debounce(() => {
+      // Re-check for mobile optimizations
+      if (window.innerWidth <= 768) {
+        document.querySelectorAll('.floating-orb').forEach(orb => orb.style.display = 'none');
+      } else {
+        document.querySelectorAll('.floating-orb').forEach(orb => orb.style.display = 'block');
+      }
+    }, 250));
   </script>
 </body>
 </html>
