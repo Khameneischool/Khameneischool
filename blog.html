@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#0a0a1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>بلاگ دبیرستان امام خامنه‌ای | مقالات و اخبار</title>
+  <meta name="description" content="بلاگ رسمی دبیرستان - مقالات آموزشی، اخبار مدرسه و تجربیات دانش‌آموزان">
+  
+  <!-- Preconnect for faster loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* ========== CSS VARIABLES ========== */
+    :root {
+      --red: #b31b1b;
+      --gold: #d4af37;
+      --blue: #1a237e;
+      --primary: #4CAF50;
+      --secondary: #2196F3;
+      --accent: #FF9800;
+      --purple: #9C27B0;
+      --pink: #e91e63;
+      --glass-light: rgba(255, 255, 255, 0.22);
+      --glass-dark: rgba(255, 255, 255, 0.15);
+      --border: rgba(255, 255, 255, 0.28);
+      --border-strong: rgba(255, 255, 255, 0.42);
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+      --shadow-hover: 0 18px 50px rgba(0, 0, 0, 0.75);
+      --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      --spacing-sm: 1rem;
+      --spacing-md: 1.5rem;
+      --spacing-lg: 2.5rem;
+      --radius-sm: 14px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-xl: 35px;
+    }
+
+    /* ========== RESET & BASE ========== */
+    *, *::before, *::after {
+      margin: 0;      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: linear-gradient(135deg, #0a0a1a, #0f1428, #0a0f1f);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+      background-attachment: fixed;
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      position: relative;
+      font-size: clamp(14px, 1.5vw, 16px);
+    }
+
+    @keyframes gradientBG {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* ========== BACKGROUND EFFECTS ========== */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 60, 78, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 30%, rgba(33, 150, 243, 0.07) 0%, transparent 25%),
+        radial-gradient(circle at 30% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 25%),
+        radial-gradient(circle at 70% 70%, rgba(156, 39, 176, 0.07) 0%, transparent 25%);
+      z-index: -3;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .floating-orb {
+      position: fixed;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      z-index: -1;
+      animation: floatOrb 25s infinite linear;      opacity: 0.6;
+      box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+      pointer-events: none;
+    }
+
+    @keyframes floatOrb {
+      0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.6; }
+      25% { transform: translateY(-60px) translateX(40px) rotate(90deg); opacity: 0.3; }
+      50% { transform: translateY(-120px) translateX(0) rotate(180deg); opacity: 0.1; }
+      75% { transform: translateY(-60px) translateX(-40px) rotate(270deg); opacity: 0.3; }
+    }
+
+    /* ========== SCROLL PROGRESS ========== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--secondary), var(--accent), var(--purple));
+      z-index: 10000;
+      width: 0%;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.9);
+      transition: width 0.1s ease;
+    }
+
+    /* ========== HEADER ========== */
+    .blog-header {
+      text-align: center;
+      padding: clamp(3rem, 8vw, 5rem) 1rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-header::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    @keyframes rotate { to { transform: rotate(360deg); } }
+
+    .blog-header h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, white, var(--gold), white, var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 3px 15px rgba(0,0,0,0.5);
+      line-height: 1.2;
+    }
+
+    .blog-header p {
+      font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .blog-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0.8rem 1.5rem;
+      background: var(--glass-light);
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+    }
+
+    .stat-item .number {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 800;
+      color: var(--gold);
+      display: block;
+    }
+
+    .stat-item .label {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* ========== BLOG GRID ========== */
+    .blog-section {
+      padding: clamp(2rem, 5vw, 4rem) 1rem;
+      position: relative;      z-index: 15;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      margin-bottom: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(to right, var(--gold), white, var(--gold));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 2px;
+      box-shadow: 0 0 12px var(--gold);
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+      gap: clamp(1.5rem, 4vw, 2.5rem);
+    }
+
+    /* ========== BLOG CARD ========== */
+    .blog-card {
+      background: var(--glass-dark);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 2px solid var(--border-strong);      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+    }
+
+    .blog-card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(45deg, var(--gold), var(--secondary), var(--accent), var(--purple));
+      z-index: -1;
+      border-radius: var(--radius-lg);
+      animation: rotateGradient 12s linear infinite;
+      opacity: 0.85;
+    }
+
+    .blog-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: var(--radius-lg);
+      z-index: -1;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--gold);
+    }
+
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .blog-card-image {
+      width: 100%;
+      height: clamp(180px, 40vw, 220px);
+      object-fit: cover;
+      border-bottom: 2px solid var(--border);
+      transition: transform 0.4s ease;
+    }
+
+    .blog-card:hover .blog-card-image {      transform: scale(1.03);
+    }
+
+    .blog-card-content {
+      padding: clamp(1.2rem, 3vw, 1.8rem);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .blog-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      flex-wrap: wrap;
+    }
+
+    .blog-card-meta .author {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .blog-card-meta .author img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+    }
+
+    .blog-card-meta .date {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .blog-card-category {
+      display: inline-block;
+      padding: 0.3rem 0.9rem;
+      background: rgba(212, 175, 55, 0.2);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      border: 1px solid var(--gold);      width: fit-content;
+    }
+
+    .blog-card h3 {
+      font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.4;
+    }
+
+    .blog-card p {
+      font-size: clamp(0.95rem, 2.8vw, 1.05rem);
+      opacity: 0.9;
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .blog-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+
+    .blog-card-read {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .blog-card-read:hover {
+      gap: 0.8rem;
+      color: white;
+    }
+
+    .blog-card-stats {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+    .blog-card-stats span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* ========== REGISTRATION SECTION ========== */
+    .register-section {
+      padding: clamp(3rem, 7vw, 5rem) 1rem;
+      background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(33, 150, 243, 0.1));
+      position: relative;
+      z-index: 15;
+    }
+
+    .register-card {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--glass-dark);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: clamp(2rem, 5vw, 3rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .register-card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(45deg, var(--purple), var(--pink), var(--secondary), var(--purple));
+      z-index: -1;
+      border-radius: var(--radius-lg);
+      animation: rotateGradient 12s linear infinite;
+      opacity: 0.85;
+    }
+
+    .register-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.9), rgba(25, 30, 55, 0.85));
+      border-radius: var(--radius-lg);
+      z-index: -1;
+    }
+
+    .register-card h2 {      text-align: center;
+      font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+      margin-bottom: 1.5rem;
+      color: var(--gold);
+      font-weight: 800;
+    }
+
+    .register-card p {
+      text-align: center;
+      font-size: clamp(0.95rem, 3vw, 1.1rem);
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .register-form .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .register-form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--gold);
+      font-size: 0.95rem;
+    }
+
+    .register-form input,
+    .register-form select,
+    .register-form textarea {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: 1.5px solid var(--border);
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: 'Vazirmatn', sans-serif;
+      transition: var(--transition);
+    }
+
+    .register-form input:focus,
+    .register-form select:focus,
+    .register-form textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .register-form input::placeholder,
+    .register-form textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .register-form textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .register-form .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .register-form .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .register-form .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(156, 39, 176, 0.5);
+    }
+
+    .register-form .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .form-message {
+      text-align: center;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 1rem;      display: none;
+      font-weight: 600;
+    }
+
+    .form-message.success {
+      display: block;
+      background: rgba(76, 175, 80, 0.2);
+      color: #51cf66;
+      border: 1px solid rgba(76, 175, 80, 0.4);
+    }
+
+    .form-message.error {
+      display: block;
+      background: rgba(244, 67, 54, 0.2);
+      color: #ff6b6b;
+      border: 1px solid rgba(244, 67, 54, 0.4);
+    }
+
+    /* ========== FOOTER ========== */
+    .blog-footer {
+      text-align: center;
+      padding: clamp(2rem, 5vw, 3rem) 1rem;
+      font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+      opacity: 0.9;
+      background: var(--glass-dark);
+      backdrop-filter: blur(30px);
+      border-top: 2px solid var(--border-strong);
+      position: relative;
+      z-index: 15;
+    }
+
+    .blog-footer a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .blog-footer a:hover {
+      text-shadow: 0 0 8px var(--gold);
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      .blog-stats {
+        gap: 1rem;
+      }
+      
+      .stat-item {
+        padding: 0.6rem 1.2rem;      }
+      
+      .register-form .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .blog-card-footer {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .floating-orb {
+        display: none;
+      }
+      
+      .blog-header {
+        padding: 2.5rem 0.5rem 2rem;
+      }
+      
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .register-card {
+        padding: 1.5rem;
+        margin: 0 0.5rem;
+      }
+    }
+
+    /* ========== REDUCED MOTION ========== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating decorative orbs -->
+  <div class="floating-orb" style="width: 220px; height: 220px; top: 15%; left: 8%; animation-delay: 0s;"></div>
+  <div class="floating-orb" style="width: 180px; height: 180px; top: 55%; left: 92%; animation-delay: -7s;"></div>
+  
+  <!-- Scroll Progress Indicator -->  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- Header -->
+  <header class="blog-header">
+    <h1>📝 بلاگ دبیرستان امام خامنه‌ای</h1>
+    <p>مقالات آموزشی، اخبار مدرسه، تجربیات دانش‌آموزان و مطالب انگیزشی</p>
+    
+    <div class="blog-stats">
+      <div class="stat-item">
+        <span class="number">۴۲</span>
+        <span class="label">مقاله</span>
+      </div>
+      <div class="stat-item">
+        <span class="number">۱۸</span>
+        <span class="label">بلاگر</span>
+      </div>
+      <div class="stat-item">
+        <span class="number">۱.۲k</span>
+        <span class="label">بازدید</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Blog Posts Section -->
+  <section class="blog-section">
+    <div class="container">
+      <h2 class="section-title">آخرین مقالات</h2>
+      
+      <div class="blog-grid">
+        
+        <!-- Blog Card 1 -->
+        <article class="blog-card">
+          <img src="https://via.placeholder.com/400x220/1a237e/ffffff?text=روش‌های+مطالعه" alt="روش‌های مطالعه مؤثر" class="blog-card-image" loading="lazy">
+          <div class="blog-card-content">
+            <span class="blog-card-category">آموزشی</span>
+            <div class="blog-card-meta">
+              <span class="author">
+                <img src="https://via.placeholder.com/24/d4af37/000?text=س" alt="سپهر قاسمی">
+                سپهر قاسمی
+              </span>
+              <span class="date">
+                <i class="far fa-calendar"></i>
+                ۱۴۰۴/۱۱/۰۵
+              </span>
+            </div>
+            <h3>۵ روش مطالعه مؤثر برای موفقیت در امتحانات</h3>
+            <p>در این مقاله با تکنیک‌های علمی و کاربردی برای افزایش بازدهی مطالعه آشنا می‌شوید. از روش پومودورو تا نقشه‌های ذهنی...</p>
+            <div class="blog-card-footer">
+              <a href="blog-post-1.html" class="blog-card-read">
+                ادامه مطلب <i class="fas fa-arrow-left"></i>              </a>
+              <div class="blog-card-stats">
+                <span><i class="far fa-eye"></i> ۳۴۲</span>
+                <span><i class="far fa-comment"></i> ۱۲</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Blog Card 2 -->
+        <article class="blog-card">
+          <img src="https://via.placeholder.com/400x220/4CAF50/ffffff?text=ورزش+مدرسه" alt="ورزش در مدرسه" class="blog-card-image" loading="lazy">
+          <div class="blog-card-content">
+            <span class="blog-card-category">ورزشی</span>
+            <div class="blog-card-meta">
+              <span class="author">
+                <img src="https://via.placeholder.com/24/d4af37/000?text=م" alt="ماهان جهاندیده">
+                ماهان جهاندیده
+              </span>
+              <span class="date">
+                <i class="far fa-calendar"></i>
+                ۱۴۰۴/۱۱/۰۳
+              </span>
+            </div>
+            <h3>تأثیر ورزش صبحگاهی بر عملکرد تحصیلی دانش‌آموزان</h3>
+            <p>تحقیقات نشان می‌دهد دانش‌آموزانی که ورزش صبحگاهی دارند، تمرکز بالاتر و انرژی بیشتری در طول روز دارند...</p>
+            <div class="blog-card-footer">
+              <a href="blog-post-2.html" class="blog-card-read">
+                ادامه مطلب <i class="fas fa-arrow-left"></i>
+              </a>
+              <div class="blog-card-stats">
+                <span><i class="far fa-eye"></i> ۲۸۷</span>
+                <span><i class="far fa-comment"></i> ۸</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Blog Card 3 -->
+        <article class="blog-card">
+          <img src="https://via.placeholder.com/400x220/9C27B0/ffffff?text=تکنولوژی+آموزش" alt="تکنولوژی در آموزش" class="blog-card-image" loading="lazy">
+          <div class="blog-card-content">
+            <span class="blog-card-category">فناوری</span>
+            <div class="blog-card-meta">
+              <span class="author">
+                <img src="https://via.placeholder.com/24/d4af37/000?text=ا" alt="علی رضایی">
+                علی رضایی
+              </span>
+              <span class="date">
+                <i class="far fa-calendar"></i>                ۱۴۰۴/۱۰/۲۸
+              </span>
+            </div>
+            <h3>نقش هوش مصنوعی در آینده آموزش و پرورش</h3>
+            <p>هوش مصنوعی چگونه می‌تواند تجربه یادگیری را شخصی‌سازی کند و به معلمان در ارزیابی دانش‌آموزان کمک کند؟...</p>
+            <div class="blog-card-footer">
+              <a href="blog-post-3.html" class="blog-card-read">
+                ادامه مطلب <i class="fas fa-arrow-left"></i>
+              </a>
+              <div class="blog-card-stats">
+                <span><i class="far fa-eye"></i> ۵۲۱</span>
+                <span><i class="far fa-comment"></i> ۲۳</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Blog Card 4 -->
+        <article class="blog-card">
+          <img src="https://via.placeholder.com/400x220/FF9800/ffffff?text=مهارت‌های+زندگی" alt="مهارت‌های زندگی" class="blog-card-image" loading="lazy">
+          <div class="blog-card-content">
+            <span class="blog-card-category">مهارت‌های زندگی</span>
+            <div class="blog-card-meta">
+              <span class="author">
+                <img src="https://via.placeholder.com/24/d4af37/000?text=ف" alt="فاطمه احمدی">
+                فاطمه احمدی
+              </span>
+              <span class="date">
+                <i class="far fa-calendar"></i>
+                ۱۴۰۴/۱۰/۲۵
+              </span>
+            </div>
+            <h3>۷ مهارت ضروری که هر دانش‌آموزی باید بیاموزد</h3>
+            <p>از مدیریت زمان تا تفکر انتقادی، این مهارت‌ها نه تنها در مدرسه بلکه در تمام مراحل زندگی به کار شما می‌آیند...</p>
+            <div class="blog-card-footer">
+              <a href="blog-post-4.html" class="blog-card-read">
+                ادامه مطلب <i class="fas fa-arrow-left"></i>
+              </a>
+              <div class="blog-card-stats">
+                <span><i class="far fa-eye"></i> ۴۱۵</span>
+                <span><i class="far fa-comment"></i> ۱۹</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Blog Card 5 -->
+        <article class="blog-card">
+          <img src="https://via.placeholder.com/400x220/2196F3/ffffff?text=روانشناسی+نوجوان" alt="روانشناسی نوجوان" class="blog-card-image" loading="lazy">
+          <div class="blog-card-content">            <span class="blog-card-category">روانشناسی</span>
+            <div class="blog-card-meta">
+              <span class="author">
+                <img src="https://via.placeholder.com/24/d4af37/000?text=م" alt="مشاور مدرسه">
+                مشاور مدرسه
+              </span>
+              <span class="date">
+                <i class="far fa-calendar"></i>
+                ۱۴۰۴/۱۰/۲۰
+              </span>
+            </div>
+            <h3>راهکارهای مقابله با استرس امتحان برای نوجوانان</h3>
+            <p>استرس امتحان طبیعی است، اما وقتی از حد بگذرد می‌تواند عملکرد را کاهش دهد. در این مقاله راهکارهای عملی ارائه شده...</p>
+            <div class="blog-card-footer">
+              <a href="blog-post-5.html" class="blog-card-read">
+                ادامه مطلب <i class="fas fa-arrow-left"></i>
+              </a>
+              <div class="blog-card-stats">
+                <span><i class="far fa-eye"></i> ۶۷۸</span>
+                <span><i class="far fa-comment"></i> ۳۴</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Blog Card 6 -->
+        <article class="blog-card">
+          <img src="https://via.placeholder.com/400x220/e91e63/ffffff?text=خلاقیت+و+نوآوری" alt="خلاقیت و نوآوری" class="blog-card-image" loading="lazy">
+          <div class="blog-card-content">
+            <span class="blog-card-category">خلاقیت</span>
+            <div class="blog-card-meta">
+              <span class="author">
+                <img src="https://via.placeholder.com/24/d4af37/000?text=ر" alt="رضا محمدی">
+                رضا محمدی
+              </span>
+              <span class="date">
+                <i class="far fa-calendar"></i>
+                ۱۴۰۴/۱۰/۱۵
+              </span>
+            </div>
+            <h3>چگونه خلاقیت خود را در حل مسائل ریاضی افزایش دهیم؟</h3>
+            <p>ریاضیات فقط حفظ فرمول نیست! با تکنیک‌های خلاقانه می‌توانید مسائل پیچیده را به روش‌های جدید حل کنید...</p>
+            <div class="blog-card-footer">
+              <a href="blog-post-6.html" class="blog-card-read">
+                ادامه مطلب <i class="fas fa-arrow-left"></i>
+              </a>
+              <div class="blog-card-stats">
+                <span><i class="far fa-eye"></i> ۳۹۲</span>
+                <span><i class="far fa-comment"></i> ۱۵</span>
+              </div>            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Blogger Registration Section -->
+  <section class="register-section">
+    <div class="container">
+      <div class="register-card">
+        <h2>🎯 ثبت‌نام به عنوان بلاگر مدرسه</h2>
+        <p>آیا علاقه‌مند به نوشتن و اشتراک‌گذاری تجربیات خود هستید؟ فرم زیر را پر کنید تا به تیم بلاگرهای دبیرستان بپیوندید!</p>
+        
+        <form class="register-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="blogger-form">
+          
+          <!-- Hidden field for form type -->
+          <input type="hidden" name="form_type" value="blogger_registration">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first-name"><i class="fas fa-user"></i> نام</label>
+              <input type="text" id="first-name" name="first_name" placeholder="نام خود را وارد کنید" required>
+            </div>
+            <div class="form-group">
+              <label for="last-name"><i class="fas fa-user"></i> نام خانوادگی</label>
+              <input type="text" id="last-name" name="last_name" placeholder="نام خانوادگی خود را وارد کنید" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="phone"><i class="fas fa-phone"></i> شماره موبایل</label>
+            <input type="tel" id="phone" name="phone" placeholder="09123456789" pattern="09[0-9]{9}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="age"><i class="fas fa-birthday-cake"></i> سن</label>
+            <select id="age" name="age" required>
+              <option value="">انتخاب کنید</option>
+              <option value="13">۱۳ سال</option>
+              <option value="14">۱۴ سال</option>
+              <option value="15">۱۵ سال</option>
+              <option value="16">۱۶ سال</option>
+              <option value="17">۱۷ سال</option>
+              <option value="18">۱۸ سال و بالاتر</option>
+            </select>
+          </div>
+
+          <div class="form-group">            <label for="interest"><i class="fas fa-heart"></i> حوزه مورد علاقه برای نوشتن</label>
+            <select id="interest" name="interest" required>
+              <option value="">انتخاب کنید</option>
+              <option value="educational">مقالات آموزشی</option>
+              <option value="sports">ورزش و سلامت</option>
+              <option value="technology">فناوری و هوش مصنوعی</option>
+              <option value="psychology">روانشناسی و مشاوره</option>
+              <option value="creative">خلاقیت و هنر</option>
+              <option value="news">اخبار و رویدادهای مدرسه</option>
+              <option value="other">سایر</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="bio"><i class="fas fa-pen"></i> درباره خودتان بنویسید (اختیاری)</label>
+            <textarea id="bio" name="bio" placeholder="علاقه‌مندی‌ها، تجربیات و انگیزه شما برای نوشتن..."></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submit-btn">
+            <i class="fas fa-paper-plane"></i>
+            ارسال درخواست ثبت‌نام
+          </button>
+
+          <div class="form-message" id="form-message"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="blog-footer">
+    <p>© ۱۴۰۵ دبیرستان حضرت امام خامنه‌ای — تمامی حقوق محفوظ است.</p>
+    <p>
+      <a href="index.html">بازگشت به صفحه اصلی</a> | 
+      <a href="feedback.html">تماس با ما</a>
+    </p>
+  </footer>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // ===== Scroll Progress =====
+      const scrollProgress = document.getElementById('scroll-progress');
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+        scrollProgress.style.width = `${Math.min(scrolled, 100)}%`;      }, { passive: true });
+
+      // ===== Form Submission with Formspree =====
+      const form = document.getElementById('blogger-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const formMessage = document.getElementById('form-message');
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Disable button and show loading
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ارسال...';
+        formMessage.className = 'form-message';
+        formMessage.textContent = '';
+
+        try {
+          const formData = new FormData(form);
+          
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+
+          if (response.ok) {
+            // Success
+            formMessage.className = 'form-message success';
+            formMessage.textContent = '✅ درخواست شما با موفقیت ثبت شد! پس از بررسی با شما تماس خواهیم گرفت.';
+            form.reset();
+            
+            // Reset button after delay
+            setTimeout(() => {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ارسال درخواست ثبت‌نام';
+            }, 3000);
+            
+          } else {
+            // Error from Formspree
+            const data = await response.json();
+            throw new Error(data.errors?.[0]?.message || 'خطا در ارسال فرم');
+            
+          }
+        } catch (error) {
+          // Error handling
+          formMessage.className = 'form-message error';
+          formMessage.textContent = `❌ خطا: ${error.message}. لطفاً دوباره تلاش کنید.`;
+                    // Reset button
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ارسال درخواست ثبت‌نام';
+          
+          console.error('Form submission error:', error);
+        }
+      });
+
+      // ===== Phone Input Formatting =====
+      const phoneInput = document.getElementById('phone');
+      phoneInput?.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.startsWith('09') && value.length > 2) {
+          value = value.slice(0, 11);
+        }
+        e.target.value = value;
+      });
+
+      // ===== Animate Blog Cards on Scroll =====
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+            }, index * 100);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.blog-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        observer.observe(card);
+      });
+
+      // ===== Hide floating orbs on mobile =====
+      if (window.innerWidth <= 768) {
+        document.querySelectorAll('.floating-orb').forEach(orb => {
+          orb.style.display = 'none';
+        });
+      }
+    });
+  </script>
+</body>
+</html>
